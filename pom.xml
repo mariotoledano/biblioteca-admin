@@ -11,6 +11,7 @@
 	<groupId>com.mariots.biblioteca</groupId>
 	<artifactId>biblioteca-admin</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
+	<packaging>war</packaging>
 	<name>biblioteca-admin</name>
 	<description>Web para la administracion de la bbdd de la biblioteca</description>
 	<properties>
@@ -46,9 +47,18 @@
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
+		<!--AÑADIDO-->
+		<!--Para anular el embebed tomcat una vez montado-->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-tomcat</artifactId>
+			<scope>provided</scope>
+		</dependency>
+
 	</dependencies>
 
 	<build>
+		<finalName>biblioteca-admin</finalName>
 		<plugins>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
