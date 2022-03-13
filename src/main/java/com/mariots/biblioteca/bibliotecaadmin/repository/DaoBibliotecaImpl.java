@@ -7,10 +7,10 @@ import org.springframework.stereotype.Repository;
 @Repository
 public class DaoBibliotecaImpl implements DaoBiblioteca {
     @Autowired
-    AutorJpaRepository auotorJpaRepository;
+    AutorJpaRepository autorJpaRepository;
 
     @Override
     public Autor guardarAutor(Autor autor) {
-        return auotorJpaRepository.save(autor);
+        return autorJpaRepository.save(autor);
     }
 }

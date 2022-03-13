@@ -5,7 +5,7 @@
     <title>Nuevo Autor</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <!-- Icono -->
-    <link rel="shortcut icon" href="../resources/img/laurel-favicon.ico">
+    <link rel="shortcut icon" href="laurel-favicon.ico">
     <!-- Bootstrap -->
     <link
             rel="stylesheet"
@@ -25,50 +25,50 @@
             type="text/css"
             media="all"
     />
-<!--    &lt;!&ndash;    SCRIPT JS FORMULARIO&ndash;&gt;-->
-<!--    <script type="text/javascript">-->
+    <!--    SCRIPT JS FORMULARIO-->
+    <script type="text/javascript">
 
-<!--        let formulario = document.getElementById("formulario");-->
-<!--        formulario.addEventListener("submit", function(evento){-->
-<!--          //Prevenimos el envío del formulario con submit-->
-<!--          evento.preventDefault();-->
-<!--          //Recogemos datos del formulario-->
-<!--          let nombreAutor = document.getElementById("nombreAutor").value;-->
-<!--          let fechaAutor = document.getElementById("fechaAutor").value;-->
-<!--          let descripcionBreve = document.getElementById("descripcionBreve").value;-->
-<!--          let descripcionLarga =document.getElementById("descripcionLarga").value;-->
-<!--          let nuevoAutorObjeto = {"nombreAutor": nombreAutor,"fechaAutor":fechaAutor, "descripcionBreve":descripcionBreve, "descripcionLarga":descripcionLarga};-->
-<!--          var nuevoAutorString = JSON.stringify(nuevoAutorObjeto);-->
-<!--          //Creamos una conexión POST para envío de datos del autor-->
-<!--        let xhr = new XMLHttpRequest();-->
-<!--        let url = "/registrarNuevoTexto";-->
+        let formulario = document.getElementById("formulario");
+        formulario.addEventListener("submit", function(evento){
+          //Prevenimos el envío del formulario con submit
+          evento.preventDefault();
+          //Recogemos datos del formulario
+          let nombreAutor = document.getElementById("nombreAutor").value;
+          let fechaAutor = document.getElementById("fechaAutor").value;
+          let descripcionBreve = document.getElementById("descripcionBreve").value;
+          let descripcionLarga =document.getElementById("descripcionLarga").value;
+          let nuevoAutorObjeto = {"nombreAutor": nombreAutor,"fechaAutor":fechaAutor, "descripcionBreve":descripcionBreve, "descripcionLarga":descripcionLarga};
+          var nuevoAutorString = JSON.stringify(nuevoAutorObjeto);
+          //Creamos una conexión POST para envío de datos del autor
+        let xhr = new XMLHttpRequest();
+        let url = "/registrarNuevoTexto";
 
-<!--        xhr.open("POST", url, true);-->
-<!--        xhr.setRequestHeader("Content-Type", "application/json");-->
-<!--      // //Cuando la conexión el request tiene respuesta correcta del servidor activar mensaje de éxito-->
-<!--      //   xhr.onreadystatechange =function() {-->
-<!--      //     if (xhr.readyState === 4 && xhr.status === 200) {-->
-<!--      //       let textoRespuesta= this.responseText;-->
-<!--      //       let nombreAutorRespuesta = JSON.parse(textoRespuesta).nombreAutor;-->
-<!--      //       let textoAlerta = "El autor " + nombreAutorRespuesta + " ha sido registrado."-->
-<!--      //       document.getElementById("alertaExito").innerHTML = textoAlerta;-->
-<!--      //       document.getElementById("alertaExito").style.display("block") = textoAlerta;-->
+        xhr.open("POST", url, true);
+        xhr.setRequestHeader("Content-Type", "application/json");
+      // //Cuando la conexión el request tiene respuesta correcta del servidor activar mensaje de éxito
+      //   xhr.onreadystatechange =function() {
+      //     if (xhr.readyState === 4 && xhr.status === 200) {
+      //       let textoRespuesta= this.responseText;
+      //       let nombreAutorRespuesta = JSON.parse(textoRespuesta).nombreAutor;
+      //       let textoAlerta = "El autor " + nombreAutorRespuesta + " ha sido registrado."
+      //       document.getElementById("alertaExito").innerHTML = textoAlerta;
+      //       document.getElementById("alertaExito").style.display("block") = textoAlerta;
 
-<!--      //   }-->
-<!--      // }-->
-<!--          //Enviamos el autor en formato JSON String-->
-<!--          xhr.send(nuevoAutor);-->
-
-
-
-<!--        })-->
+      //   }
+      // }
+          //Enviamos el autor en formato JSON String
+          xhr.send(nuevoAutor);
 
 
-<!--    </script>-->
+
+        })
+
+
+    </script>
 </head>
 <!-- Body -->
 <body>
-<form class="my-3 mx-5" id="formulario" action="/registrarNuevoAutor" method="post">
+<form class="my-3 mx-5" id="formulario" action="/registrarNuevoAutor" method="POST">
     <!-- AUTOR -->
     <h3 class="mb-3">Autor</h3>
     <div class="ms-4">
@@ -125,7 +125,7 @@
         <button type="submit" class="btn btn-primary btn-bg mt-4 me-4">
             Registrar
         </button>
-        <a href="../public/index.html" class="btn btn-primary btn-bg mt-4">Volver</a>
+        <a href="index.html" class="btn btn-primary btn-bg mt-4">Volver</a>
     </div>
 </form>
 <div

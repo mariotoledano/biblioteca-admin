@@ -5,14 +5,13 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
-@ComponentScan({"model", "repository", "service", "controller"})
-@EnableJpaRepositories("repository")
+@EnableJpaRepositories
 @SpringBootApplication
 public class BibliotecaAdminApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(BibliotecaAdminApplication.class, args);
-		System.out.println("Inicio de la aplicación 2");
+		System.out.println("Inicio de la aplicación");
 	}
 
 }

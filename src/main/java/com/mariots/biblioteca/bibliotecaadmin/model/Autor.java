@@ -1,7 +1,6 @@
 package com.mariots.biblioteca.bibliotecaadmin.model;
 
 import lombok.*;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -20,22 +19,22 @@ import javax.persistence.Table;
         @GeneratedValue(strategy = GenerationType.IDENTITY)
         @Column(name = "id", nullable = false)
         private int id;
-        @Column
-        private String autor;
-        @Column
-        private String fecha_autor;
-        @Column
-        private String descripcion_breve;
-        @Column
-        private String descripcion_larga;
+        @Column(name="autor")
+        private String nombreAutor;
+        @Column(name="fecha_autor")
+        private String fechaAutor;
+        @Column(name="descripcion_breve")
+        private String descripcionBreve;
+        @Column(name="descripcion_larga")
+        private String descripcionLarga;
 
         //CONSTRUCTORES
-        public Autor(String autor, String fecha_autor, String descripcion_breve, String descripcion_larga) {
+        public Autor(String nombreAutor, String fechaAutor, String descripcionBreve, String descripcionLarga) {
             super();
-            this.autor = autor;
-            this.fecha_autor = fecha_autor;
-            this.descripcion_breve = descripcion_breve;
-            this.descripcion_larga = descripcion_larga;
+            this.nombreAutor = nombreAutor;
+            this.fechaAutor = fechaAutor;
+            this.descripcionBreve = descripcionBreve;
+            this.descripcionLarga = descripcionLarga;
         }
 
 
