@@ -11,66 +11,152 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
     <!-- CSS   -->
     <link rel="stylesheet" href="" type="text/css" media="all" />
+    <!--jQuery-->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 </head>
 <!-- Body -->
-<body>
-<form class="my-3 mx-5" action="">
-    <!-- TEMA   -->
-    <h3 class="mb-3">Tema</h3>
-    <div class="ms-4">
-        <!-- Switch Tema nuevo <-> Tema registrado -->
-        <div class="form-check form-switch">
-            <input class="form-check-input" type="checkbox" id="switch-tema-nuevo-registrado" name="switch-tema-nuevo-registrado" value="yes" checked>
-            <label class="form-check-label" for="switch-tema-nuevo-registrado">Nuevo Tema (pulsar para tema registrado)</label>
-        </div>
-        <!-- Nuevo Tema -->
-        <div class="mb-3 mt-3">
-            <label for="tema" class="form-label">Nuevo tema:</label>
-            <input type="text" class="form-control" id="tema" type="text" placeholder="Introduce el nombre de un nuevo tema">
-        </div>
-        <!-- Tema registrado -->
-        <div class="mb-3 mt-3">
-            <label for="tema" class="form-label">Tema registrado:</label>
-            <input class="form-control" placeholder="Introduce nombre de un tema previamente registrado" list="lista-temas" name="tema" id="tema">
-            <datalist id="lista-temas">
-                <option value="Edge">
-                <option value="Firefox">
-                <option value="Chrome">
-                <option value="Opera">
-                <option value="Safari">
-            </datalist>
-        </div>
+<body class="my-4 mx-5">
 
-        <!-- Switch Supertema nuevo <-> Supertema registrado -->
-        <div class="form-check form-switch">
-            <input class="form-check-input" type="checkbox" id="switch-supertema-nuevo-registrado" name="switch-supertema-nuevo-registrado" value="yes" checked>
-            <label class="form-check-label" for="switch-supertema-nuevo-registrado">Nuevo Supertema (pulsar para supertema registrado)</label>
-        </div>
-        <!-- Supertema registrado -->
+<!-- TEMA   -->
+    <h3 class="mt-4 mb-3">Tema</h3>
+    <!-- Nuevo Tema -->
+    <form id="form-tema">
         <div class="mb-3 mt-3">
-            <label for="supertema" class="form-label">Supertema registrado:</label>
-            <input class="form-control" placeholder="Introduce nombre de un supertema previamente registrado" list="lista-supertemas" name="supertema" id="supertema">
-            <datalist id="lista-supertemas">
-                <option value="Edge">
-                <option value="Firefox">
-                <option value="Chrome">
-                <option value="Opera">
-                <option value="Safari">
-            </datalist>
+            <label for="nombre-tema-nuevo" class="form-label">Nuevo tema:</label>
+            <input class="form-control" id="nombre-tema-nuevo" name="nombreTema" type="text" placeholder="Introduce el nombre de un nuevo tema">
         </div>
-        <!-- Nuevo Supertema -->
+    <!--Botón submit-->
+        <div>
+            <button type="submit" class="btn btn-primary btn-bg mt-3 me-4">Registrar</button>
+            <a href="index.html" class="btn btn-primary btn-bg mt-3">Volver</a>
+        </div>
+    </form>
+    <!--Alerta Autor registrado en BBDD-->
+    <div id="alerta-exito-tema" class="alert alert-success my-4 mx-3" role="alert" style="width: fit-content; display: none"> </div>
+
+<!-- SUPERTEMA   -->
+    <h3 class="mt-5 mb-3">Supertema</h3>
+    <!-- Nuevo Supertema -->
+    <form id="form-supertema">
         <div class="mb-3 mt-3">
-            <label for="supertema" class="form-label">Nuevo supertema:</label>
-            <input type="text" class="form-control" id="supertema" type="text" placeholder="Introduce el nombre de un nuevo supertema">
+            <label for="nombre-supertema-nuevo" class="form-label">Nuevo supertema:</label>
+            <input type="text" class="form-control" id="nombre-supertema-nuevo" name="nombreSupertema" type="text" placeholder="Introduce el nombre de un nuevo supertema">
         </div>
+    <!--Botón submit-->
+        <div>
+            <button type="submit" class="btn btn-primary btn-bg mt-3 me-4">Registrar</button>
+            <a href="index.html" class="btn btn-primary btn-bg mt-3">Volver</a>
+        </div>
+    </form>
+    <!--Alerta Autor registrado en BBDD-->
+    <div id="alerta-exito-supertema" class="alert alert-success my-4 mx-3" role="alert" style="width: fit-content; display: none"> </div>
 
 
-    </div>
-    <div>
-        <button type="submit" class="btn btn-primary btn-bg mt-4 me-4">Registrar</button>
-        <a href="index.html" class="btn btn-primary btn-bg mt-4">Volver</a>
-    </div>
-</form>
+<!--        &lt;!&ndash; Tema registrado &ndash;&gt;-->
+<!--        <div class="mb-3 mt-3">-->
+<!--            <label for="nombreTemaRegistrado" class="form-label">Tema registrado:</label>-->
+<!--            <input class="form-control" placeholder="Introduce nombre de un tema previamente registrado" list="lista-temas" name="nombreTema" id="nombreTemaRegistrado">-->
+<!--            <datalist id="lista-temas">-->
+<!--                <option value="Edge">-->
+<!--                <option value="Firefox">-->
+<!--                <option value="Chrome">-->
+<!--                <option value="Opera">-->
+<!--                <option value="Safari">-->
+<!--            </datalist>-->
+<!--        </div>-->
+
+<!--        &lt;!&ndash; Switch Supertema nuevo <-> Supertema registrado &ndash;&gt;-->
+<!--        <div class="form-check form-switch">-->
+<!--            <input class="form-check-input" type="checkbox" id="switch-supertema-nuevo-registrado" name="switch-supertema-nuevo-registrado" value="yes" checked>-->
+<!--            <label class="form-check-label" for="switch-supertema-nuevo-registrado">Nuevo Supertema (pulsar para supertema registrado)</label>-->
+<!--        </div>-->
+<!--        &lt;!&ndash; Supertema registrado &ndash;&gt;-->
+<!--        <div class="mb-3 mt-3">-->
+<!--            <label for="nombre-supertema-registrado" class="form-label">Supertema registrado:</label>-->
+<!--            <input class="form-control" placeholder="Introduce nombre de un supertema previamente registrado" list="lista-supertemas" name="nombreSupertema" id="nombre-supertema-registrado">-->
+<!--            <datalist id="lista-supertemas">-->
+<!--                <option value="Edge">-->
+<!--                <option value="Firefox">-->
+<!--                <option value="Chrome">-->
+<!--                <option value="Opera">-->
+<!--                <option value="Safari">-->
+<!--            </datalist>-->
+<!--        </div>-->
+
+<!--    </div>-->
+
+<!-- SCRIPTS DE JS -->
+<script>
+      <!--Función para transformar a JSON-->
+      function convertFormToJSON(form) {
+        const array = $(form).serializeArray(); // Encodes the set of form elements as an array of names and values.
+        const jsObject = {};
+        $.each(array, function () {
+          jsObject[this.name] = this.value || "";
+        });
+        const json = JSON.stringify(jsObject);
+        return json;
+      }
+      <!--Al ejecutar el submit Tema Nuevo-->
+      $("#form-tema").on("submit", function (e) {
+        e.preventDefault();
+        const form = $(e.target);
+        const json = convertFormToJSON(form);
+        console.log(json);
+        <!--Envío Post con accept parar que la recepción del body sea correcta-->
+        <!--Se muestra y oculata la alerta de éxito con el objeto guardado y el Status HTTP-->
+        <!--Se resetea el formulario-->
+        $.ajax({
+            headers: {
+            Accept: 'application/json',
+            "Content-Type": 'application/json'
+            },
+            type: 'POST',
+            url: "/registrarNuevoTema",
+            data: json,
+            dataType: 'json',
+            success: function(data,status) {
+                console.log("Guardado en BBDD: "+ JSON.stringify(data));
+                console.log("Status "+ status);
+                $("#alerta-exito-tema").html("El Tema: "+JSON.stringify(data)+" ha sido guardado en la BBDD correctamente.<br/>Status: "+status).show()+".";
+                setTimeout(function(){
+                    $("#alerta-exito-tema").hide();
+                    },5000);
+            document.getElementById("form-tema").reset();
+            }
+        });
+      });
+
+      <!--Al ejecutar el submit Supertema Nuevo-->
+      $("#form-supertema").on("submit", function (e) {
+        e.preventDefault();
+        const form = $(e.target);
+        const json = convertFormToJSON(form);
+        console.log(json);
+        <!--Envío Post con accept parar que la recepción del body sea correcta-->
+        <!--Se muestra y oculata la alerta de éxito con el objeto guardado y el Status HTTP-->
+        <!--Se resetea el formulario-->
+        $.ajax({
+            headers: {
+            Accept: 'application/json',
+            "Content-Type": 'application/json'
+            },
+            type: 'POST',
+            url: "/registrarNuevoSupertema",
+            data: json,
+            dataType: 'json',
+            success: function(data,status) {
+                console.log("Guardado en BBDD: "+ JSON.stringify(data));
+                console.log("Status "+ status);
+                $("#alerta-exito-supertema").html("El Supertema: "+JSON.stringify(data)+" ha sido guardado en la BBDD correctamente.<br/>Status: "+status).show()+".";
+                setTimeout(function(){
+                    $("#alerta-exito-supertema").hide();
+                    },5000);
+            document.getElementById("form-supertema").reset();
+            }
+        });
+      });
+    </script>
 
 </body>
 </html>

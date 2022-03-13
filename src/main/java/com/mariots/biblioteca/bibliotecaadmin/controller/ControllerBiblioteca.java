@@ -1,12 +1,13 @@
 package com.mariots.biblioteca.bibliotecaadmin.controller;
 
 import com.mariots.biblioteca.bibliotecaadmin.model.Autor;
+import com.mariots.biblioteca.bibliotecaadmin.model.Supertema;
+import com.mariots.biblioteca.bibliotecaadmin.model.Tema;
 import com.mariots.biblioteca.bibliotecaadmin.service.ServiceBiblioteca;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.ModelAndView;
 
 
 @RestController
@@ -16,12 +17,6 @@ public class ControllerBiblioteca {
     @Autowired
     ServiceBiblioteca service;
 
-    @PostMapping(value="/prueba", consumes = "application/JSON")
-    public ResponseEntity pruebaPost(@RequestBody String autor){
-        System.out.println(autor);
-        return new ResponseEntity<String>(autor, HttpStatus.CREATED);
-    }
-
     @PostMapping(value="/registrarNuevoAutor")
     public ResponseEntity registrarNuevoAutor(@RequestBody Autor autor){
        System.out.println("recibido");
@@ -29,17 +24,20 @@ public class ControllerBiblioteca {
        return new ResponseEntity<Autor>(autorGuardado, HttpStatus.CREATED);
     }
 
-    @GetMapping(value = "/hello")
-    public ModelAndView getString(){
+    @PostMapping(value="/registrarNuevoTema")
+    public ResponseEntity registrarNuevoTema(@RequestBody Tema tema){
         System.out.println("recibido");
-        ModelAndView modelAndView= new ModelAndView();
-        modelAndView.setViewName("nuevo_autor");
-        return modelAndView;
+        Tema temaGuardado = service.guardarTema(tema);
+        return new ResponseEntity<Tema>(temaGuardado, HttpStatus.CREATED);
     }
 
-    @PostMapping(value = "/hello")
-    public String postHello(){
-        return "Métodod con post";
+    @PostMapping(value="/registrarNuevoSupertema")
+    public ResponseEntity registrarNuevoSupertema(@RequestBody Supertema supertema){
+        System.out.println("recibido");
+        Supertema supertemaGuardado = service.guardarSupertema(supertema);
+        return new ResponseEntity<Supertema>(supertemaGuardado, HttpStatus.CREATED);
     }
+
 
 }
+

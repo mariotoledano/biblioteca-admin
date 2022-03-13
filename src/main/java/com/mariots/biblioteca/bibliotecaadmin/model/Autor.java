@@ -1,20 +1,17 @@
 package com.mariots.biblioteca.bibliotecaadmin.model;
 
 import lombok.*;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
 
-    @Entity
+import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
+
+@Entity
     @Table(name="autores" )
     // A shortcut for @ToString, @EqualsAndHashCode, @Getter on all fields, and @Setter on all non-final fields, and @RequiredArgsConstructor
-    @Data
+    @ToString
     @NoArgsConstructor
     public class Autor {
-
         @Id
         @GeneratedValue(strategy = GenerationType.IDENTITY)
         @Column(name = "id", nullable = false)
@@ -28,6 +25,32 @@ import javax.persistence.Table;
         @Column(name="descripcion_larga")
         private String descripcionLarga;
 
+        //JOIN TABLE
+        @ManyToMany(fetch=FetchType.EAGER, cascade= {CascadeType.PERSIST, CascadeType.MERGE,
+                CascadeType.DETACH, CascadeType.REFRESH})
+        @JoinTable(name=("texto_autor"),
+                joinColumns=@JoinColumn(name="autor_id"),
+                inverseJoinColumns=@JoinColumn(name="texto_id"))
+        private List<Texto> textos;
+
+        //MÉTODO PARA AGREGAR TEXTOS A UN AUTOR BIDIRECCIONAL
+        public void addTexto(Texto texto){
+            if(textos == null){
+                textos= new ArrayList<Texto>();
+            }
+            textos.add(texto);
+            if(texto.getAutores()==null){
+                List<Autor> autoresDeTexto = new ArrayList<>();
+                autoresDeTexto.add(this);
+                texto.setAutores(autoresDeTexto);
+                return;
+            }
+            List<Autor> autoresDeTexto = texto.getAutores();
+            autoresDeTexto.add(this);
+            texto.setAutores(autoresDeTexto);
+
+        }
+
         //CONSTRUCTORES
         public Autor(String nombreAutor, String fechaAutor, String descripcionBreve, String descripcionLarga) {
             super();
@@ -35,6 +58,41 @@ import javax.persistence.Table;
             this.fechaAutor = fechaAutor;
             this.descripcionBreve = descripcionBreve;
             this.descripcionLarga = descripcionLarga;
+        }
+
+        //GETTERS Y SETTERS
+        public int getId() {
+            return id;
+        }
+        public String getNombreAutor() {
+            return nombreAutor;
+        }
+        public void setNombreAutor(String nombreAutor) {
+            this.nombreAutor = nombreAutor;
+        }
+        public String getFechaAutor() {
+            return fechaAutor;
+        }
+        public void setFechaAutor(String fechaAutor) {
+            this.fechaAutor = fechaAutor;
+        }
+        public String getDescripcionBreve() {
+            return descripcionBreve;
+        }
+        public void setDescripcionBreve(String descripcionBreve) {
+            this.descripcionBreve = descripcionBreve;
+        }
+        public String getDescripcionLarga() {
+            return descripcionLarga;
+        }
+        public void setDescripcionLarga(String descripcionLarga) {
+            this.descripcionLarga = descripcionLarga;
+        }
+        public List<Texto> getTextos() {
+            return textos;
+        }
+        public void setTextos(List<Texto> textos) {
+            this.textos = textos;
         }
 
 
