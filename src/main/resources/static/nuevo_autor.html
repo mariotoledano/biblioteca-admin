@@ -25,50 +25,17 @@
             type="text/css"
             media="all"
     />
-    <!--    SCRIPT JS FORMULARIO-->
-    <script type="text/javascript">
-
-        let formulario = document.getElementById("formulario");
-        formulario.addEventListener("submit", function(evento){
-          //Prevenimos el envío del formulario con submit
-          evento.preventDefault();
-          //Recogemos datos del formulario
-          let nombreAutor = document.getElementById("nombreAutor").value;
-          let fechaAutor = document.getElementById("fechaAutor").value;
-          let descripcionBreve = document.getElementById("descripcionBreve").value;
-          let descripcionLarga =document.getElementById("descripcionLarga").value;
-          let nuevoAutorObjeto = {"nombreAutor": nombreAutor,"fechaAutor":fechaAutor, "descripcionBreve":descripcionBreve, "descripcionLarga":descripcionLarga};
-          var nuevoAutorString = JSON.stringify(nuevoAutorObjeto);
-          //Creamos una conexión POST para envío de datos del autor
-        let xhr = new XMLHttpRequest();
-        let url = "/registrarNuevoTexto";
-
-        xhr.open("POST", url, true);
-        xhr.setRequestHeader("Content-Type", "application/json");
-      // //Cuando la conexión el request tiene respuesta correcta del servidor activar mensaje de éxito
-      //   xhr.onreadystatechange =function() {
-      //     if (xhr.readyState === 4 && xhr.status === 200) {
-      //       let textoRespuesta= this.responseText;
-      //       let nombreAutorRespuesta = JSON.parse(textoRespuesta).nombreAutor;
-      //       let textoAlerta = "El autor " + nombreAutorRespuesta + " ha sido registrado."
-      //       document.getElementById("alertaExito").innerHTML = textoAlerta;
-      //       document.getElementById("alertaExito").style.display("block") = textoAlerta;
-
-      //   }
-      // }
-          //Enviamos el autor en formato JSON String
-          xhr.send(nuevoAutor);
-
-
-
-        })
-
-
-    </script>
+    <!--jQuery-->
+    <!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>-->
+    <script
+            src="https://code.jquery.com/jquery-3.6.0.js"
+            integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk="
+            crossorigin="anonymous"
+    ></script>
 </head>
 <!-- Body -->
 <body>
-<form class="my-3 mx-5" id="formulario" action="/registrarNuevoAutor" method="POST">
+<form class="my-3 mx-5" id="formulario">
     <!-- AUTOR -->
     <h3 class="mb-3">Autor</h3>
     <div class="ms-4">
@@ -135,5 +102,47 @@
         style="width: fit-content; display: none">
     El nuevo Autor ha sido registrado correctamente
 </div>
+<!-- SCRIPTS DE JS -->
+<script>
+<!--Función para transformar a JSON-->
+      function convertFormToJSON(form) {
+        const array = $(form).serializeArray(); // Encodes the set of form elements as an array of names and values.
+        const jsObject = {};
+        $.each(array, function () {
+          jsObject[this.name] = this.value || "";
+        });
+        const json = JSON.stringify(jsObject);
+        return json;
+      }
+<!--Al ejecutar el submit-->
+      $("#formulario").on("submit", function (e) {
+        e.preventDefault();
+        const form = $(e.target);
+        const json = convertFormToJSON(form);
+        console.log(json);
+<!--Envío Post con accept parar que la recepción del body sea correcta-->
+<!--Se muestra y oculata la alerta de éxito con el objeto guardado y el Status HTTP-->
+<!--Se resetea el formulario-->
+        $.ajax({
+            headers: {
+            Accept: 'application/json',
+            "Content-Type": 'application/json'
+            },
+            type: 'POST',
+            url: "/registrarNuevoAutor",
+            data: json,
+            dataType: 'json',
+            success: function(data,status) {
+                console.log("Guardado en BBDD: "+ JSON.stringify(data));
+                console.log("Status "+ status);
+                $("#alertaExito").html("El objeto: "+JSON.stringify(data)+" ha sido guardado en la BBDD.<br/>Status: "+status).show()+".";
+                setTimeout(function(){
+                    $("#alertaExito").hide();
+                    },5000);
+            document.getElementById("formulario").reset();
+            }
+        });
+      });
+    </script>
 </body>
 </html>
