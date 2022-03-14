@@ -1,5 +1,6 @@
 package com.mariots.biblioteca.bibliotecaadmin.controller;
 
+import com.mariots.biblioteca.bibliotecaadmin.Utilidades;
 import com.mariots.biblioteca.bibliotecaadmin.model.Autor;
 import com.mariots.biblioteca.bibliotecaadmin.model.Supertema;
 import com.mariots.biblioteca.bibliotecaadmin.model.Tema;
@@ -8,7 +9,6 @@ import com.mariots.biblioteca.bibliotecaadmin.service.ServiceBiblioteca;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
@@ -26,11 +26,12 @@ public class ControllerBiblioteca {
 
     @GetMapping(value="/irNuevoTexto")
     public ModelAndView irNuevoAutor(ModelMap model){
-        System.out.println("Recibido controller ir nuevo texto");
         List<Autor> listaAutores = service.recuperarAutores();
         model.addAttribute("listaAutores", listaAutores);
         List<Tema> listaTemas = service.recuperarTemas();
         model.addAttribute("listaTemas",listaTemas);
+        Utilidades utilidades =new Utilidades();
+        model.addAttribute("utilidades",utilidades);
         return new ModelAndView("nuevo_texto", model);
     }
 

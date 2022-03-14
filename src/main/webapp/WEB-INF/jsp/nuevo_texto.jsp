@@ -1,6 +1,7 @@
 
 <%@page	language="java" contentType="text/html; charset=ISO-8859-1"	pageEncoding="ISO-8859-1" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@page import="java.io.*, com.mariots.biblioteca.bibliotecaadmin.Utilidades"%>
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -26,19 +27,19 @@
         <!-- Texto: -->
         <div class="mb-3 mt-3">
             <label class="form-label" for="texto">Nuevo texto:</label>
-            <textarea class="form-control" rows="5" id="texto" name="texto" placeholder="Introduce el texto"></textarea>
+            <textarea class="form-control" rows="5" id="texto" name="textoString" placeholder="Introduce el texto"></textarea>
         </div>
         <!-- Longitud: -->
         <div class="mb-3">
             <label class="form-check-label me-3" for="opciones-longitud">Longitud:</label>
             <div id="opciones-longitud" class="d-inline-flex">
                 <div class="form-check me-3">
-                    <input type="radio" class="form-check-input" id="largo" name="longitud" value="largo" checked>
-                    <label class="form-check-label" for="largo">Largo</label>
+                    <input type="radio" class="form-check-input" id="breve" name="longitud" value="breve" checked>
+                    <label class="form-check-label" for="breve">Breve</label>
                 </div>
                 <div class="form-check">
-                    <input type="radio" class="form-check-input" id="breve" name="longitud" value="breve">
-                    <label class="form-check-label" for="breve">Breve</label>
+                    <input type="radio" class="form-check-input" id="largo" name="longitud" value="largo">
+                    <label class="form-check-label" for="largo">Largo</label>
                 </div>
             </div>
         </div>
@@ -48,9 +49,9 @@
     <!-- Autor previamente registrado-->
     <div class="ms-4 mb-3 mt-3">
         <label for="autor" class="form-label">Autor:</label>
-        <select class="form-select" placeholder="Introduce nombre de un autor previamente registrado" name="autor" id="autor">
+        <select class="form-select" placeholder="Introduce nombre de un autor previamente registrado" name="autores" id="autor">
             <c:forEach items="${listaAutores}" var="autor">
-                <option value="${autor}">${autor.nombreAutor}</option>
+                <option value="${autor}">${autor}</option>
             </c:forEach>
         </select>
     </div>
@@ -59,7 +60,7 @@
     <div class="ms-4">
         <div class="mb-3 mt-3">
             <label for="tema" class="form-label">Tema:</label>
-            <select class="form-select" placeholder="Introduce nombre de un tema previamente registrado" name="tema" id="tema">
+            <select class="form-select" placeholder="Introduce nombre de un tema previamente registrado" name="temas" id="tema">
                 <c:forEach items="${listaTemas}" var="tema">
                     <option value="${tema}">${tema.nombreTema}</option>
                 </c:forEach>
@@ -83,6 +84,7 @@
         $.each(array, function () {
           jsObject[this.name] = this.value || "";
         });
+        console.log("Lo que hay en el ARRAY despuesd e forEach: "+jsObject)
         const json = JSON.stringify(jsObject);
         return json;
       }
@@ -90,8 +92,9 @@
       $("#form-texto").on("submit", function (e) {
         e.preventDefault();
         const form = $(e.target);
+        console.log(form)
         const json = convertFormToJSON(form);
-        console.log(json);
+        console.log("despues de CONVERT: "+json);
 <!--Envío Post con accept parar que la recepción del body sea correcta-->
 <!--Se muestra y oculata la alerta de éxito con el objeto guardado y el Status HTTP-->
 <!--Se resetea el formulario-->
