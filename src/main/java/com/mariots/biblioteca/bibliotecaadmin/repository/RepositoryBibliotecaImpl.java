@@ -7,8 +7,10 @@ import com.mariots.biblioteca.bibliotecaadmin.model.Texto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
-public class DaoBibliotecaImpl implements DaoBiblioteca {
+public class RepositoryBibliotecaImpl implements RepositoryBiblioteca {
     @Autowired
     AutorJpaRepository autorJpaRepository;
     @Autowired
@@ -18,6 +20,7 @@ public class DaoBibliotecaImpl implements DaoBiblioteca {
     @Autowired
     TextoJpaRepository textoJpaRepository;
 
+    //METODOS GUARDAR
     @Override
     public Autor guardarAutor(Autor autor) {
         return autorJpaRepository.save(autor);
@@ -37,4 +40,26 @@ public class DaoBibliotecaImpl implements DaoBiblioteca {
     public Texto guardarTexto(Texto texto) {
         return textoJpaRepository.save(texto);
     }
+
+    //MÉTODOS RECUPERAR
+    @Override
+    public List<Autor> recuperarAutores() {
+        return autorJpaRepository.findAll();
+    }
+
+    @Override
+    public List<Tema> recuperarTemas() {
+        return temaJpaRepository.findAll();
+    }
+
+    @Override
+    public List<Supertema> recuperarSupertemas() {
+        return supertemaJpaRepository.findAll();
+    }
+
+    @Override
+    public List<Texto> recupearTextos() {
+        return textoJpaRepository.findAll();
+    }
+
 }

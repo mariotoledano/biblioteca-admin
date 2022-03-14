@@ -3,11 +3,17 @@ package com.mariots.biblioteca.bibliotecaadmin.controller;
 import com.mariots.biblioteca.bibliotecaadmin.model.Autor;
 import com.mariots.biblioteca.bibliotecaadmin.model.Supertema;
 import com.mariots.biblioteca.bibliotecaadmin.model.Tema;
+import com.mariots.biblioteca.bibliotecaadmin.model.Texto;
 import com.mariots.biblioteca.bibliotecaadmin.service.ServiceBiblioteca;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.ui.Model;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
+
+import java.util.List;
 
 
 @RestController
@@ -16,6 +22,17 @@ public class ControllerBiblioteca {
 
     @Autowired
     ServiceBiblioteca service;
+
+
+    @GetMapping(value="/irNuevoTexto")
+    public ModelAndView irNuevoAutor(ModelMap model){
+        System.out.println("Recibido controller ir nuevo texto");
+        List<Autor> listaAutores = service.recuperarAutores();
+        model.addAttribute("listaAutores", listaAutores);
+        List<Tema> listaTemas = service.recuperarTemas();
+        model.addAttribute("listaTemas",listaTemas);
+        return new ModelAndView("nuevo_texto", model);
+    }
 
     @PostMapping(value="/registrarNuevoAutor")
     public ResponseEntity registrarNuevoAutor(@RequestBody Autor autor){
@@ -36,6 +53,13 @@ public class ControllerBiblioteca {
         System.out.println("recibido");
         Supertema supertemaGuardado = service.guardarSupertema(supertema);
         return new ResponseEntity<Supertema>(supertemaGuardado, HttpStatus.CREATED);
+    }
+
+    @PostMapping(value="/registrarNuevoTexto")
+    public ResponseEntity registrarNuevoTexto(@RequestBody Texto texto){
+        System.out.println(texto);
+        Texto textoGuardado = service.guardarNuevoTexto(texto);
+        return new ResponseEntity<Texto>(textoGuardado, HttpStatus.CREATED);
     }
 
 

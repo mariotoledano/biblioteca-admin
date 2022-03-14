@@ -4,32 +4,68 @@ import com.mariots.biblioteca.bibliotecaadmin.model.Autor;
 import com.mariots.biblioteca.bibliotecaadmin.model.Supertema;
 import com.mariots.biblioteca.bibliotecaadmin.model.Tema;
 import com.mariots.biblioteca.bibliotecaadmin.model.Texto;
-import com.mariots.biblioteca.bibliotecaadmin.repository.DaoBiblioteca;
+import com.mariots.biblioteca.bibliotecaadmin.repository.RepositoryBiblioteca;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class ServiceBibliotecaImpl implements ServiceBiblioteca {
     @Autowired
-    DaoBiblioteca daoInterface;
+    RepositoryBiblioteca repository;
 
     @Override
     public Autor guardarAutor(Autor autor) {
-        return daoInterface.guardarAutor(autor);
+        return repository.guardarAutor(autor);
     }
 
     @Override
     public Tema guardarTema(Tema tema) {
-        return daoInterface.guardarTema(tema);
+        return repository.guardarTema(tema);
     }
 
     @Override
     public Supertema guardarSupertema(Supertema supertema) {
-        return daoInterface.guardarSupertema(supertema);
+        return repository.guardarSupertema(supertema);
     }
 
     @Override
     public Texto guardarTexto(Texto texto) {
-        return daoInterface.guardarTexto(texto);
+        return repository.guardarTexto(texto);
+    }
+
+    @Override
+    public Texto guardarNuevoTexto(Texto texto) {
+        //Añado al texto nuevo un autor y tema ya creados
+        //con los métodos add.Autor y addTema también al objeto autor y tema se les añade a su lista de textos el nuevo texto
+        //por eso actualizamos después ese tema y autor, para que conste ese texto nuevo en ambos
+        Autor autor = texto.getAutores().get(0);
+        texto.addAutor(autor);
+        Tema tema = texto.getTemas().get(0);
+        texto.addTema(tema);
+        repository.guardarAutor(autor);
+        repository.guardarTema(tema);
+        return repository.guardarTexto(texto);
+    }
+
+    @Override
+    public List<Autor> recuperarAutores() {
+        return repository.recuperarAutores();
+    }
+
+    @Override
+    public List<Tema> recuperarTemas() {
+        return repository.recuperarTemas();
+    }
+
+    @Override
+    public List<Supertema> recuperarSupertemas() {
+        return repository.recuperarSupertemas();
+    }
+
+    @Override
+    public List<Texto> recupearTextos() {
+        return repository.recupearTextos();
     }
 }

@@ -22,7 +22,7 @@ public class Tema {
     @Column(name="tema")
     String nombreTema;
     //JOIN TABLE TEXTO_TEMA
-    @ManyToMany(fetch=FetchType.EAGER, cascade= {CascadeType.PERSIST, CascadeType.MERGE,
+    @ManyToMany(fetch=FetchType.LAZY, cascade= {CascadeType.PERSIST, CascadeType.MERGE,
             CascadeType.DETACH, CascadeType.REFRESH})
     @JoinTable(name=("texto_tema"),
             joinColumns=@JoinColumn(name="tema_id"),

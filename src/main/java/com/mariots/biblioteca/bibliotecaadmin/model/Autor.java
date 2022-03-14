@@ -7,8 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-    @Table(name="autores" )
-    // A shortcut for @ToString, @EqualsAndHashCode, @Getter on all fields, and @Setter on all non-final fields, and @RequiredArgsConstructor
+    @Table(name="autores")
     @ToString
     @NoArgsConstructor
     public class Autor {
@@ -26,7 +25,7 @@ import java.util.List;
         private String descripcionLarga;
 
         //JOIN TABLE
-        @ManyToMany(fetch=FetchType.EAGER, cascade= {CascadeType.PERSIST, CascadeType.MERGE,
+        @ManyToMany(fetch=FetchType.LAZY, cascade= {CascadeType.PERSIST, CascadeType.MERGE,
                 CascadeType.DETACH, CascadeType.REFRESH})
         @JoinTable(name=("texto_autor"),
                 joinColumns=@JoinColumn(name="autor_id"),
@@ -94,6 +93,4 @@ import java.util.List;
         public void setTextos(List<Texto> textos) {
             this.textos = textos;
         }
-
-
     }

@@ -34,7 +34,7 @@ public class Texto {
 
     //JOIN TABLES
 //!! Reconfigurar para one to one?? REVISAR CASCADE TYPE Y FETCH
-    @ManyToMany(fetch=FetchType.EAGER, cascade= {CascadeType.PERSIST, CascadeType.MERGE,
+    @ManyToMany(fetch=FetchType.LAZY, cascade= {CascadeType.PERSIST, CascadeType.MERGE,
             CascadeType.DETACH, CascadeType.REFRESH})
     @JoinTable(name=("texto_autor"),
             joinColumns=@JoinColumn(name="texto_id"),
