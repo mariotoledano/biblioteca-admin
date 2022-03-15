@@ -1,5 +1,6 @@
-package com.mariots.biblioteca.bibliotecaadmin.model;
+package com.mariots.biblioteca.bibliotecaadmin.entity;
 
+import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 import java.util.ArrayList;
@@ -20,6 +21,7 @@ import javax.persistence.Table;
 @Table(name="textos")
 @NoArgsConstructor
 @ToString
+@Data
 public class Texto {
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
@@ -91,6 +93,12 @@ public class Texto {
         this.longitud = longitud;
     }
 
+    public Texto(String textoString, String longitud, List<Autor> autores, List<Tema> temas) {
+        this.textoString = textoString;
+        this.longitud = longitud;
+        this.autores = autores;
+        this.temas = temas;
+    }
 
     //GETTERS Y SETTERS
     public int getIdTexto() {

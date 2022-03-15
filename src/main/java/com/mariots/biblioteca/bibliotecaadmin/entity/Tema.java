@@ -1,5 +1,6 @@
-package com.mariots.biblioteca.bibliotecaadmin.model;
+package com.mariots.biblioteca.bibliotecaadmin.entity;
 
+import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
@@ -12,6 +13,7 @@ import javax.persistence.*;
 @Table(name="temas")
 @NoArgsConstructor
 @ToString
+@Data
 public class Tema {
 
     @Id

@@ -1,9 +1,9 @@
 package com.mariots.biblioteca.bibliotecaadmin.repository;
 
-import com.mariots.biblioteca.bibliotecaadmin.model.Autor;
-import com.mariots.biblioteca.bibliotecaadmin.model.Supertema;
-import com.mariots.biblioteca.bibliotecaadmin.model.Tema;
-import com.mariots.biblioteca.bibliotecaadmin.model.Texto;
+import com.mariots.biblioteca.bibliotecaadmin.entity.Autor;
+import com.mariots.biblioteca.bibliotecaadmin.entity.Supertema;
+import com.mariots.biblioteca.bibliotecaadmin.entity.Tema;
+import com.mariots.biblioteca.bibliotecaadmin.entity.Texto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 

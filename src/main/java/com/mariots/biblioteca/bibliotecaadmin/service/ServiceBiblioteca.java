@@ -1,12 +1,11 @@
 package com.mariots.biblioteca.bibliotecaadmin.service;
 
-import com.mariots.biblioteca.bibliotecaadmin.model.Autor;
-import com.mariots.biblioteca.bibliotecaadmin.model.Supertema;
-import com.mariots.biblioteca.bibliotecaadmin.model.Tema;
-import com.mariots.biblioteca.bibliotecaadmin.model.Texto;
+import com.mariots.biblioteca.bibliotecaadmin.entity.Autor;
+import com.mariots.biblioteca.bibliotecaadmin.entity.Supertema;
+import com.mariots.biblioteca.bibliotecaadmin.entity.Tema;
+import com.mariots.biblioteca.bibliotecaadmin.entity.Texto;
 
 import java.util.List;
-import java.util.Optional;
 
 public interface ServiceBiblioteca {
     public Autor guardarAutor(Autor autor);

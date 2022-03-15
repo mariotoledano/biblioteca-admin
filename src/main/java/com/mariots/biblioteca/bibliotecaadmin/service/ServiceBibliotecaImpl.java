@@ -1,10 +1,10 @@
 package com.mariots.biblioteca.bibliotecaadmin.service;
 
 import com.mariots.biblioteca.bibliotecaadmin.exceptions.BdException;
-import com.mariots.biblioteca.bibliotecaadmin.model.Autor;
-import com.mariots.biblioteca.bibliotecaadmin.model.Supertema;
-import com.mariots.biblioteca.bibliotecaadmin.model.Tema;
-import com.mariots.biblioteca.bibliotecaadmin.model.Texto;
+import com.mariots.biblioteca.bibliotecaadmin.entity.Autor;
+import com.mariots.biblioteca.bibliotecaadmin.entity.Supertema;
+import com.mariots.biblioteca.bibliotecaadmin.entity.Tema;
+import com.mariots.biblioteca.bibliotecaadmin.entity.Texto;
 import com.mariots.biblioteca.bibliotecaadmin.repository.RepositoryBiblioteca;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -42,12 +42,12 @@ public class ServiceBibliotecaImpl implements ServiceBiblioteca {
         //Añado al texto nuevo un autor y tema ya creados
         //con los métodos add.Autor y addTema también al objeto autor y tema se les añade a su lista de textos el nuevo texto
         //por eso actualizamos después ese tema y autor, para que conste ese texto nuevo en ambos
-        Autor autor = texto.getAutores().get(0);
-        texto.addAutor(autor);
-        Tema tema = texto.getTemas().get(0);
-        texto.addTema(tema);
-        repository.guardarAutor(autor);
-        repository.guardarTema(tema);
+//        Autor autor = texto.getAutores().get(0);
+//        texto.addAutor(autor);
+//        Tema tema = texto.getTemas().get(0);
+//        texto.addTema(tema);
+//        repository.guardarAutor(autor);
+//        repository.guardarTema(tema);
         return repository.guardarTexto(texto);
     }
 

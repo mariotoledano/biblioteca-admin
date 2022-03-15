@@ -1,5 +1,6 @@
-package com.mariots.biblioteca.bibliotecaadmin.model;
+package com.mariots.biblioteca.bibliotecaadmin.entity;
 
+import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
@@ -11,6 +12,7 @@ import java.util.List;
 @Table(name = "supertemas")
 @NoArgsConstructor
 @ToString
+@Data
 public class Supertema {
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)

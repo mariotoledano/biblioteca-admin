@@ -1,5 +1,4 @@
-
-<%@page	language="java" contentType="text/html; charset=ISO-8859-1"	pageEncoding="ISO-8859-1" %>
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html lang="es">
@@ -48,7 +47,7 @@
     <!-- Autor previamente registrado-->
     <div class="ms-4 mb-3 mt-3">
         <label for="autor" class="form-label">Autor:</label>
-        <select class="form-select" placeholder="Introduce nombre de un autor previamente registrado" name="autores" id="autor">
+        <select class="form-select" placeholder="Introduce nombre de un autor previamente registrado" name="idAutor" id="autor">
             <c:forEach items="${listaAutores}" var="autor">
                 <option value="${autor.idAutor}">${autor.nombreAutor}</option>
             </c:forEach>
@@ -59,7 +58,7 @@
     <div class="ms-4">
         <div class="mb-3 mt-3">
             <label for="tema" class="form-label">Tema:</label>
-            <select class="form-select" placeholder="Introduce nombre de un tema previamente registrado" name="temas" id="tema">
+            <select class="form-select" placeholder="Introduce nombre de un tema previamente registrado" name="idTema" id="tema">
                 <c:forEach items="${listaTemas}" var="tema">
                     <option value="${tema.idTema}">${tema.nombreTema}</option>
                 </c:forEach>
@@ -71,7 +70,7 @@
         <a href="index.html" class="btn btn-primary btn-bg mt-3">Volver</a>
     </div>
 </form>
-<!--Alerta Autor registrado en BBDD-->
+<!--Alerta Texto registrado en BBDD-->
 <div id="alertaExito" class="alert alert-success my-5 mx-5" role="alert" style="width: fit-content; display: none"> </div>
 
 <!-- SCRIPTS DE JS -->
@@ -83,7 +82,6 @@
         $.each(array, function () {
           jsObject[this.name] = this.value || "";
         });
-        console.log("Lo que hay en el ARRAY despuesd e forEach: "+jsObject)
         const json = JSON.stringify(jsObject);
         return json;
       }
@@ -91,9 +89,8 @@
       $("#form-texto").on("submit", function (e) {
         e.preventDefault();
         const form = $(e.target);
-        console.log(form)
         const json = convertFormToJSON(form);
-        console.log("despues de CONVERT: "+json);
+        console.log("Después de CONVERT: "+json);
 <!--Envío Post con accept parar que la recepción del body sea correcta-->
 <!--Se muestra y oculata la alerta de éxito con el objeto guardado y el Status HTTP-->
 <!--Se resetea el formulario-->
@@ -103,7 +100,7 @@
             "Content-Type": 'application/json'
             },
             type: 'POST',
-            url: "/nuevo_texto",
+            url: "/registrarNuevoTexto",
             data: json,
             dataType: 'json',
             success: function(data,status) {

@@ -1,4 +1,4 @@
-package com.mariots.biblioteca.bibliotecaadmin.model;
+package com.mariots.biblioteca.bibliotecaadmin.entity;
 
 import lombok.*;
 
@@ -6,10 +6,11 @@ import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
-@Entity
+    @Entity
     @Table(name="autores")
     @ToString
     @NoArgsConstructor
+    @Data
     public class Autor {
         @Id
         @GeneratedValue(strategy = GenerationType.IDENTITY)

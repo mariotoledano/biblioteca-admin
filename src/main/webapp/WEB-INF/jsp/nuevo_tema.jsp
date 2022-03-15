@@ -1,3 +1,5 @@
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -50,40 +52,6 @@
     </form>
     <!--Alerta Autor registrado en BBDD-->
     <div id="alerta-exito-supertema" class="alert alert-success my-4 mx-3" role="alert" style="width: fit-content; display: none"> </div>
-
-
-<!--        &lt;!&ndash; Tema registrado &ndash;&gt;-->
-<!--        <div class="mb-3 mt-3">-->
-<!--            <label for="nombreTemaRegistrado" class="form-label">Tema registrado:</label>-->
-<!--            <input class="form-control" placeholder="Introduce nombre de un tema previamente registrado" list="lista-temas" name="nombreTema" id="nombreTemaRegistrado">-->
-<!--            <datalist id="lista-temas">-->
-<!--                <option value="Edge">-->
-<!--                <option value="Firefox">-->
-<!--                <option value="Chrome">-->
-<!--                <option value="Opera">-->
-<!--                <option value="Safari">-->
-<!--            </datalist>-->
-<!--        </div>-->
-
-<!--        &lt;!&ndash; Switch Supertema nuevo <-> Supertema registrado &ndash;&gt;-->
-<!--        <div class="form-check form-switch">-->
-<!--            <input class="form-check-input" type="checkbox" id="switch-supertema-nuevo-registrado" name="switch-supertema-nuevo-registrado" value="yes" checked>-->
-<!--            <label class="form-check-label" for="switch-supertema-nuevo-registrado">Nuevo Supertema (pulsar para supertema registrado)</label>-->
-<!--        </div>-->
-<!--        &lt;!&ndash; Supertema registrado &ndash;&gt;-->
-<!--        <div class="mb-3 mt-3">-->
-<!--            <label for="nombre-supertema-registrado" class="form-label">Supertema registrado:</label>-->
-<!--            <input class="form-control" placeholder="Introduce nombre de un supertema previamente registrado" list="lista-supertemas" name="nombreSupertema" id="nombre-supertema-registrado">-->
-<!--            <datalist id="lista-supertemas">-->
-<!--                <option value="Edge">-->
-<!--                <option value="Firefox">-->
-<!--                <option value="Chrome">-->
-<!--                <option value="Opera">-->
-<!--                <option value="Safari">-->
-<!--            </datalist>-->
-<!--        </div>-->
-
-<!--    </div>-->
 
 <!-- SCRIPTS DE JS -->
 <script>
