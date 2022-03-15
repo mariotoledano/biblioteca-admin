@@ -75,21 +75,21 @@ public class ServiceBibliotecaImpl implements ServiceBiblioteca {
     //MÉTODOS RECUPERAR POR ID
     @Override
     public Autor recuperarAutorPorId(int idAutor) {
-        return repository.recuperarAutorPorId(idAutor).orElseThrow(BdException::new);
+        return repository.recuperarAutorPorId(idAutor).orElseThrow();
     }
 
     @Override
     public Tema recuperarTemaPorId(int idTema) {
-        return repository.recuperarTemaPorId(idTema).orElseThrow(BdException::new);
+        return repository.recuperarTemaPorId(idTema).orElseThrow();
     }
 
     @Override
     public Supertema recuperarSupertemaPorId(int idSupertema) {
-        return repository.recuperarSupertemaPorId(idSupertema).orElseThrow(BdException::new);
+        return repository.recuperarSupertemaPorId(idSupertema).orElseThrow();
     }
 
     @Override
     public Texto recuperarTextoPorId(int idTexto) {
-        return repository.recuperarTextoPorId(idTexto).orElseThrow(BdException::new);
+        return repository.recuperarTextoPorId(idTexto).orElseThrow();
     }
 }

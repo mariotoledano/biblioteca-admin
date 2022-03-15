@@ -23,7 +23,15 @@ public class ControllerBiblioteca {
 
     @Autowired
     ServiceBiblioteca service;
-
+//MÉTODOS DE PRUEBA
+    @GetMapping(value="/autorPorId")
+    public Autor conseguirAutorPorId(@RequestParam int idAutor){
+        return service.recuperarAutorPorId(idAutor);
+    }
+    @GetMapping(value="/temaPorId")
+    public Tema conseguirTemaPorId(@RequestParam int idTema){
+        return service.recuperarTemaPorId(idTema);
+    }
 //ÓRDENES DE REDIRECCIÓN
     @GetMapping(value="/nuevoTema")
     public ModelAndView irNuevoTema(ModelMap model){
