@@ -1,6 +1,5 @@
 package com.mariots.biblioteca.bibliotecaadmin.controller;
 
-import com.mariots.biblioteca.bibliotecaadmin.Utilidades;
 import com.mariots.biblioteca.bibliotecaadmin.model.Autor;
 import com.mariots.biblioteca.bibliotecaadmin.model.Supertema;
 import com.mariots.biblioteca.bibliotecaadmin.model.Tema;
@@ -24,17 +23,15 @@ public class ControllerBiblioteca {
     ServiceBiblioteca service;
 
 
-    @GetMapping(value="/irNuevoTexto")
+    @GetMapping(value="/nuevoTexto")
     public ModelAndView irNuevoAutor(ModelMap model){
         List<Autor> listaAutores = service.recuperarAutores();
         model.addAttribute("listaAutores", listaAutores);
         List<Tema> listaTemas = service.recuperarTemas();
         model.addAttribute("listaTemas",listaTemas);
-        Utilidades utilidades =new Utilidades();
-        model.addAttribute("utilidades",utilidades);
         return new ModelAndView("nuevo_texto", model);
     }
-
+//REGISTRAR NUEVO
     @PostMapping(value="/registrarNuevoAutor")
     public ResponseEntity registrarNuevoAutor(@RequestBody Autor autor){
        System.out.println("recibido");

@@ -50,7 +50,7 @@
         <label for="autor" class="form-label">Autor:</label>
         <select class="form-select" placeholder="Introduce nombre de un autor previamente registrado" name="autores" id="autor">
             <c:forEach items="${listaAutores}" var="autor">
-                <option value="${autor.id}">${autor.nombreAutor}</option>
+                <option value="${autor.idAutor}">${autor.nombreAutor}</option>
             </c:forEach>
         </select>
     </div>
@@ -61,7 +61,7 @@
             <label for="tema" class="form-label">Tema:</label>
             <select class="form-select" placeholder="Introduce nombre de un tema previamente registrado" name="temas" id="tema">
                 <c:forEach items="${listaTemas}" var="tema">
-                    <option value="${tema.id}">${tema.nombreTema}</option>
+                    <option value="${tema.idTema}">${tema.nombreTema}</option>
                 </c:forEach>
              </select>
         </div>
