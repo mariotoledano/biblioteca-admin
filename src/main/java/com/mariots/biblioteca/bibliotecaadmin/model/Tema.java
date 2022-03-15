@@ -1,6 +1,5 @@
 package com.mariots.biblioteca.bibliotecaadmin.model;
 
-import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
@@ -17,8 +16,8 @@ public class Tema {
 
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
-    @Column
-    int id;
+    @Column(name="id")
+    int idTema;
     @Column(name="tema")
     String nombreTema;
     //JOIN TABLE TEXTO_TEMA
@@ -60,8 +59,8 @@ public class Tema {
     }
 
     //GETTERS Y SETTERS
-    public int getId() {
-        return id;
+    public int getIdTema() {
+        return idTema;
     }
     public String getNombreTema() {
         return nombreTema;

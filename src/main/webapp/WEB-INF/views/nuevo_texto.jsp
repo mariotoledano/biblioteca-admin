@@ -1,7 +1,6 @@
 
 <%@page	language="java" contentType="text/html; charset=ISO-8859-1"	pageEncoding="ISO-8859-1" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@page import="java.io.*, com.mariots.biblioteca.bibliotecaadmin.Utilidades"%>
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -26,8 +25,8 @@
     <div class="ms-4">
         <!-- Texto: -->
         <div class="mb-3 mt-3">
-            <label class="form-label" for="texto">Nuevo texto:</label>
-            <textarea class="form-control" rows="5" id="texto" name="textoString" placeholder="Introduce el texto"></textarea>
+            <label class="form-label" for="textoString">Nuevo texto:</label>
+            <textarea class="form-control" rows="5" id="textoString" name="textoString" placeholder="Introduce el texto"></textarea>
         </div>
         <!-- Longitud: -->
         <div class="mb-3">
@@ -51,7 +50,7 @@
         <label for="autor" class="form-label">Autor:</label>
         <select class="form-select" placeholder="Introduce nombre de un autor previamente registrado" name="autores" id="autor">
             <c:forEach items="${listaAutores}" var="autor">
-                <option value="${autor}">${autor}</option>
+                <option value="${autor.id}">${autor.nombreAutor}</option>
             </c:forEach>
         </select>
     </div>
@@ -62,7 +61,7 @@
             <label for="tema" class="form-label">Tema:</label>
             <select class="form-select" placeholder="Introduce nombre de un tema previamente registrado" name="temas" id="tema">
                 <c:forEach items="${listaTemas}" var="tema">
-                    <option value="${tema}">${tema.nombreTema}</option>
+                    <option value="${tema.id}">${tema.nombreTema}</option>
                 </c:forEach>
              </select>
         </div>
@@ -104,7 +103,7 @@
             "Content-Type": 'application/json'
             },
             type: 'POST',
-            url: "/registrarNuevoTexto",
+            url: "/nuevo_texto",
             data: json,
             dataType: 'json',
             success: function(data,status) {

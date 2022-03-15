@@ -24,7 +24,7 @@ public class Texto {
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     @Column(name = "id")
-    private int id;
+    private int idTexto;
 
     @Column(name="texto")
     private String textoString;
@@ -93,12 +93,12 @@ public class Texto {
 
 
     //GETTERS Y SETTERS
-    public int getId() {
-        return id;
+    public int getIdTexto() {
+        return idTexto;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setIdTexto(int idTexto) {
+        this.idTexto = idTexto;
     }
 
     public String getTextoString() {

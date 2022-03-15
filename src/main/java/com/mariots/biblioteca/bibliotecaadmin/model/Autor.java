@@ -13,8 +13,8 @@ import java.util.List;
     public class Autor {
         @Id
         @GeneratedValue(strategy = GenerationType.IDENTITY)
-        @Column(name = "id", nullable = false)
-        private int id;
+        @Column(name = "id")
+        private int idAutor;
         @Column(name="autor")
         private String nombreAutor;
         @Column(name="fecha_autor")
@@ -60,8 +60,8 @@ import java.util.List;
         }
 
         //GETTERS Y SETTERS
-        public int getId() {
-            return id;
+        public int getIdAutor() {
+            return idAutor;
         }
         public String getNombreAutor() {
             return nombreAutor;

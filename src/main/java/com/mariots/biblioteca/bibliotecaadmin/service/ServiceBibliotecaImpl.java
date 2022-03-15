@@ -1,5 +1,6 @@
 package com.mariots.biblioteca.bibliotecaadmin.service;
 
+import com.mariots.biblioteca.bibliotecaadmin.exceptions.BdException;
 import com.mariots.biblioteca.bibliotecaadmin.model.Autor;
 import com.mariots.biblioteca.bibliotecaadmin.model.Supertema;
 import com.mariots.biblioteca.bibliotecaadmin.model.Tema;
@@ -15,6 +16,7 @@ public class ServiceBibliotecaImpl implements ServiceBiblioteca {
     @Autowired
     RepositoryBiblioteca repository;
 
+    //MÉTODOS GUARDAR
     @Override
     public Autor guardarAutor(Autor autor) {
         return repository.guardarAutor(autor);
@@ -49,6 +51,7 @@ public class ServiceBibliotecaImpl implements ServiceBiblioteca {
         return repository.guardarTexto(texto);
     }
 
+    //MÉTODOS RECUPERAR TODOS
     @Override
     public List<Autor> recuperarAutores() {
         return repository.recuperarAutores();
@@ -67,5 +70,26 @@ public class ServiceBibliotecaImpl implements ServiceBiblioteca {
     @Override
     public List<Texto> recupearTextos() {
         return repository.recupearTextos();
+    }
+
+    //MÉTODOS RECUPERAR POR ID
+    @Override
+    public Autor recuperarAutorPorId(int idAutor) {
+        return repository.recuperarAutorPorId(idAutor).orElseThrow(BdException::new);
+    }
+
+    @Override
+    public Tema recuperarTemaPorId(int idTema) {
+        return repository.recuperarTemaPorId(idTema).orElseThrow(BdException::new);
+    }
+
+    @Override
+    public Supertema recuperarSupertemaPorId(int idSupertema) {
+        return repository.recuperarSupertemaPorId(idSupertema).orElseThrow(BdException::new);
+    }
+
+    @Override
+    public Texto recuperarTextoPorId(int idTexto) {
+        return repository.recuperarTextoPorId(idTexto).orElseThrow(BdException::new);
     }
 }

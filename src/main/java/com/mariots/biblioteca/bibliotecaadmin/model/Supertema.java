@@ -14,8 +14,8 @@ import java.util.List;
 public class Supertema {
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
-    @Column(name = "id", nullable = false)
-    private int id;
+    @Column(name = "id")
+    private int idSupertema;
 
     @Column(name = "supertema")
     private String nombreSupertema;
@@ -38,8 +38,8 @@ public class Supertema {
         this.nombreSupertema = nombreSupertema;
     }
 
-    public int getId() {
-        return id;
+    public int getIdSupertema() {
+        return idSupertema;
     }
 
     public String getNombreSupertema() {
