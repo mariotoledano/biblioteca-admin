@@ -1,20 +1,19 @@
-package com.mariots.biblioteca.bibliotecaadmin.entity;
+package com.mariots.biblioteca.bibliotecaadmin.entities;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
-
-import javax.persistence.*;
 
 @Entity
 @Table(name="temas")
 @NoArgsConstructor
 @ToString
 @Data
-public class Tema {
+public class TemaEntity {
 
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
@@ -28,33 +27,33 @@ public class Tema {
     @JoinTable(name=("texto_tema"),
             joinColumns=@JoinColumn(name="tema_id"),
             inverseJoinColumns=@JoinColumn(name="texto_id"))
-    private List<Texto> textos;
+    private List<TextoEntity> textos;
 
     //TEMAS -> SUPERTEMA MANY TO ONE
     @ManyToOne(fetch=FetchType.LAZY, cascade= {CascadeType.PERSIST, CascadeType.MERGE,
             CascadeType.DETACH, CascadeType.REFRESH})
     @JoinColumn(name=("supertema_id"))
-    private Supertema supertema;
+    private SupertemaEntity supertema;
 
     //MÉTODO PARA AGREGAR TEXTOS A UN TEMA BIDIRECCIONAL
-    public void addTexto(Texto texto){
+    public void addTexto(TextoEntity textoEntity){
         if(textos == null){
-            textos= new ArrayList<Texto>();
+            textos = new ArrayList<TextoEntity>();
         }
-        textos.add(texto);
-        if(texto.getTemas()==null){
-            List<Tema> temasDeTexto = new ArrayList<>();
+        textos.add(textoEntity);
+        if(textoEntity.getTemas()==null){
+            List<TemaEntity> temasDeTexto = new ArrayList<>();
             temasDeTexto.add(this);
-            texto.setTemas(temasDeTexto);
+            textoEntity.setTemas(temasDeTexto);
             return;
         }
-        List<Tema> temasDeTexto = texto.getTemas();
+        List<TemaEntity> temasDeTexto = textoEntity.getTemas();
         temasDeTexto.add(this);
-        texto.setTemas(temasDeTexto);
+        textoEntity.setTemas(temasDeTexto);
     }
 
     //CONSTRUCTORES
-    public Tema(String nombreTema, Supertema supertema) {
+    public TemaEntity(String nombreTema, SupertemaEntity supertema) {
         super();
         this.nombreTema = nombreTema;
         this.supertema = supertema;
@@ -70,12 +69,12 @@ public class Tema {
     public void setNombreTema(String nombreTema) {
         this.nombreTema = nombreTema;
     }
-    public Supertema getSupertema() {return supertema;}
-    public void setSupertema(Supertema supertema) {this.supertema = supertema;	}
-    public List<Texto> getTextos() {
+    public SupertemaEntity getSupertema() {return supertema;}
+    public void setSupertema(SupertemaEntity supertema) {this.supertema = supertema;	}
+    public List<TextoEntity> getTextos() {
         return textos;
     }
-    public void setTextos(List<Texto> textos) {
+    public void setTextos(List<TextoEntity> textos) {
         this.textos = textos;
     }
 

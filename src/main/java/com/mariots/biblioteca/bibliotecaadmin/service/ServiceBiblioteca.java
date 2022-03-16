@@ -1,26 +1,26 @@
 package com.mariots.biblioteca.bibliotecaadmin.service;
 
-import com.mariots.biblioteca.bibliotecaadmin.entity.Autor;
-import com.mariots.biblioteca.bibliotecaadmin.entity.Supertema;
-import com.mariots.biblioteca.bibliotecaadmin.entity.Tema;
-import com.mariots.biblioteca.bibliotecaadmin.entity.Texto;
+import com.mariots.biblioteca.bibliotecaadmin.dtos.AutorDto;
+import com.mariots.biblioteca.bibliotecaadmin.dtos.SupertemaDto;
+import com.mariots.biblioteca.bibliotecaadmin.dtos.TemaDto;
+import com.mariots.biblioteca.bibliotecaadmin.dtos.TextoDto;
 
 import java.util.List;
 
 public interface ServiceBiblioteca {
-    public Autor guardarAutor(Autor autor);
-    public Tema guardarTema(Tema tema);
-    public Supertema guardarSupertema(Supertema supertema);
-    public Texto guardarTexto(Texto texto);
-    public Texto guardarNuevoTexto(Texto texto);
+    public AutorDto guardarAutor(AutorDto autorDto);
+    public TemaDto guardarTema(TemaDto temaDto);
+    public SupertemaDto guardarSupertema(SupertemaDto supertemaDto);
+    public TextoDto guardarTexto(TextoDto textoDto);
+    public TextoDto guardarNuevoTexto(TextoDto textoDto);
 
-    public List<Autor> recuperarAutores();
-    public List<Tema> recuperarTemas();
-    public List<Supertema> recuperarSupertemas();
-    public List<Texto> recupearTextos();
+    public List<AutorDto> recuperarAutores();
+    public List<TemaDto> recuperarTemas();
+    public List<SupertemaDto> recuperarSupertemas();
+    public List<TextoDto> recupearTextos();
 
-    public Autor recuperarAutorPorId(int idAutor);
-    public Tema recuperarTemaPorId(int idTema);
-    public Supertema recuperarSupertemaPorId(int idSupertema);
-    public Texto recuperarTextoPorId(int idTexto);
+    public AutorDto recuperarAutorPorId(int idAutor);
+    public TemaDto recuperarTemaPorId(int idTema);
+    public SupertemaDto recuperarSupertemaPorId(int idSupertema);
+    public TextoDto recuperarTextoPorId(int idTexto);
 }

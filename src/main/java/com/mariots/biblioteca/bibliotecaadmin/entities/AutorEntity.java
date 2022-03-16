@@ -1,6 +1,8 @@
-package com.mariots.biblioteca.bibliotecaadmin.entity;
+package com.mariots.biblioteca.bibliotecaadmin.entities;
 
-import lombok.*;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -11,7 +13,7 @@ import java.util.List;
     @ToString
     @NoArgsConstructor
     @Data
-    public class Autor {
+    public class AutorEntity {
         @Id
         @GeneratedValue(strategy = GenerationType.IDENTITY)
         @Column(name = "id")
@@ -31,28 +33,28 @@ import java.util.List;
         @JoinTable(name=("texto_autor"),
                 joinColumns=@JoinColumn(name="autor_id"),
                 inverseJoinColumns=@JoinColumn(name="texto_id"))
-        private List<Texto> textos;
+        private List<TextoEntity> textos;
 
         //MÉTODO PARA AGREGAR TEXTOS A UN AUTOR BIDIRECCIONAL
-        public void addTexto(Texto texto){
+        public void addTexto(TextoEntity textoEntity){
             if(textos == null){
-                textos= new ArrayList<Texto>();
+                textos = new ArrayList<TextoEntity>();
             }
-            textos.add(texto);
-            if(texto.getAutores()==null){
-                List<Autor> autoresDeTexto = new ArrayList<>();
+            textos.add(textoEntity);
+            if(textoEntity.getAutores()==null){
+                List<AutorEntity> autoresDeTexto = new ArrayList<>();
                 autoresDeTexto.add(this);
-                texto.setAutores(autoresDeTexto);
+                textoEntity.setAutores(autoresDeTexto);
                 return;
             }
-            List<Autor> autoresDeTexto = texto.getAutores();
+            List<AutorEntity> autoresDeTexto = textoEntity.getAutores();
             autoresDeTexto.add(this);
-            texto.setAutores(autoresDeTexto);
+            textoEntity.setAutores(autoresDeTexto);
 
         }
 
         //CONSTRUCTORES
-        public Autor(String nombreAutor, String fechaAutor, String descripcionBreve, String descripcionLarga) {
+        public AutorEntity(String nombreAutor, String fechaAutor, String descripcionBreve, String descripcionLarga) {
             super();
             this.nombreAutor = nombreAutor;
             this.fechaAutor = fechaAutor;
@@ -88,10 +90,10 @@ import java.util.List;
         public void setDescripcionLarga(String descripcionLarga) {
             this.descripcionLarga = descripcionLarga;
         }
-        public List<Texto> getTextos() {
+        public List<TextoEntity> getTextos() {
             return textos;
         }
-        public void setTextos(List<Texto> textos) {
+        public void setTextos(List<TextoEntity> textos) {
             this.textos = textos;
         }
     }

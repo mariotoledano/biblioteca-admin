@@ -1,44 +1,61 @@
 package com.mariots.biblioteca.bibliotecaadmin.service;
 
-import com.mariots.biblioteca.bibliotecaadmin.exceptions.BdException;
-import com.mariots.biblioteca.bibliotecaadmin.entity.Autor;
-import com.mariots.biblioteca.bibliotecaadmin.entity.Supertema;
-import com.mariots.biblioteca.bibliotecaadmin.entity.Tema;
-import com.mariots.biblioteca.bibliotecaadmin.entity.Texto;
+import com.mariots.biblioteca.bibliotecaadmin.dtos.AutorDto;
+import com.mariots.biblioteca.bibliotecaadmin.dtos.SupertemaDto;
+import com.mariots.biblioteca.bibliotecaadmin.dtos.TemaDto;
+import com.mariots.biblioteca.bibliotecaadmin.dtos.TextoDto;
+import com.mariots.biblioteca.bibliotecaadmin.entities.AutorEntity;
+import com.mariots.biblioteca.bibliotecaadmin.entities.SupertemaEntity;
+import com.mariots.biblioteca.bibliotecaadmin.entities.TemaEntity;
+import com.mariots.biblioteca.bibliotecaadmin.entities.TextoEntity;
+import com.mariots.biblioteca.bibliotecaadmin.mapper.AutorMapper;
+import com.mariots.biblioteca.bibliotecaadmin.mapper.SupertemaMapper;
+import com.mariots.biblioteca.bibliotecaadmin.mapper.TemaMapper;
+import com.mariots.biblioteca.bibliotecaadmin.mapper.TextoMapper;
 import com.mariots.biblioteca.bibliotecaadmin.repository.RepositoryBiblioteca;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class ServiceBibliotecaImpl implements ServiceBiblioteca {
     @Autowired
     RepositoryBiblioteca repository;
+    @Autowired
+    AutorMapper autorMapper;
+    @Autowired
+    TemaMapper temaMapper;
+    @Autowired
+    SupertemaMapper supertemaMapper;
+    @Autowired
+    TextoMapper textoMapper;
 
     //MÉTODOS GUARDAR
     @Override
-    public Autor guardarAutor(Autor autor) {
-        return repository.guardarAutor(autor);
+    public AutorDto guardarAutor(AutorDto autorDto) {
+
+        return autorMapper.toDto(repository.guardarAutor(autorMapper.toEntity(autorDto)));
     }
 
     @Override
-    public Tema guardarTema(Tema tema) {
-        return repository.guardarTema(tema);
+    public TemaDto guardarTema(TemaDto temaDto) {
+        return temaMapper.toDto(repository.guardarTema(temaMapper.toEntity(temaDto)));
     }
 
     @Override
-    public Supertema guardarSupertema(Supertema supertema) {
-        return repository.guardarSupertema(supertema);
+    public SupertemaDto guardarSupertema(SupertemaDto supertemaDto) {
+        return supertemaMapper.toDto(repository.guardarSupertema(supertemaMapper.toEntity(supertemaDto)));
     }
 
     @Override
-    public Texto guardarTexto(Texto texto) {
-        return repository.guardarTexto(texto);
+    public TextoDto guardarTexto(TextoDto textoDto) {
+        return textoMapper.toDto(repository.guardarTexto(textoMapper.toEntity(textoDto)));
     }
 
     @Override
-    public Texto guardarNuevoTexto(Texto texto) {
+    public TextoDto guardarNuevoTexto(TextoDto textoDto) {
         //Añado al texto nuevo un autor y tema ya creados
         //con los métodos add.Autor y addTema también al objeto autor y tema se les añade a su lista de textos el nuevo texto
         //por eso actualizamos después ese tema y autor, para que conste ese texto nuevo en ambos
@@ -48,48 +65,48 @@ public class ServiceBibliotecaImpl implements ServiceBiblioteca {
 //        texto.addTema(tema);
 //        repository.guardarAutor(autor);
 //        repository.guardarTema(tema);
-        return repository.guardarTexto(texto);
+        return textoMapper.toDto(repository.guardarTexto(textoMapper.toEntity(textoDto)));
     }
 
     //MÉTODOS RECUPERAR TODOS
     @Override
-    public List<Autor> recuperarAutores() {
-        return repository.recuperarAutores();
+    public List<AutorDto> recuperarAutores() {
+        return repository.recuperarAutores().stream().map(autorMapper::toDto).collect(Collectors.toList());
     }
 
     @Override
-    public List<Tema> recuperarTemas() {
-        return repository.recuperarTemas();
+    public List<TemaDto> recuperarTemas() {
+        return repository.recuperarTemas().stream().map(temaMapper::toDto).collect(Collectors.toList());
     }
 
     @Override
-    public List<Supertema> recuperarSupertemas() {
-        return repository.recuperarSupertemas();
+    public List<SupertemaDto> recuperarSupertemas() {
+        return repository.recuperarSupertemas().stream().map(supertemaMapper::toDto).collect(Collectors.toList());
     }
 
     @Override
-    public List<Texto> recupearTextos() {
-        return repository.recupearTextos();
+    public List<TextoDto> recupearTextos() {
+        return repository.recupearTextos().stream().map(textoMapper::toDto).collect(Collectors.toList());
     }
 
     //MÉTODOS RECUPERAR POR ID
     @Override
-    public Autor recuperarAutorPorId(int idAutor) {
-        return repository.recuperarAutorPorId(idAutor).orElseThrow();
+    public AutorDto recuperarAutorPorId(int idAutor) {
+        return repository.recuperarAutorPorId(idAutor).map(autorMapper::toDto).orElseThrow();
     }
 
     @Override
-    public Tema recuperarTemaPorId(int idTema) {
-        return repository.recuperarTemaPorId(idTema).orElseThrow();
+    public TemaDto recuperarTemaPorId(int idTema) {
+        return repository.recuperarTemaPorId(idTema).map(temaMapper::toDto).orElseThrow();
     }
 
     @Override
-    public Supertema recuperarSupertemaPorId(int idSupertema) {
-        return repository.recuperarSupertemaPorId(idSupertema).orElseThrow();
+    public SupertemaDto recuperarSupertemaPorId(int idSupertema) {
+        return repository.recuperarSupertemaPorId(idSupertema).map(supertemaMapper::toDto).orElseThrow();
     }
 
     @Override
-    public Texto recuperarTextoPorId(int idTexto) {
-        return repository.recuperarTextoPorId(idTexto).orElseThrow();
+    public TextoDto recuperarTextoPorId(int idTexto) {
+        return repository.recuperarTextoPorId(idTexto).map(textoMapper::toDto).orElseThrow();
     }
 }

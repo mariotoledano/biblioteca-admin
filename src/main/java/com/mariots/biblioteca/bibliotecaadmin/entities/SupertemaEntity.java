@@ -1,4 +1,4 @@
-package com.mariots.biblioteca.bibliotecaadmin.entity;
+package com.mariots.biblioteca.bibliotecaadmin.entities;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -13,7 +13,7 @@ import java.util.List;
 @NoArgsConstructor
 @ToString
 @Data
-public class Supertema {
+public class SupertemaEntity {
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     @Column(name = "id")
@@ -24,19 +24,19 @@ public class Supertema {
 
     //SUPERTEMA->TEMAS ONE TO MANY
     @OneToMany(mappedBy = "supertema")
-    private List<Tema> temas = new ArrayList<>();
+    private List<TemaEntity> temas = new ArrayList<>();
 
     //MÉTODO PARA AGREGAR TEMAS A UN SUPERTEMA BIDIRECCIONAL
-    public void addTema(Tema tema){
+    public void addTema(TemaEntity temaEntity){
         if(temas == null){
-            temas= new ArrayList<Tema>();
+            temas = new ArrayList<TemaEntity>();
         }
-        temas.add(tema);
-        tema.setSupertema(this);
+        temas.add(temaEntity);
+        temaEntity.setSupertema(this);
     }
 
     //CONSTRUCTORES
-    public Supertema(String nombreSupertema) {
+    public SupertemaEntity(String nombreSupertema) {
         this.nombreSupertema = nombreSupertema;
     }
 
@@ -52,11 +52,11 @@ public class Supertema {
         this.nombreSupertema = nombreSupertema;
     }
 
-    public List<Tema> getTemas() {
+    public List<TemaEntity> getTemas() {
         return temas;
     }
 
-    public void setTemas(List<Tema> temas) {
+    public void setTemas(List<TemaEntity> temas) {
         this.temas = temas;
     }
 }

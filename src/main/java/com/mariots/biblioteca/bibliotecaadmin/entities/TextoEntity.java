@@ -1,28 +1,19 @@
-package com.mariots.biblioteca.bibliotecaadmin.entity;
+package com.mariots.biblioteca.bibliotecaadmin.entities;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
+
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
-import javax.persistence.Table;
 
 @Entity
 @Table(name="textos")
 @NoArgsConstructor
 @ToString
 @Data
-public class Texto {
+public class TextoEntity {
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     @Column(name = "id")
@@ -41,59 +32,59 @@ public class Texto {
     @JoinTable(name=("texto_autor"),
             joinColumns=@JoinColumn(name="texto_id"),
             inverseJoinColumns=@JoinColumn(name="autor_id"))
-    private List<Autor> autores;
+    private List<AutorEntity> autores;
 
     @ManyToMany(fetch=FetchType.LAZY, cascade= {CascadeType.PERSIST, CascadeType.MERGE,
             CascadeType.DETACH, CascadeType.REFRESH})
     @JoinTable(name=("texto_tema"),
             joinColumns=@JoinColumn(name="texto_id"),
             inverseJoinColumns=@JoinColumn(name="tema_id"))
-    private List<Tema> temas;
+    private List<TemaEntity> temas;
 
     //MÉTODO PARA AGREGAR TEMAS A UN TEXTO BIDIRECCIONAL
-    public void addTema(Tema tema){
+    public void addTema(TemaEntity temaEntity){
         //controlamos not null los temas del texto
         if(temas == null){
-            temas= new ArrayList<Tema>();
+            temas = new ArrayList<TemaEntity>();
         }
-        temas.add(tema);
+        temas.add(temaEntity);
         //controlamos not null los textos del tema para después agregar texto
-        if(tema.getTextos()==null){
-            List<Texto> textosDeTema = new ArrayList<>();
+        if(temaEntity.getTextos()==null){
+            List<TextoEntity> textosDeTema = new ArrayList<>();
             textosDeTema.add(this);
-            tema.setTextos(textosDeTema);
+            temaEntity.setTextos(textosDeTema);
             return;
         }
-        List<Texto> textosDeTema = tema.getTextos();
+        List<TextoEntity> textosDeTema = temaEntity.getTextos();
         textosDeTema.add(this);
-        tema.setTextos(textosDeTema);
+        temaEntity.setTextos(textosDeTema);
     }
 
     //MÉTODO PARA AGREGAR AUTOR A UN TEXTO BIDIRECCIONAL
-    public void addAutor(Autor autor){
+    public void addAutor(AutorEntity autorEntity){
         if(temas == null){
-            autores= new ArrayList<Autor>();
+            autores= new ArrayList<AutorEntity>();
         }
-        autores.add(autor);
-        if(autor.getTextos()==null){
-            List<Texto> textosDeAutor= new ArrayList<>();
+        autores.add(autorEntity);
+        if(autorEntity.getTextos()==null){
+            List<TextoEntity> textosDeAutor= new ArrayList<>();
             textosDeAutor.add(this);
-            autor.setTextos(textosDeAutor);
+            autorEntity.setTextos(textosDeAutor);
             return;
         }
-        List<Texto> textosDeAutor = autor.getTextos();
+        List<TextoEntity> textosDeAutor = autorEntity.getTextos();
         textosDeAutor.add(this);
-        autor.setTextos(textosDeAutor);
+        autorEntity.setTextos(textosDeAutor);
     }
 
     //CONSTRUCTORES
-    public Texto(String textoString, String longitud) {
+    public TextoEntity(String textoString, String longitud) {
         super();
         this.textoString = textoString;
         this.longitud = longitud;
     }
 
-    public Texto(String textoString, String longitud, List<Autor> autores, List<Tema> temas) {
+    public TextoEntity(String textoString, String longitud, List<AutorEntity> autores, List<TemaEntity> temas) {
         this.textoString = textoString;
         this.longitud = longitud;
         this.autores = autores;
@@ -125,19 +116,19 @@ public class Texto {
         this.longitud = longitud;
     }
 
-    public List<Autor> getAutores() {
+    public List<AutorEntity> getAutores() {
         return autores;
     }
 
-    public void setAutores(List<Autor> autores) {
+    public void setAutores(List<AutorEntity> autores) {
         this.autores = autores;
     }
 
-    public List<Tema> getTemas() {
+    public List<TemaEntity> getTemas() {
         return temas;
     }
 
-    public void setTemas(List<Tema> temas) {
+    public void setTemas(List<TemaEntity> temas) {
         this.temas = temas;
     }
 }

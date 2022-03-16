@@ -1,4 +1,4 @@
-package com.mariots.biblioteca.bibliotecaadmin.model;
+package com.mariots.biblioteca.bibliotecaadmin.dtos;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;

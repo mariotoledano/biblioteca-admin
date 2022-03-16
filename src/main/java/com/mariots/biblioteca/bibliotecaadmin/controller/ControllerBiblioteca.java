@@ -1,10 +1,6 @@
 package com.mariots.biblioteca.bibliotecaadmin.controller;
 
-import com.mariots.biblioteca.bibliotecaadmin.entity.Autor;
-import com.mariots.biblioteca.bibliotecaadmin.entity.Supertema;
-import com.mariots.biblioteca.bibliotecaadmin.entity.Tema;
-import com.mariots.biblioteca.bibliotecaadmin.entity.Texto;
-import com.mariots.biblioteca.bibliotecaadmin.model.TextoFront;
+import com.mariots.biblioteca.bibliotecaadmin.dtos.*;
 import com.mariots.biblioteca.bibliotecaadmin.service.ServiceBiblioteca;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -25,13 +21,14 @@ public class ControllerBiblioteca {
     ServiceBiblioteca service;
 //MÉTODOS DE PRUEBA
     @GetMapping(value="/autorPorId")
-    public Autor conseguirAutorPorId(@RequestParam int idAutor){
+    public AutorDto conseguirAutorPorId(@RequestParam int idAutor){
         return service.recuperarAutorPorId(idAutor);
     }
     @GetMapping(value="/temaPorId")
-    public Tema conseguirTemaPorId(@RequestParam int idTema){
+    public TemaDto conseguirTemaPorId(@RequestParam int idTema){
         return service.recuperarTemaPorId(idTema);
     }
+
 //ÓRDENES DE REDIRECCIÓN
     @GetMapping(value="/nuevoTema")
     public ModelAndView irNuevoTema(ModelMap model){
@@ -45,33 +42,33 @@ public class ControllerBiblioteca {
 
     @GetMapping(value="/nuevoTexto")
     public ModelAndView irNuevoTexto(ModelMap model){
-        List<Autor> listaAutores = service.recuperarAutores();
+        List<AutorDto> listaAutores = service.recuperarAutores();
         model.addAttribute("listaAutores", listaAutores);
-        List<Tema> listaTemas = service.recuperarTemas();
-        model.addAttribute("listaTemas",listaTemas);
+        List<TemaDto> listaTemas = service.recuperarTemas();
+        model.addAttribute("listaTemas", listaTemas);
         return new ModelAndView("nuevo_texto", model);
     }
 
 //REGISTRAR NUEVO
     @PostMapping(value="/registrarNuevoAutor")
-    public ResponseEntity registrarNuevoAutor(@RequestBody Autor autor){
+    public ResponseEntity registrarNuevoAutor(@RequestBody AutorDto autor){
        System.out.println("recibido");
-       Autor autorGuardado = service.guardarAutor(autor);
-       return new ResponseEntity<Autor>(autorGuardado, HttpStatus.CREATED);
+       AutorDto autorGuardado = service.guardarAutor(autor);
+       return new ResponseEntity<AutorDto>(autorGuardado, HttpStatus.CREATED);
     }
 
     @PostMapping(value="/registrarNuevoTema")
-    public ResponseEntity registrarNuevoTema(@RequestBody Tema tema){
+    public ResponseEntity registrarNuevoTema(@RequestBody TemaDto tema){
         System.out.println("recibido");
-        Tema temaGuardado = service.guardarTema(tema);
-        return new ResponseEntity<Tema>(temaGuardado, HttpStatus.CREATED);
+        TemaDto temaGuardado = service.guardarTema(tema);
+        return new ResponseEntity<TemaDto>(tema, HttpStatus.CREATED);
     }
 
     @PostMapping(value="/registrarNuevoSupertema")
-    public ResponseEntity registrarNuevoSupertema(@RequestBody Supertema supertema){
+    public ResponseEntity registrarNuevoSupertema(@RequestBody SupertemaDto supertema){
         System.out.println("recibido");
-        Supertema supertemaGuardado = service.guardarSupertema(supertema);
-        return new ResponseEntity<Supertema>(supertemaGuardado, HttpStatus.CREATED);
+        SupertemaDto supertemaGuardado = service.guardarSupertema(supertema);
+        return new ResponseEntity<SupertemaDto>(supertemaGuardado, HttpStatus.CREATED);
     }
 
     @PostMapping(value="/registrarNuevoTexto")
@@ -79,16 +76,16 @@ public class ControllerBiblioteca {
         System.out.println(textoFront);
         String textoString = textoFront.getTextoString();
         String longitud = textoFront.getLongitud();
-        Autor autor = service.recuperarAutorPorId(textoFront.getIdAutor());
-        List<Autor> autores = new ArrayList<>();
+        AutorDto autor = service.recuperarAutorPorId(textoFront.getIdAutor());
+        List<AutorDto> autores = new ArrayList<>();
         autores.add(autor);
-        Tema tema = service.recuperarTemaPorId(textoFront.getIdTema());
-        List<Tema> temas = new ArrayList<>();
+        TemaDto tema = service.recuperarTemaPorId(textoFront.getIdTema());
+        List<TemaDto> temas = new ArrayList<>();
         temas.add(tema);
-        Texto textoNuevo = new Texto(textoString,longitud,autores,temas);
+        TextoDto textoNuevo = new TextoDto(textoString,longitud,autores, temas);
         System.out.println(textoNuevo);
-        Texto textoGuardado = service.guardarNuevoTexto(textoNuevo);
-        return new ResponseEntity<Texto>(textoGuardado, HttpStatus.CREATED);
+        TextoDto textoGuardado = service.guardarNuevoTexto(textoNuevo);
+        return new ResponseEntity<TextoDto>(textoGuardado, HttpStatus.CREATED);
     }
 
 

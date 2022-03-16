@@ -1,7 +1,7 @@
 package com.mariots.biblioteca.bibliotecaadmin.repository;
 
-import com.mariots.biblioteca.bibliotecaadmin.entity.Texto;
+import com.mariots.biblioteca.bibliotecaadmin.entities.TextoEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface TextoJpaRepository extends JpaRepository<Texto, Integer> {
+public interface TextoJpaRepository extends JpaRepository<TextoEntity, Integer> {
 }

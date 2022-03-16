@@ -1,9 +1,9 @@
 package com.mariots.biblioteca.bibliotecaadmin.repository;
 
-import com.mariots.biblioteca.bibliotecaadmin.entity.Autor;
-import com.mariots.biblioteca.bibliotecaadmin.entity.Supertema;
-import com.mariots.biblioteca.bibliotecaadmin.entity.Tema;
-import com.mariots.biblioteca.bibliotecaadmin.entity.Texto;
+import com.mariots.biblioteca.bibliotecaadmin.entities.AutorEntity;
+import com.mariots.biblioteca.bibliotecaadmin.entities.SupertemaEntity;
+import com.mariots.biblioteca.bibliotecaadmin.entities.TemaEntity;
+import com.mariots.biblioteca.bibliotecaadmin.entities.TextoEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -23,64 +23,64 @@ public class RepositoryBibliotecaImpl implements RepositoryBiblioteca {
 
     //METODOS GUARDAR
     @Override
-    public Autor guardarAutor(Autor autor) {
-        return autorJpaRepository.save(autor);
+    public AutorEntity guardarAutor(AutorEntity autorEntity) {
+        return autorJpaRepository.save(autorEntity);
     }
 
     @Override
-    public Tema guardarTema(Tema tema) {
-        return temaJpaRepository.save(tema);
+    public TemaEntity guardarTema(TemaEntity temaEntity) {
+        return temaJpaRepository.save(temaEntity);
     }
 
     @Override
-    public Supertema guardarSupertema(Supertema supertema) {
-        return supertemaJpaRepository.save(supertema);
+    public SupertemaEntity guardarSupertema(SupertemaEntity supertemaEntity) {
+        return supertemaJpaRepository.save(supertemaEntity);
     }
 
     @Override
-    public Texto guardarTexto(Texto texto) {
-        return textoJpaRepository.save(texto);
+    public TextoEntity guardarTexto(TextoEntity textoEntity) {
+        return textoJpaRepository.save(textoEntity);
     }
 
     //MÉTODOS RECUPERAR
     @Override
-    public List<Autor> recuperarAutores() {
+    public List<AutorEntity> recuperarAutores() {
         return autorJpaRepository.findAll();
     }
 
     @Override
-    public List<Tema> recuperarTemas() {
+    public List<TemaEntity> recuperarTemas() {
         return temaJpaRepository.findAll();
     }
 
     @Override
-    public List<Supertema> recuperarSupertemas() {
+    public List<SupertemaEntity> recuperarSupertemas() {
         return supertemaJpaRepository.findAll();
     }
 
     @Override
-    public List<Texto> recupearTextos() {
+    public List<TextoEntity> recupearTextos() {
         return textoJpaRepository.findAll();
     }
 
     //MÉTODOS RECUPERAR POR ID
     @Override
-    public Optional<Autor> recuperarAutorPorId(int idAutor) {
+    public Optional<AutorEntity> recuperarAutorPorId(int idAutor) {
         return autorJpaRepository.findById(idAutor);
     }
 
     @Override
-    public Optional<Tema> recuperarTemaPorId(int idTema) {
+    public Optional<TemaEntity> recuperarTemaPorId(int idTema) {
         return temaJpaRepository.findById(idTema);
     }
 
     @Override
-    public Optional<Supertema> recuperarSupertemaPorId(int idSupertema) {
+    public Optional<SupertemaEntity> recuperarSupertemaPorId(int idSupertema) {
         return supertemaJpaRepository.findById(idSupertema);
     }
 
     @Override
-    public Optional<Texto> recuperarTextoPorId(int idTexto) {
+    public Optional<TextoEntity> recuperarTextoPorId(int idTexto) {
         return textoJpaRepository.findById(idTexto);
     }
 
