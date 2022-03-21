@@ -4,6 +4,7 @@ import com.mariots.biblioteca.bibliotecaadmin.dtos.AutorDto;
 import com.mariots.biblioteca.bibliotecaadmin.dtos.SupertemaDto;
 import com.mariots.biblioteca.bibliotecaadmin.dtos.TemaDto;
 import com.mariots.biblioteca.bibliotecaadmin.dtos.TextoDto;
+import com.mariots.biblioteca.bibliotecaadmin.entities.TemaEntity;
 import com.mariots.biblioteca.bibliotecaadmin.mapper.Mapper;
 import com.mariots.biblioteca.bibliotecaadmin.repository.RepositoryBiblioteca;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,7 +24,6 @@ public class ServiceBibliotecaImpl implements ServiceBiblioteca {
 //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! MAPPER NO PREPARADO PARA TO ENTITY AFECTA MÉTODOS GUARDADO
     @Override
     public AutorDto guardarAutor(AutorDto autorDto) {
-
         return mapper.toDto(repository.guardarAutor(mapper.toEntity(autorDto)));
     }
 
@@ -42,19 +42,19 @@ public class ServiceBibliotecaImpl implements ServiceBiblioteca {
         return mapper.toDto(repository.guardarTexto(mapper.toEntity(textoDto)));
     }
 
-    @Override
-    public TextoDto guardarNuevoTexto(TextoDto textoDto) {
-        //Añado al texto nuevo un autor y tema ya creados
-        //con los métodos add.Autor y addTema también al objeto autor y tema se les añade a su lista de textos el nuevo texto
-        //por eso actualizamos después ese tema y autor, para que conste ese texto nuevo en ambos
-//        Autor autor = texto.getAutores().get(0);
-//        texto.addAutor(autor);
-//        Tema tema = texto.getTemas().get(0);
-//        texto.addTema(tema);
-//        repository.guardarAutor(autor);
-//        repository.guardarTema(tema);
-        return mapper.toDto(repository.guardarTexto(mapper.toEntity(textoDto)));
-    }
+//    @Override
+//    public TextoDto guardarNuevoTexto(TextoDto textoDto) {
+//        //Añado al texto nuevo un autor y tema ya creados
+//        //con los métodos add.Autor y addTema también al objeto autor y tema se les añade a su lista de textos el nuevo texto
+//        //por eso actualizamos después ese tema y autor, para que conste ese texto nuevo en ambos
+////        Autor autor = texto.getAutores().get(0);
+////        texto.addAutor(autor);
+////        Tema tema = texto.getTemas().get(0);
+////        texto.addTema(tema);
+////        repository.guardarAutor(autor);
+////        repository.guardarTema(tema);
+//        return mapper.toDto(repository.guardarTexto(repository.recuperarTextoPorId(textoDto.getIdTexto()).get()));
+//    }
 
     //MÉTODOS RECUPERAR TODOS
     @Override
@@ -80,21 +80,21 @@ public class ServiceBibliotecaImpl implements ServiceBiblioteca {
     //MÉTODOS RECUPERAR POR ID
     @Override
     public AutorDto recuperarAutorPorId(int idAutor) {
-        return repository.recuperarAutorPorId(idAutor).map(mapper::toDto).orElseThrow();
+        return repository.recuperarAutorPorId(idAutor).map(mapper::toDto).get();
     }
 
     @Override
     public TemaDto recuperarTemaPorId(int idTema) {
-        return repository.recuperarTemaPorId(idTema).map(mapper::toDto).orElseThrow();
+        return repository.recuperarTemaPorId(idTema).map(mapper::toDto).get();
     }
 
     @Override
     public SupertemaDto recuperarSupertemaPorId(int idSupertema) {
-        return repository.recuperarSupertemaPorId(idSupertema).map(mapper::toDto).orElseThrow();
+        return repository.recuperarSupertemaPorId(idSupertema).map(mapper::toDto).get();
     }
 
     @Override
     public TextoDto recuperarTextoPorId(int idTexto) {
-        return repository.recuperarTextoPorId(idTexto).map(mapper::toDto).orElseThrow();
+        return repository.recuperarTextoPorId(idTexto).map(mapper::toDto).get();
     }
 }

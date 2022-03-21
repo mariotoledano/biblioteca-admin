@@ -12,7 +12,7 @@ public interface ServiceBiblioteca {
     public TemaDto guardarTema(TemaDto temaDto);
     public SupertemaDto guardarSupertema(SupertemaDto supertemaDto);
     public TextoDto guardarTexto(TextoDto textoDto);
-    public TextoDto guardarNuevoTexto(TextoDto textoDto);
+//    public TextoDto guardarNuevoTexto(TextoDto textoDto);
 
     public List<AutorDto> recuperarAutores();
     public List<TemaDto> recuperarTemas();
