@@ -13,13 +13,13 @@ public class TextoDto {
     private int idTexto;
     private String textoString;
     private String longitud;
-    private List<Integer> idAutores;
+    private Integer idAutor;
     private List<Integer> idTemas;
 
-    public TextoDto(String textoString, String longitud, List<Integer> idAutores, List<Integer> idTemas) {
+    public TextoDto(String textoString, String longitud, Integer idAutor, List<Integer> idTemas) {
         this.textoString = textoString;
         this.longitud = longitud;
-        this.idAutores = idAutores;
+        this.idAutor = idAutor;
         this.idTemas = idTemas;
     }
 }
