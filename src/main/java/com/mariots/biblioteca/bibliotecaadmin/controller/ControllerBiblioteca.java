@@ -8,6 +8,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -69,22 +71,17 @@ public class ControllerBiblioteca {
         return new ResponseEntity<SupertemaDto>(supertemaGuardado, HttpStatus.CREATED);
     }
 
-//    @PostMapping(value="/registrarNuevoTexto")
-//    public ResponseEntity registrarNuevoTexto(@RequestBody TextoFront textoFront){
-//        System.out.println(textoFront);
-//        String textoString = textoFront.getTextoString();
-//        String longitud = textoFront.getLongitud();
-//        AutorDto autor = service.recuperarAutorPorId(textoFront.getIdAutor());
-//        List<AutorDto> autores = new ArrayList<>();
-//        autores.add(autor);
-//        TemaDto tema = service.recuperarTemaPorId(textoFront.getIdTema());
-//        List<TemaDto> temas = new ArrayList<>();
-//        temas.add(tema);
-//        TextoDto textoNuevo = new TextoDto(textoString,longitud,autores, temas);
-//        System.out.println(textoNuevo);
-//        TextoDto textoGuardado = service.guardarNuevoTexto(textoNuevo);
-//        return new ResponseEntity<TextoDto>(textoGuardado, HttpStatus.CREATED);
-//    }
+    @PostMapping(value="/registrarNuevoTexto")
+    public ResponseEntity registrarNuevoTexto(@RequestBody TextoFront textoFront){
+        System.out.println(textoFront);
+        Integer idTema = textoFront.getIdTema();
+        List<Integer> idTemas = new ArrayList<>();
+        idTemas.add(idTema);
+        TextoDto textoNuevo = new TextoDto(textoFront.getTextoString(), textoFront.getLongitud(), textoFront.getIdAutor(), idTemas);
+        System.out.println(textoNuevo);
+        TextoDto textoGuardado = service.guardarTexto(textoNuevo);
+        return new ResponseEntity<TextoDto>(textoGuardado, HttpStatus.CREATED);
+    }
 
 
 }
