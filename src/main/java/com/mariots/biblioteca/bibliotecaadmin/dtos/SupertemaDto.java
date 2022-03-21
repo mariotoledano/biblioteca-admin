@@ -1,19 +1,20 @@
 package com.mariots.biblioteca.bibliotecaadmin.dtos;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.ToString;
 
 import java.util.ArrayList;
 import java.util.List;
 
-@ToString
 @Data
 @NoArgsConstructor
+@AllArgsConstructor
 public class SupertemaDto {
 
     private int idSupertema;
     private String nombreSupertema;
-    private List<TemaDto> temas = new ArrayList<>();
+    private List<Integer> idTemas = new ArrayList<>();
+
 
 }
