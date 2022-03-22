@@ -1,4 +1,4 @@
-package com.mariots.biblioteca.bibliotecaadmin.dtos;
+package com.mariots.biblioteca.bibliotecaadmin.core.dtos;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

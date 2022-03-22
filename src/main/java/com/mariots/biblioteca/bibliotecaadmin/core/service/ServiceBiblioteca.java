@@ -1,9 +1,9 @@
-package com.mariots.biblioteca.bibliotecaadmin.service;
+package com.mariots.biblioteca.bibliotecaadmin.core.service;
 
-import com.mariots.biblioteca.bibliotecaadmin.dtos.AutorDto;
-import com.mariots.biblioteca.bibliotecaadmin.dtos.SupertemaDto;
-import com.mariots.biblioteca.bibliotecaadmin.dtos.TemaDto;
-import com.mariots.biblioteca.bibliotecaadmin.dtos.TextoDto;
+import com.mariots.biblioteca.bibliotecaadmin.core.dtos.AutorDto;
+import com.mariots.biblioteca.bibliotecaadmin.core.dtos.SupertemaDto;
+import com.mariots.biblioteca.bibliotecaadmin.core.dtos.TemaDto;
+import com.mariots.biblioteca.bibliotecaadmin.core.dtos.TextoDto;
 
 import java.util.List;
 

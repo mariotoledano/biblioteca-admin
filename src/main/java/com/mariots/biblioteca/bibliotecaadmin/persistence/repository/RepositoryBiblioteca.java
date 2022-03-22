@@ -1,9 +1,9 @@
-package com.mariots.biblioteca.bibliotecaadmin.repository;
+package com.mariots.biblioteca.bibliotecaadmin.persistence.repository;
 
-import com.mariots.biblioteca.bibliotecaadmin.entities.AutorEntity;
-import com.mariots.biblioteca.bibliotecaadmin.entities.SupertemaEntity;
-import com.mariots.biblioteca.bibliotecaadmin.entities.TemaEntity;
-import com.mariots.biblioteca.bibliotecaadmin.entities.TextoEntity;
+import com.mariots.biblioteca.bibliotecaadmin.persistence.entities.AutorEntity;
+import com.mariots.biblioteca.bibliotecaadmin.persistence.entities.SupertemaEntity;
+import com.mariots.biblioteca.bibliotecaadmin.persistence.entities.TemaEntity;
+import com.mariots.biblioteca.bibliotecaadmin.persistence.entities.TextoEntity;
 
 import java.util.List;
 import java.util.Optional;

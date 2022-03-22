@@ -1,14 +1,14 @@
-package com.mariots.biblioteca.bibliotecaadmin.mapper;
+package com.mariots.biblioteca.bibliotecaadmin.api.mapper;
 
-import com.mariots.biblioteca.bibliotecaadmin.dtos.AutorDto;
-import com.mariots.biblioteca.bibliotecaadmin.dtos.SupertemaDto;
-import com.mariots.biblioteca.bibliotecaadmin.dtos.TemaDto;
-import com.mariots.biblioteca.bibliotecaadmin.dtos.TextoDto;
-import com.mariots.biblioteca.bibliotecaadmin.entities.AutorEntity;
-import com.mariots.biblioteca.bibliotecaadmin.entities.SupertemaEntity;
-import com.mariots.biblioteca.bibliotecaadmin.entities.TemaEntity;
-import com.mariots.biblioteca.bibliotecaadmin.entities.TextoEntity;
-import com.mariots.biblioteca.bibliotecaadmin.repository.RepositoryBiblioteca;
+import com.mariots.biblioteca.bibliotecaadmin.core.dtos.AutorDto;
+import com.mariots.biblioteca.bibliotecaadmin.core.dtos.SupertemaDto;
+import com.mariots.biblioteca.bibliotecaadmin.core.dtos.TemaDto;
+import com.mariots.biblioteca.bibliotecaadmin.core.dtos.TextoDto;
+import com.mariots.biblioteca.bibliotecaadmin.persistence.entities.AutorEntity;
+import com.mariots.biblioteca.bibliotecaadmin.persistence.entities.SupertemaEntity;
+import com.mariots.biblioteca.bibliotecaadmin.persistence.entities.TemaEntity;
+import com.mariots.biblioteca.bibliotecaadmin.persistence.entities.TextoEntity;
+import com.mariots.biblioteca.bibliotecaadmin.persistence.repository.RepositoryBiblioteca;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 

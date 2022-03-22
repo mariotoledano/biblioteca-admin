@@ -1,12 +1,11 @@
-package com.mariots.biblioteca.bibliotecaadmin.service;
+package com.mariots.biblioteca.bibliotecaadmin.core.service;
 
-import com.mariots.biblioteca.bibliotecaadmin.dtos.AutorDto;
-import com.mariots.biblioteca.bibliotecaadmin.dtos.SupertemaDto;
-import com.mariots.biblioteca.bibliotecaadmin.dtos.TemaDto;
-import com.mariots.biblioteca.bibliotecaadmin.dtos.TextoDto;
-import com.mariots.biblioteca.bibliotecaadmin.entities.TemaEntity;
-import com.mariots.biblioteca.bibliotecaadmin.mapper.Mapper;
-import com.mariots.biblioteca.bibliotecaadmin.repository.RepositoryBiblioteca;
+import com.mariots.biblioteca.bibliotecaadmin.core.dtos.AutorDto;
+import com.mariots.biblioteca.bibliotecaadmin.core.dtos.SupertemaDto;
+import com.mariots.biblioteca.bibliotecaadmin.core.dtos.TemaDto;
+import com.mariots.biblioteca.bibliotecaadmin.core.dtos.TextoDto;
+import com.mariots.biblioteca.bibliotecaadmin.api.mapper.Mapper;
+import com.mariots.biblioteca.bibliotecaadmin.persistence.repository.RepositoryBiblioteca;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -41,20 +40,6 @@ public class ServiceBibliotecaImpl implements ServiceBiblioteca {
     public TextoDto guardarTexto(TextoDto textoDto) {
         return mapper.toDto(repository.guardarTexto(mapper.toEntity(textoDto)));
     }
-
-//    @Override
-//    public TextoDto guardarNuevoTexto(TextoDto textoDto) {
-//        //Añado al texto nuevo un autor y tema ya creados
-//        //con los métodos add.Autor y addTema también al objeto autor y tema se les añade a su lista de textos el nuevo texto
-//        //por eso actualizamos después ese tema y autor, para que conste ese texto nuevo en ambos
-////        Autor autor = texto.getAutores().get(0);
-////        texto.addAutor(autor);
-////        Tema tema = texto.getTemas().get(0);
-////        texto.addTema(tema);
-////        repository.guardarAutor(autor);
-////        repository.guardarTema(tema);
-//        return mapper.toDto(repository.guardarTexto(repository.recuperarTextoPorId(textoDto.getIdTexto()).get()));
-//    }
 
     //MÉTODOS RECUPERAR TODOS
     @Override

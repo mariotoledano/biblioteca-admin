@@ -1,4 +1,4 @@
-package com.mariots.biblioteca.bibliotecaadmin.exceptions;
+package com.mariots.biblioteca.bibliotecaadmin.api.exceptions;
 
 public class BdException extends RuntimeException {
     public BdException(){

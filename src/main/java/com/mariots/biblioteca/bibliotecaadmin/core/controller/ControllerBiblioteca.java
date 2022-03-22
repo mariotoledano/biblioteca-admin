@@ -1,14 +1,13 @@
-package com.mariots.biblioteca.bibliotecaadmin.controller;
+package com.mariots.biblioteca.bibliotecaadmin.core.controller;
 
-import com.mariots.biblioteca.bibliotecaadmin.dtos.*;
-import com.mariots.biblioteca.bibliotecaadmin.service.ServiceBiblioteca;
+import com.mariots.biblioteca.bibliotecaadmin.core.dtos.*;
+import com.mariots.biblioteca.bibliotecaadmin.core.service.ServiceBiblioteca;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
-
 import java.util.ArrayList;
 import java.util.List;
 

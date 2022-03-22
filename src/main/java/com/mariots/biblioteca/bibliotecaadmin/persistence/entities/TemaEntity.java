@@ -1,4 +1,4 @@
-package com.mariots.biblioteca.bibliotecaadmin.entities;
+package com.mariots.biblioteca.bibliotecaadmin.persistence.entities;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

@@ -1,5 +1,6 @@
-package com.mariots.biblioteca.bibliotecaadmin.dtos;
+package com.mariots.biblioteca.bibliotecaadmin.core.dtos;
 
+import com.mariots.biblioteca.bibliotecaadmin.api.enums.EnumLongitud;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
