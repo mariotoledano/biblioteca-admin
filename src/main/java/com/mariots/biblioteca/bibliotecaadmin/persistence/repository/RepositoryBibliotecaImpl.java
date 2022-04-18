@@ -6,7 +6,6 @@ import com.mariots.biblioteca.bibliotecaadmin.persistence.entities.TemaEntity;
 import com.mariots.biblioteca.bibliotecaadmin.persistence.entities.TextoEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-
 import java.util.List;
 import java.util.Optional;
 
@@ -84,6 +83,20 @@ public class RepositoryBibliotecaImpl implements RepositoryBiblioteca {
         return textoJpaRepository.findById(idTexto);
     }
 
+    @Override
+    public Optional<AutorEntity> recuperarAutorPorNombre(String nombreAutor) {
+        return autorJpaRepository.findByNombreAutor(nombreAutor);
+    }
+
+    @Override
+    public Optional<TemaEntity> recuperarTemaPorNombre(String nombreTema) {
+        return temaJpaRepository.findByNombreTema(nombreTema);
+    }
+
+    @Override
+    public Optional<SupertemaEntity> recuperarSupertemaPorNombre(String nombreSupertema) {
+        return supertemaJpaRepository.findByNombreSupertema(nombreSupertema);
+    }
 
 
 }

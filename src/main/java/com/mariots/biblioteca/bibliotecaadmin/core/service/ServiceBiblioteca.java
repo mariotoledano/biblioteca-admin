@@ -4,7 +4,6 @@ import com.mariots.biblioteca.bibliotecaadmin.core.dtos.AutorDto;
 import com.mariots.biblioteca.bibliotecaadmin.core.dtos.SupertemaDto;
 import com.mariots.biblioteca.bibliotecaadmin.core.dtos.TemaDto;
 import com.mariots.biblioteca.bibliotecaadmin.core.dtos.TextoDto;
-
 import java.util.List;
 
 public interface ServiceBiblioteca {
@@ -23,4 +22,8 @@ public interface ServiceBiblioteca {
     public TemaDto recuperarTemaPorId(int idTema);
     public SupertemaDto recuperarSupertemaPorId(int idSupertema);
     public TextoDto recuperarTextoPorId(int idTexto);
+
+    public AutorDto recuperarAutorPorNombre(String nombreAutor);
+    public TemaDto recuperarTemaPorNombre(String nombreTema);
+    public SupertemaDto recuperarSupertemaPorNombre(String nombreSupertema);
 }

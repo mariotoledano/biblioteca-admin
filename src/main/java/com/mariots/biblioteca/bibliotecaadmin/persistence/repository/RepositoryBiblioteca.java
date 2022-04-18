@@ -24,4 +24,7 @@ public interface RepositoryBiblioteca {
     public Optional<SupertemaEntity> recuperarSupertemaPorId(int idSupertema);
     public Optional<TextoEntity> recuperarTextoPorId(int idTexto);
 
+    public Optional<AutorEntity> recuperarAutorPorNombre(String nombreAutor);
+    public Optional<TemaEntity> recuperarTemaPorNombre(String nombreTema);
+    public Optional<SupertemaEntity> recuperarSupertemaPorNombre(String nombreSupertema);
 }

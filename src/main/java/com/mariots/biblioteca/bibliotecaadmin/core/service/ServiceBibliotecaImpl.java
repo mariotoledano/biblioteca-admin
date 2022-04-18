@@ -1,5 +1,6 @@
 package com.mariots.biblioteca.bibliotecaadmin.core.service;
 
+import com.mariots.biblioteca.bibliotecaadmin.api.exceptions.RecursoNoEncontradoException;
 import com.mariots.biblioteca.bibliotecaadmin.core.dtos.AutorDto;
 import com.mariots.biblioteca.bibliotecaadmin.core.dtos.SupertemaDto;
 import com.mariots.biblioteca.bibliotecaadmin.core.dtos.TemaDto;
@@ -20,7 +21,6 @@ public class ServiceBibliotecaImpl implements ServiceBiblioteca {
     Mapper mapper;
 
     //MÉTODOS GUARDAR
-//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! MAPPER NO PREPARADO PARA TO ENTITY AFECTA MÉTODOS GUARDADO
     @Override
     public AutorDto guardarAutor(AutorDto autorDto) {
         return mapper.toDto(repository.guardarAutor(mapper.toEntity(autorDto)));
@@ -65,21 +65,35 @@ public class ServiceBibliotecaImpl implements ServiceBiblioteca {
     //MÉTODOS RECUPERAR POR ID
     @Override
     public AutorDto recuperarAutorPorId(int idAutor) {
-        return repository.recuperarAutorPorId(idAutor).map(mapper::toDto).get();
+        return repository.recuperarAutorPorId(idAutor).map(mapper::toDto).orElseThrow(()->new RecursoNoEncontradoException("Id de Autor no encontrado"));
     }
 
     @Override
     public TemaDto recuperarTemaPorId(int idTema) {
-        return repository.recuperarTemaPorId(idTema).map(mapper::toDto).get();
+        return repository.recuperarTemaPorId(idTema).map(mapper::toDto).orElseThrow(()->new RecursoNoEncontradoException("Id de Tema no encontrado"));
     }
 
     @Override
     public SupertemaDto recuperarSupertemaPorId(int idSupertema) {
-        return repository.recuperarSupertemaPorId(idSupertema).map(mapper::toDto).get();
+        return repository.recuperarSupertemaPorId(idSupertema).map(mapper::toDto).orElseThrow(()->new RecursoNoEncontradoException("Id de Supertema no encontrado"));
     }
 
     @Override
     public TextoDto recuperarTextoPorId(int idTexto) {
-        return repository.recuperarTextoPorId(idTexto).map(mapper::toDto).get();
+        return repository.recuperarTextoPorId(idTexto).map(mapper::toDto).orElseThrow(()->new RecursoNoEncontradoException("Id de Texto no encontrado"));
+    }
+
+    @Override
+    public AutorDto recuperarAutorPorNombre(String nombreAutor) {
+        return repository.recuperarAutorPorNombre(nombreAutor).map(mapper::toDto).orElseThrow(()->new RecursoNoEncontradoException("Nombre de Autor no encontrado"));
+    }
+
+    @Override
+    public TemaDto recuperarTemaPorNombre(String nombreTema) {
+        return repository.recuperarTemaPorNombre(nombreTema).map(mapper::toDto).orElseThrow(()->new RecursoNoEncontradoException("Nombre de Tema no encontrado"));    }
+
+    @Override
+    public SupertemaDto recuperarSupertemaPorNombre(String nombreSupertema) {
+        return repository.recuperarSupertemaPorNombre(nombreSupertema).map(mapper::toDto).orElseThrow(()->new RecursoNoEncontradoException("Nombre de Supertema no encontrado"));
     }
 }

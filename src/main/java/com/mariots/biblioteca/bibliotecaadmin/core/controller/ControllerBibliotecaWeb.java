@@ -1,6 +1,7 @@
 package com.mariots.biblioteca.bibliotecaadmin.core.controller;
 
 import com.mariots.biblioteca.bibliotecaadmin.core.dtos.*;
+import com.mariots.biblioteca.bibliotecaadmin.core.dtos.web.TextoWeb;
 import com.mariots.biblioteca.bibliotecaadmin.core.service.ServiceBiblioteca;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -13,11 +14,12 @@ import java.util.List;
 
 
 @RestController
-@RequestMapping
-public class ControllerBiblioteca {
+//@RequestMapping
+public class ControllerBibliotecaWeb {
 
     @Autowired
     ServiceBiblioteca service;
+
 //MÉTODOS DE PRUEBA
     @GetMapping(value="/autorPorId")
     public AutorDto conseguirAutorPorId(@RequestParam int idAutor){
@@ -60,7 +62,7 @@ public class ControllerBiblioteca {
     public ResponseEntity registrarNuevoTema(@RequestBody TemaDto tema){
         System.out.println("recibido");
         TemaDto temaGuardado = service.guardarTema(tema);
-        return new ResponseEntity<TemaDto>(tema, HttpStatus.CREATED);
+        return new ResponseEntity<TemaDto>(temaGuardado, HttpStatus.CREATED);
     }
 
     @PostMapping(value="/registrarNuevoSupertema")
@@ -71,12 +73,12 @@ public class ControllerBiblioteca {
     }
 
     @PostMapping(value="/registrarNuevoTexto")
-    public ResponseEntity registrarNuevoTexto(@RequestBody TextoFront textoFront){
-        System.out.println(textoFront);
-        Integer idTema = textoFront.getIdTema();
+    public ResponseEntity registrarNuevoTexto(@RequestBody TextoWeb textoWeb){
+        System.out.println(textoWeb);
+        Integer idTema = textoWeb.getIdTema();
         List<Integer> idTemas = new ArrayList<>();
         idTemas.add(idTema);
-        TextoDto textoNuevo = new TextoDto(textoFront.getTextoString(), textoFront.getLongitud(), textoFront.getIdAutor(), idTemas);
+        TextoDto textoNuevo = new TextoDto(textoWeb.getTextoString(), textoWeb.getLongitud(), textoWeb.getIdAutor(), idTemas);
         System.out.println(textoNuevo);
         TextoDto textoGuardado = service.guardarTexto(textoNuevo);
         return new ResponseEntity<TextoDto>(textoGuardado, HttpStatus.CREATED);

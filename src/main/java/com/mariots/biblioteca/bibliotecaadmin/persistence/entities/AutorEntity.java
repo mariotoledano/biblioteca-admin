@@ -3,8 +3,8 @@ package com.mariots.biblioteca.bibliotecaadmin.persistence.entities;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.util.List;
 
     @Data
@@ -17,6 +17,7 @@ public class AutorEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private int idAutor;
+    @NotNull
     @Column(name="autor")
     private String nombreAutor;
     @Column(name="fecha_autor")
