@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,8 +21,8 @@ public class SupertemaEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private int idSupertema;
-
-    @Column(name = "supertema")
+    @NotNull
+    @Column(name = "supertema", unique = true)
     private String nombreSupertema;
 
     //SUPERTEMA->TEMAS ONE TO MANY

@@ -18,7 +18,7 @@ public class AutorEntity {
     @Column(name = "id")
     private int idAutor;
     @NotNull
-    @Column(name="autor")
+    @Column(name="autor", unique = true)
     private String nombreAutor;
     @Column(name="fecha_autor")
     private String fechaAutor;

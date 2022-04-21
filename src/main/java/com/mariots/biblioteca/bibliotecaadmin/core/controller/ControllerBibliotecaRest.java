@@ -68,27 +68,42 @@ public class ControllerBibliotecaRest {
         SupertemaDto supertema = service.recuperarSupertemaPorId(id);
         return new ResponseEntity<SupertemaDto>(supertema, HttpStatus.OK);
     }
-
+    //GET NOMBRE
+    @GetMapping(value="/autores/{nombreAutor}")
+    public ResponseEntity recuperarAutoresPorNombre(@PathVariable String nombreAutor){
+        AutorDto autor = service.recuperarAutorPorNombre(nombreAutor);
+        return new ResponseEntity<AutorDto>(autor, HttpStatus.OK);
+    }
+    @GetMapping(value ="/temas/{nombreTema}")
+    public ResponseEntity recuperarTemasPorNombre(@PathVariable String nombreTema){
+        TemaDto tema = service.recuperarTemaPorNombre(nombreTema);
+        return new ResponseEntity<TemaDto>(tema, HttpStatus.OK);
+    }
+    @GetMapping(value ="/supertemas/{nombreSupertema}")
+    public ResponseEntity recuperarSupertemasPorId(@PathVariable String nombreSupertema) {
+        SupertemaDto supertema = service.recuperarSupertemaPorNombre(nombreSupertema);
+        return new ResponseEntity<SupertemaDto>(supertema, HttpStatus.OK);
+    }
     //REGISTRAR NUEVO
-    @PostMapping(value="/autor")
+    @PostMapping(value="/autores")
     public ResponseEntity registrarNuevoAutor(@RequestBody NuevoAutorRest autor){
         AutorDto autorGuardado = service.guardarAutor(mapper.toDto(autor));
         return new ResponseEntity<AutorDto>(autorGuardado, HttpStatus.CREATED);
     }
 
-    @PostMapping(value="/tema")
+    @PostMapping(value="/temas")
     public ResponseEntity registrarNuevoTema(@RequestBody NuevoTemaRest tema){
         TemaDto temaGuardado = service.guardarTema(mapper.toDto(tema));
         return new ResponseEntity<TemaDto>(temaGuardado, HttpStatus.CREATED);
     }
 
-    @PostMapping(value="/supertema")
+    @PostMapping(value="/supertemas")
     public ResponseEntity registrarNuevoSupertema(@RequestBody NuevoSupertemaRest supertema){
         SupertemaDto supertemaGuardado = service.guardarSupertema(mapper.toDto(supertema));
         return new ResponseEntity<SupertemaDto>(supertemaGuardado, HttpStatus.CREATED);
     }
 
-    @PostMapping(value="/texto")
+    @PostMapping(value="/textos")
     public ResponseEntity registrarNuevoTexto(@RequestBody NuevoTextoRest texto){
         TextoDto textoGuardado = service.guardarTexto(mapper.toDto(texto));
         return new ResponseEntity<TextoDto>(textoGuardado, HttpStatus.CREATED);

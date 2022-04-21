@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.util.List;
 
 @Data
@@ -18,7 +19,8 @@ public class TemaEntity {
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     @Column(name="id")
     int idTema;
-    @Column(name="tema")
+    @NotNull
+    @Column(name="tema", unique = true)
     String nombreTema;
 
     //TEXTO -> TEMA MANY TO MANY
