@@ -27,6 +27,7 @@ public class MapperImpl implements Mapper{
     @Autowired
     RepositoryBiblioteca repository;
 
+    //ENTITY -->> DTO
     @Override
     public AutorDto toDto(AutorEntity autorEntity) {
         AutorDto autorDto = new AutorDto();
@@ -40,6 +41,42 @@ public class MapperImpl implements Mapper{
         return autorDto;
     }
 
+    @Override
+    public TextoDto toDto(TextoEntity textoEntity) {
+        TextoDto textoDto =new TextoDto();
+        textoDto.setIdTexto(textoEntity.getIdTexto());
+        textoDto.setTextoString(textoEntity.getTextoString());
+        textoDto.setLongitud(textoEntity.getLongitud());
+        if (textoEntity.getTemas() == null) {
+        } else textoDto.setIdTemas(textoEntity.getTemas().stream().map(TemaEntity::getIdTema).collect(Collectors.toList()));
+        if (textoEntity.getAutor() == null) {
+        } else textoDto.setIdAutor(textoEntity.getAutor().getIdAutor());
+        return textoDto;
+    }
+
+    @Override
+    public TemaDto toDto(TemaEntity temaEntity) {
+        TemaDto temaDto= new TemaDto();
+        temaDto.setIdTema(temaEntity.getIdTema());
+        temaDto.setNombreTema(temaEntity.getNombreTema());
+        if (temaEntity.getSupertema() == null) {
+        } else temaDto.setIdSupertema(temaEntity.getSupertema().getIdSupertema());
+        if (temaEntity.getTextos() == null) {
+        } else temaDto.setIdTextos(temaEntity.getTextos().stream().map(TextoEntity::getIdTexto).collect(Collectors.toList()));
+        return temaDto;
+    }
+
+    @Override
+    public SupertemaDto toDto(SupertemaEntity supertemaEntity) {
+        SupertemaDto supertemaDto = new SupertemaDto();
+        supertemaDto.setIdSupertema(supertemaEntity.getIdSupertema());
+        supertemaDto.setNombreSupertema(supertemaEntity.getNombreSupertema());
+        if(supertemaEntity.getTemas() == null){
+        } else supertemaDto.setIdTemas(supertemaEntity.getTemas().stream().map(TemaEntity::getIdTema).collect(Collectors.toList()));
+        return supertemaDto;
+    }
+
+    //DTO -->> ENTITY
     @Override
     public AutorEntity toEntity(AutorDto autorDto) {
         AutorEntity autorEntity = new AutorEntity();
@@ -58,16 +95,6 @@ public class MapperImpl implements Mapper{
     }
 
     @Override
-    public SupertemaDto toDto(SupertemaEntity supertemaEntity) {
-        SupertemaDto supertemaDto = new SupertemaDto();
-        supertemaDto.setIdSupertema(supertemaEntity.getIdSupertema());
-        supertemaDto.setNombreSupertema(supertemaEntity.getNombreSupertema());
-        if(supertemaEntity.getTemas() == null){
-        } else supertemaDto.setIdTemas(supertemaEntity.getTemas().stream().map(TemaEntity::getIdTema).collect(Collectors.toList()));
-        return supertemaDto;
-    }
-
-    @Override
     public SupertemaEntity toEntity(SupertemaDto supertemaDto) {
         SupertemaEntity supertemaEntity = new SupertemaEntity();
         supertemaEntity.setNombreSupertema(supertemaDto.getNombreSupertema());
@@ -81,18 +108,6 @@ public class MapperImpl implements Mapper{
     }
 
     @Override
-    public TemaDto toDto(TemaEntity temaEntity) {
-       TemaDto temaDto= new TemaDto();
-       temaDto.setIdTema(temaEntity.getIdTema());
-       temaDto.setNombreTema(temaEntity.getNombreTema());
-        if (temaEntity.getSupertema() == null) {
-        } else temaDto.setIdSupertema(temaEntity.getSupertema().getIdSupertema());
-        if (temaEntity.getTextos() == null) {
-        } else temaDto.setIdTextos(temaEntity.getTextos().stream().map(TextoEntity::getIdTexto).collect(Collectors.toList()));
-       return temaDto;
-    }
-
-    @Override
     public TemaEntity toEntity(TemaDto temaDto) {
         TemaEntity temaEntity= new TemaEntity();
         temaEntity.setNombreTema(temaDto.getNombreTema());
@@ -103,19 +118,6 @@ public class MapperImpl implements Mapper{
             temaEntity.setTextos(listaTextosEntity);
         }
         return temaEntity;
-    }
-
-    @Override
-    public TextoDto toDto(TextoEntity textoEntity) {
-        TextoDto textoDto =new TextoDto();
-        textoDto.setIdTexto(textoEntity.getIdTexto());
-        textoDto.setTextoString(textoEntity.getTextoString());
-        textoDto.setLongitud(textoEntity.getLongitud());
-        if (textoEntity.getTemas() == null) {
-        } else textoDto.setIdTemas(textoEntity.getTemas().stream().map(TemaEntity::getIdTema).collect(Collectors.toList()));
-        if (textoEntity.getAutor() == null) {
-        } else textoDto.setIdAutor(textoEntity.getAutor().getIdAutor());
-        return textoDto;
     }
 
     @Override
@@ -136,7 +138,7 @@ public class MapperImpl implements Mapper{
         return textoEntity;
     }
 
-    //NuevoRest --> Dto
+    //NUEVO-REST --> DTO
     @Override
     public AutorDto toDto(NuevoAutorRest nuevoAutorRest) {
         return new AutorDto().builder()
@@ -154,15 +156,19 @@ public class MapperImpl implements Mapper{
                 .longitud(nuevoTextoRest.getLongitud())
                 .build();
         List<Integer> idTemas = new ArrayList<>();
-        //comprobamos si el nombre de autor se introducido
+        //comprobamos si el nombre de autor se ha introducido
         if(nuevoTextoRest.getNombreAutor()==null) {
+            //no se ha introducido --> excepción
             throw new CampoEnBlancoException();
         } else {
+            //se ha introducido -->
             //comprobamos si existe el nombre de autor en BD
             if(repository.recuperarAutorPorNombre(nuevoTextoRest.getNombreAutor()).isPresent()){
+                //existe entonces añadimos el autor al textoDto
                 int idAutor =repository.recuperarAutorPorNombre(nuevoTextoRest.getNombreAutor()).get().getIdAutor();
                 textoDto.setIdAutor(idAutor);
             } else {
+                //no existe --> excepción y pedimos otro
                 throw new RecursoNoEncontradoException("No existe el nombre de autor aportado, ingrese un nombre de autor previamente registrado");
             }
         }

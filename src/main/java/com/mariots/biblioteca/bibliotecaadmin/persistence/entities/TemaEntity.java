@@ -19,10 +19,8 @@ public class TemaEntity {
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     @Column(name="id")
     int idTema;
-    @NotNull
-    @Column(name="tema", unique = true)
+    @Column(name="tema", unique = true, nullable = false)
     String nombreTema;
-
     //TEXTO -> TEMA MANY TO MANY
     @ManyToMany(fetch=FetchType.LAZY, cascade= {CascadeType.PERSIST, CascadeType.MERGE,
             CascadeType.DETACH, CascadeType.REFRESH})
@@ -30,7 +28,6 @@ public class TemaEntity {
             joinColumns=@JoinColumn(name="tema_id"),
             inverseJoinColumns=@JoinColumn(name="texto_id"))
     private List<TextoEntity> textos;
-
     //TEMAS -> SUPERTEMA MANY TO ONE
     @ManyToOne(fetch=FetchType.LAZY, cascade= {CascadeType.PERSIST, CascadeType.MERGE,
             CascadeType.DETACH, CascadeType.REFRESH})

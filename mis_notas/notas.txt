@@ -7,3 +7,6 @@ Demasiada lógica de negocio concentrada en mapper
     comprobar si este data.sql generaria datos en el perfil mysql
 Investigar h2 persistente, cómo crear un esquema valido desde mysql ya que con el esquema autogenerado por hibernate
 no funciona la persistencia https://www.baeldung.com/spring-boot-data-sql-and-schema-sql -->> funciona bbdd persistente
+
+
+

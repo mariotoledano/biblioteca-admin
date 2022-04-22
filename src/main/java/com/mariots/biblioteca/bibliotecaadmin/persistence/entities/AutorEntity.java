@@ -17,8 +17,7 @@ public class AutorEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private int idAutor;
-    @NotNull
-    @Column(name="autor", unique = true)
+    @Column(name="autor", unique = true, nullable = false)
     private String nombreAutor;
     @Column(name="fecha_autor")
     private String fechaAutor;
@@ -26,7 +25,6 @@ public class AutorEntity {
     private String descripcionBreve;
     @Column(name="descripcion_larga")
     private String descripcionLarga;
-
     //JOIN TABLE
     @OneToMany(fetch=FetchType.LAZY, cascade= {CascadeType.PERSIST, CascadeType.MERGE,
                 CascadeType.DETACH, CascadeType.REFRESH}, mappedBy = "autor")

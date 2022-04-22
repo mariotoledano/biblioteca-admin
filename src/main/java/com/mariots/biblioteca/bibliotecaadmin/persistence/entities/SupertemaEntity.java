@@ -21,10 +21,8 @@ public class SupertemaEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private int idSupertema;
-    @NotNull
-    @Column(name = "supertema", unique = true)
+    @Column(name = "supertema", unique = true, nullable = false)
     private String nombreSupertema;
-
     //SUPERTEMA->TEMAS ONE TO MANY
     @OneToMany(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE,
             CascadeType.DETACH, CascadeType.REFRESH}, mappedBy = "supertema")

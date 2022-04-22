@@ -19,8 +19,7 @@ public class TextoEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private int idTexto;
-    @NotNull
-    @Column(name = "texto")
+    @Column(name = "texto", nullable = false)
     private String textoString;
 
     @Column(name = "longitud")

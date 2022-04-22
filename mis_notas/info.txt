@@ -1,0 +1,6 @@
+#Swagger
+http://localhost:8085/swagger-ui/index.html
+#H2 Base de Datos
+http://localhost:8085/h2
+#Web
+http://localhost:8085/
