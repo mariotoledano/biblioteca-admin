@@ -14,18 +14,32 @@ public class ResponseEntityExceptionHandlerPersonalizado extends ResponseEntityE
     //Excepción lanzada como respuesta Rest en caso de una excepción genérica no especificada
     @ExceptionHandler(Exception.class)
     public final ResponseEntity<Object> respuestaGenericaExcepcion(Exception ex, WebRequest request) {
-        ModeloException modeloException = new ModeloException(LocalDateTime.now(),ex.getMessage(), request.getDescription(true));
+        ModeloException modeloException = ModeloException.builder()
+                .fechaYHora(LocalDateTime.now())
+                .mensaje(ex.getMessage())
+                .detalles(request.getDescription(true))
+                .build();
         return new ResponseEntity(modeloException, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
     @ExceptionHandler(RecursoNoEncontradoException.class)
     public final ResponseEntity<ModeloException> respuestaRecursoNoEncontrado(RecursoNoEncontradoException ex, WebRequest request){
-        ModeloException modeloException = new ModeloException(LocalDateTime.now(),ex.getMessage(), request.getDescription(true));
+        ModeloException modeloException = ModeloException.builder()
+                .fechaYHora(LocalDateTime.now())
+                .mensaje(ex.getMessage())
+                .detalles(request.getDescription(true))
+                .build();
         return new ResponseEntity(modeloException, HttpStatus.NOT_FOUND);
     }
+
+    //El exception handler
     @ExceptionHandler(CampoEnBlancoException.class)
-    public final ResponseEntity<ModeloException> respuestaCampoEnBlancoException(RecursoNoEncontradoException ex, WebRequest request){
-        ModeloException modeloException = new ModeloException(LocalDateTime.now(),ex.getMessage(), request.getDescription(true));
+    public final ResponseEntity<ModeloException> respuestaCampoEnBlancoException(CampoEnBlancoException ex, WebRequest request){
+        ModeloException modeloException = ModeloException.builder()
+                .fechaYHora(LocalDateTime.now())
+                .mensaje(ex.getMessage())
+                .detalles(request.getDescription(true))
+                .build();
         return new ResponseEntity(modeloException, HttpStatus.BAD_REQUEST);
     }
 
