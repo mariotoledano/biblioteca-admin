@@ -9,6 +9,7 @@ import com.mariots.biblioteca.bibliotecaadmin.core.dtos.nuevorest.NuevoAutorRest
 import com.mariots.biblioteca.bibliotecaadmin.core.dtos.nuevorest.NuevoSupertemaRest;
 import com.mariots.biblioteca.bibliotecaadmin.core.dtos.nuevorest.NuevoTemaRest;
 import com.mariots.biblioteca.bibliotecaadmin.core.dtos.nuevorest.NuevoTextoRest;
+import com.mariots.biblioteca.bibliotecaadmin.core.dtos.objetosvinculados.TemaSupertema;
 import com.mariots.biblioteca.bibliotecaadmin.core.service.ServiceBiblioteca;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -112,7 +113,7 @@ public class ControllerBibliotecaRest {
     //PUT vincular tema -->> supertema
     @PutMapping(value="/temas/{idTema}/supertemas/{idSupertema}")
     public ResponseEntity vincularTemaSupertema(@PathVariable int idTema, @PathVariable int idSupertema){
-        TemaDto temaGuardado= service.vincularTemaSupertema(idTema, idSupertema);
-        return new ResponseEntity<TemaDto>(temaGuardado, HttpStatus.CREATED);
+        TemaSupertema temaSupertema= service.vincularTemaSupertema(idTema, idSupertema);
+        return new ResponseEntity<TemaSupertema>(temaSupertema, HttpStatus.CREATED);
     }
 }

@@ -32,7 +32,6 @@ public class ResponseEntityExceptionHandlerPersonalizado extends ResponseEntityE
         return new ResponseEntity(modeloException, HttpStatus.NOT_FOUND);
     }
 
-    //El exception handler
     @ExceptionHandler(CampoEnBlancoException.class)
     public final ResponseEntity<ModeloException> respuestaCampoEnBlancoException(CampoEnBlancoException ex, WebRequest request){
         ModeloException modeloException = ModeloException.builder()
@@ -43,4 +42,13 @@ public class ResponseEntityExceptionHandlerPersonalizado extends ResponseEntityE
         return new ResponseEntity(modeloException, HttpStatus.BAD_REQUEST);
     }
 
+    @ExceptionHandler(RecursoYaVinculadoException.class)
+    public final ResponseEntity<ModeloException> respuestaRecursoYaVinculadoException(RecursoYaVinculadoException ex, WebRequest request){
+        ModeloException modeloException = ModeloException.builder()
+                .fechaYHora(LocalDateTime.now())
+                .mensaje(ex.getMessage())
+                .detalles(request.getDescription(true))
+                .build();
+        return new ResponseEntity(modeloException, HttpStatus.BAD_REQUEST);
+    }
 }

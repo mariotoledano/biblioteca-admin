@@ -4,6 +4,8 @@ import com.mariots.biblioteca.bibliotecaadmin.core.dtos.AutorDto;
 import com.mariots.biblioteca.bibliotecaadmin.core.dtos.SupertemaDto;
 import com.mariots.biblioteca.bibliotecaadmin.core.dtos.TemaDto;
 import com.mariots.biblioteca.bibliotecaadmin.core.dtos.TextoDto;
+import com.mariots.biblioteca.bibliotecaadmin.core.dtos.objetosvinculados.TemaSupertema;
+
 import java.util.List;
 
 public interface ServiceBiblioteca {
@@ -11,7 +13,6 @@ public interface ServiceBiblioteca {
     public TemaDto guardarTema(TemaDto temaDto);
     public SupertemaDto guardarSupertema(SupertemaDto supertemaDto);
     public TextoDto guardarTexto(TextoDto textoDto);
-//    public TextoDto guardarNuevoTexto(TextoDto textoDto);
 
     public List<AutorDto> recuperarAutores();
     public List<TemaDto> recuperarTemas();
@@ -26,4 +27,6 @@ public interface ServiceBiblioteca {
     public AutorDto recuperarAutorPorNombre(String nombreAutor);
     public TemaDto recuperarTemaPorNombre(String nombreTema);
     public SupertemaDto recuperarSupertemaPorNombre(String nombreSupertema);
+
+    public TemaSupertema vincularTemaSupertema(int idTema, int idSupertema);
 }
