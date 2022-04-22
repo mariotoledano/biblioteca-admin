@@ -2,11 +2,8 @@
 
 
 MEJORAS
-Demasiada lógica de negocio concentrada en mapper
--Incluir un data.sql en resources con datos para pruebas https://www.baeldung.com/spring-boot-h2-database
-    comprobar si este data.sql generaria datos en el perfil mysql
-Investigar h2 persistente, cómo crear un esquema valido desde mysql ya que con el esquema autogenerado por hibernate
-no funciona la persistencia https://www.baeldung.com/spring-boot-data-sql-and-schema-sql -->> funciona bbdd persistente
-
+Demasiada lógica de negocio concentrada en mapper:
+    La solución sería que service tubiera un método para guardar cada típo de DTO y allí estubiera la lógica en vez de
+    un método fijo en service trabajando solo con los DTOs puros y no también con los de cliente
 
 
