@@ -3,6 +3,7 @@ package com.mariots.biblioteca.bibliotecaadmin.core.service;
 import com.mariots.biblioteca.bibliotecaadmin.api.exceptions.RecursoNoEncontradoException;
 import com.mariots.biblioteca.bibliotecaadmin.api.exceptions.RecursoNoVinculadoException;
 import com.mariots.biblioteca.bibliotecaadmin.api.exceptions.RecursoYaVinculadoException;
+import com.mariots.biblioteca.bibliotecaadmin.api.exceptions.RepetirVinculoException;
 import com.mariots.biblioteca.bibliotecaadmin.core.dtos.AutorDto;
 import com.mariots.biblioteca.bibliotecaadmin.core.dtos.SupertemaDto;
 import com.mariots.biblioteca.bibliotecaadmin.core.dtos.TemaDto;
@@ -108,19 +109,23 @@ public class ServiceBibliotecaImpl implements ServiceBiblioteca {
     public SupertemaDto recuperarSupertemaPorNombre(String nombreSupertema) {
         return repository.recuperarSupertemaPorNombre(nombreSupertema).map(mapper::toDto).orElseThrow(()->new RecursoNoEncontradoException("Nombre de Supertema no encontrado"));
     }
-
+    //MÉTODOS AÑADIR VÍNCULOS
     @Override
     public TemaSupertema vincularTemaSupertema(int idTema, int idSupertema) {
         TemaEntity temaEntity = repository.recuperarTemaPorId(idTema)
                 .orElseThrow(()->new RecursoNoEncontradoException("Id de tema no encontrado "));
         SupertemaEntity supertemaEntity = repository.recuperarSupertemaPorId(idSupertema)
                 .orElseThrow(()->new RecursoNoEncontradoException("Id de tema no encontrado "));
-        //Comprobamos si el temaEntity tiene ya un Supertema asociado
-        if(temaEntity.getSupertema()!=null){
-            throw new RecursoYaVinculadoException();
-        } else{
+        //Comprobamos si el supertema de temaEntity es null, si lo es añadimos vínculo
+        if(temaEntity.getSupertema()==null){
             temaEntity.setSupertema(supertemaEntity);
             repository.guardarTema(temaEntity);
+            //Comprobamos si el vinculo existe previamente para no generar duplicados
+        } else if (temaEntity.getSupertema()==supertemaEntity) {
+            throw new RepetirVinculoException();
+            //si no es nulo ni existe el vínculo previamente, entonces existe un vínculo y hay que sobreescribir
+        } else{
+            throw new RecursoYaVinculadoException();
         }
         TemaDto temaDespues = recuperarTemaPorId(idTema);
         SupertemaDto supertemaDespues =recuperarSupertemaPorId(idSupertema);
@@ -132,13 +137,17 @@ public class ServiceBibliotecaImpl implements ServiceBiblioteca {
         TemaEntity temaEntity = repository.recuperarTemaPorId(idTema)
                 .orElseThrow(()->new RecursoNoEncontradoException("Id de tema no encontrado "));
         SupertemaEntity supertemaEntity = repository.recuperarSupertemaPorId(idSupertema)
-                .orElseThrow(()->new RecursoNoEncontradoException("Id de tema no encontrado "));
-        //Comprobamos si existe previamente el vínculo y si no es así pedimos que no use /sobreescribir
-        if(temaEntity.getSupertema()!=supertemaEntity){
+                .orElseThrow(()->new RecursoNoEncontradoException("Id de supertematema no encontrado "));
+        //Comprobamos que el supertema de tema no es null
+        if(temaEntity.getSupertema()==null){
             throw new RecursoNoVinculadoException();
+            //Comprobamos si existe previamente el vínculo para no generar duplicados
+        } else if(temaEntity.getSupertema()==supertemaEntity) {
+            throw new RepetirVinculoException();
+        } else{
+            temaEntity.setSupertema(supertemaEntity);
+            repository.guardarTema(temaEntity);
         }
-        temaEntity.setSupertema(supertemaEntity);
-        repository.guardarTema(temaEntity);
         TemaDto temaDespues = recuperarTemaPorId(idTema);
         SupertemaDto supertemaDespues =recuperarSupertemaPorId(idSupertema);
         return new TemaSupertema(temaDespues,supertemaDespues);
@@ -150,21 +159,19 @@ public class ServiceBibliotecaImpl implements ServiceBiblioteca {
                 .orElseThrow(()->new RecursoNoEncontradoException("Id de texto no encontrado"));
         TemaEntity temaEntity= repository.recuperarTemaPorId(idTema)
                 .orElseThrow(()->new RecursoNoEncontradoException("Id de tema no encontrado"));
-        //Comprobamos si TextoEntity no tiene temas asociados (en teoría imposible)
+        //Comprobamos si TextoEntity no tiene temas asociados (en teoría imposible), si lo es se añade vínculo
         if(textoEntity.getTemas()==null){
             List<TemaEntity> temasEnTexto = Arrays.asList(temaEntity);
             textoEntity.setTemas(temasEnTexto);
             repository.guardarTexto(textoEntity);
+            //comprobamos si el vínculo existía previamente para evitar duplicados
+        } else if(textoEntity.getTemas().stream().anyMatch((tema)->tema==temaEntity)){
+            throw new RepetirVinculoException();
         } else{
-            //comprobamos si el vínculo existía previamente y si no añadimos el tema al texto
-            if(textoEntity.getTemas().stream().anyMatch((tema)->tema==temaEntity)){
-                throw new RecursoYaVinculadoException();
-            } else{
-                List<TemaEntity> temasEnTexto = textoEntity.getTemas();
-                temasEnTexto.add(temaEntity);
-                textoEntity.setTemas(temasEnTexto);
-                repository.guardarTexto(textoEntity);
-            }
+            List<TemaEntity> temasEnTexto = textoEntity.getTemas();
+            temasEnTexto.add(temaEntity);
+            textoEntity.setTemas(temasEnTexto);
+            repository.guardarTexto(textoEntity);
         }
         TextoDto textoDespues = recuperarTextoPorId(idTexto);
         TemaDto temaDespues = recuperarTemaPorId(idTema);
@@ -177,16 +184,19 @@ public class ServiceBibliotecaImpl implements ServiceBiblioteca {
                 .orElseThrow(() -> new RecursoNoEncontradoException("Id de texto no encontrado"));
         AutorEntity autorEntity = repository.recuperarAutorPorId(idAutor)
                 .orElseThrow(() -> new RecursoNoEncontradoException("Id de autor no encontrado"));
-        //Comprobamos si el vínculo texto autor es nulo
+        //Comprobamos si el vínculo texto autor es nulo, si lo es se añade y guarda
         if(textoEntity.getAutor()==null){
             textoEntity.setAutor(autorEntity);
             repository.guardarTexto(textoEntity);
-            TextoDto textoDespues = recuperarTextoPorId(idTexto);
-            AutorDto autorDespues = recuperarAutorPorId(idAutor);
-            return  new TextoAutor(textoDespues,autorDespues);
+            //comprobamos si el vínculo que se quiere crear ya existe para eviar repeticiones
+        } else if (textoEntity.getAutor()==autorEntity) {
+            throw new RepetirVinculoException();
         } else{
             throw new RecursoYaVinculadoException();
         }
+        TextoDto textoDespues = recuperarTextoPorId(idTexto);
+        AutorDto autorDespues = recuperarAutorPorId(idAutor);
+        return  new TextoAutor(textoDespues,autorDespues);
     }
 
     @Override
@@ -195,15 +205,20 @@ public class ServiceBibliotecaImpl implements ServiceBiblioteca {
                 .orElseThrow(() -> new RecursoNoEncontradoException("Id de texto no encontrado"));
         AutorEntity autorEntity = repository.recuperarAutorPorId(idAutor)
                 .orElseThrow(() -> new RecursoNoEncontradoException("Id de autor no encontrado"));
-        if(textoEntity.getAutor()!=null){
+        //comprobamos si el autor es null
+        if(textoEntity.getAutor()==null){
+            throw new RecursoNoVinculadoException();
+            //comprobamos si el vínculo ya existía para no duplicar elementos de vínculo
+        } else if(textoEntity.getAutor()==autorEntity){
+            throw new RepetirVinculoException();
+            //si no existe previamente se añade
+        } else {
             textoEntity.setAutor(autorEntity);
             repository.guardarTexto(textoEntity);
-            TextoDto textoDespues = recuperarTextoPorId(idTexto);
-            AutorDto autorDespues = recuperarAutorPorId(idAutor);
-            return  new TextoAutor(textoDespues,autorDespues);
-        } else{
-            throw new RecursoYaVinculadoException();
         }
+        TextoDto textoDespues = recuperarTextoPorId(idTexto);
+        AutorDto autorDespues = recuperarAutorPorId(idAutor);
+        return  new TextoAutor(textoDespues,autorDespues);
     }
 
 

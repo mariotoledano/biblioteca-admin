@@ -61,4 +61,13 @@ public class ResponseEntityExceptionHandlerPersonalizado extends ResponseEntityE
                 .build();
         return new ResponseEntity(modeloException, HttpStatus.BAD_REQUEST);
     }
+    @ExceptionHandler(RepetirVinculoException.class)
+    public final ResponseEntity<ModeloException> respuestaRepetirVinculoException(RepetirVinculoException ex, WebRequest request){
+        ModeloException modeloException = ModeloException.builder()
+                .fechaYHora(LocalDateTime.now())
+                .mensaje(ex.getMessage())
+                .detalles(request.getDescription(true))
+                .build();
+        return new ResponseEntity(modeloException, HttpStatus.BAD_REQUEST);
+    }
 }
