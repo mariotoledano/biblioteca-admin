@@ -1,4 +1,4 @@
-package com.mariots.biblioteca.bibliotecaadmin.core.dtos.nuevorest;
+package com.mariots.biblioteca.bibliotecaadmin.core.dtos.inputrest;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

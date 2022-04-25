@@ -5,7 +5,7 @@ import com.mariots.biblioteca.bibliotecaadmin.core.dtos.AutorDto;
 import com.mariots.biblioteca.bibliotecaadmin.core.dtos.SupertemaDto;
 import com.mariots.biblioteca.bibliotecaadmin.core.dtos.TemaDto;
 import com.mariots.biblioteca.bibliotecaadmin.core.dtos.TextoDto;
-import com.mariots.biblioteca.bibliotecaadmin.core.dtos.nuevorest.*;
+import com.mariots.biblioteca.bibliotecaadmin.core.dtos.inputrest.*;
 import com.mariots.biblioteca.bibliotecaadmin.core.dtos.objetosvinculados.TemaSupertema;
 import com.mariots.biblioteca.bibliotecaadmin.core.dtos.objetosvinculados.TextoAutor;
 import com.mariots.biblioteca.bibliotecaadmin.core.dtos.objetosvinculados.TextoTema;
@@ -191,9 +191,9 @@ public class ControllerBibliotecaRest {
         return new ResponseEntity<AutorDto>(autorDto,HttpStatus.OK);
     }
     @DeleteMapping("textos/{idTexto}")
-    public ResponseEntity eliminarTextoPorId(@PathVariable int idTexo){
-        TextoDto textoDto = service.recuperarTextoPorId(idTexo);
-        service.eliminarTextoPorId(idTexo);
+    public ResponseEntity eliminarTextoPorId(@PathVariable int idTexto){
+        TextoDto textoDto = service.recuperarTextoPorId(idTexto);
+        service.eliminarTextoPorId(idTexto);
         return new ResponseEntity<TextoDto>(textoDto,HttpStatus.OK);
     }
     @DeleteMapping("temas/{idTema}")

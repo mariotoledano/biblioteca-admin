@@ -22,15 +22,15 @@ public class TemaEntity {
     @Column(name="tema", unique = true, nullable = false)
     String nombreTema;
     //TEXTO -> TEMA MANY TO MANY
-    @ManyToMany(fetch=FetchType.LAZY, cascade= {CascadeType.PERSIST, CascadeType.MERGE,
-            CascadeType.DETACH, CascadeType.REFRESH})
+    @ManyToMany(fetch=FetchType.LAZY,
+            cascade= {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
     @JoinTable(name=("texto_tema"),
             joinColumns=@JoinColumn(name="tema_id"),
             inverseJoinColumns=@JoinColumn(name="texto_id"))
     private List<TextoEntity> textos;
     //TEMAS -> SUPERTEMA MANY TO ONE
-    @ManyToOne(fetch=FetchType.LAZY, cascade= {CascadeType.PERSIST, CascadeType.MERGE,
-            CascadeType.DETACH, CascadeType.REFRESH})
+    @ManyToOne(fetch=FetchType.LAZY,
+            cascade= {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
     @JoinColumn(name=("supertema_id"))
     private SupertemaEntity supertema;
 

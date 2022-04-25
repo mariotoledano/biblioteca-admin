@@ -26,8 +26,9 @@ public class AutorEntity {
     @Column(name="descripcion_larga")
     private String descripcionLarga;
     //JOIN TABLE
-    @OneToMany(fetch=FetchType.LAZY, cascade= {CascadeType.PERSIST, CascadeType.MERGE,
-                CascadeType.DETACH, CascadeType.REFRESH}, mappedBy = "autor")
+    @OneToMany(fetch=FetchType.LAZY,
+            cascade= {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH},
+            mappedBy = "autor")
     private List<TextoEntity> textos;
 
     }

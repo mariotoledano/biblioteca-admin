@@ -24,8 +24,9 @@ public class SupertemaEntity {
     @Column(name = "supertema", unique = true, nullable = false)
     private String nombreSupertema;
     //SUPERTEMA->TEMAS ONE TO MANY
-    @OneToMany(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE,
-            CascadeType.DETACH, CascadeType.REFRESH}, mappedBy = "supertema")
+    @OneToMany(fetch = FetchType.LAZY,
+            cascade= {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH},
+            mappedBy = "supertema")
     private List<TemaEntity> temas = new ArrayList<>();
 
 
