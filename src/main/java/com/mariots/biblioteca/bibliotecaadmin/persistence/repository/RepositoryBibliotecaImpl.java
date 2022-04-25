@@ -98,5 +98,25 @@ public class RepositoryBibliotecaImpl implements RepositoryBiblioteca {
         return supertemaJpaRepository.findByNombreSupertema(nombreSupertema);
     }
 
+    @Override
+    public void eliminarAutor(AutorEntity autor) {
+        autorJpaRepository.delete(autor);
+    }
+
+    @Override
+    public void eliminarTexto(TextoEntity texto) {
+        textoJpaRepository.delete(texto);
+    }
+
+    @Override
+    public void eliminarTema(TemaEntity tema) {
+        temaJpaRepository.delete(tema);
+    }
+
+    @Override
+    public void eliminarSupertema(SupertemaEntity supertema) {
+        supertemaJpaRepository.delete(supertema);
+    }
+
 
 }

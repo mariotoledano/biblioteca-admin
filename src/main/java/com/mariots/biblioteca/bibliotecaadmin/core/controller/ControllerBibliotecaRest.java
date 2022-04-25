@@ -9,6 +9,7 @@ import com.mariots.biblioteca.bibliotecaadmin.core.dtos.nuevorest.*;
 import com.mariots.biblioteca.bibliotecaadmin.core.dtos.objetosvinculados.TemaSupertema;
 import com.mariots.biblioteca.bibliotecaadmin.core.dtos.objetosvinculados.TextoAutor;
 import com.mariots.biblioteca.bibliotecaadmin.core.dtos.objetosvinculados.TextoTema;
+import com.mariots.biblioteca.bibliotecaadmin.core.dtos.respuestaDelete.RecursoEliminado;
 import com.mariots.biblioteca.bibliotecaadmin.core.service.ServiceBiblioteca;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -183,26 +184,30 @@ public class ControllerBibliotecaRest {
     }
 
     //DELETE resource/{id} --> Eliminar recursos por id
-//    @DeleteMapping("autores/{idAutor}")
-//    public ResponseEntity eliminarAutorPorId(@PathVariable int idAutor){
-//        boolean autorEliminado = service.eliminarAutorPorId(idAutor);
-//        return new ResponseEntity<Boolean>(autorEliminado,HttpStatus.OK);
-//    }
-//    @DeleteMapping("textos/{idTexto}")
-//    public ResponseEntity eliminarTextoPorId(@PathVariable int idTexo){
-//        boolean textoEliminado = service.eliminarTextoPorId(idTexo);
-//        return new ResponseEntity<Boolean>(textoEliminado,HttpStatus.OK);
-//    }
-//    @DeleteMapping("temas/{idTema}")
-//    public ResponseEntity eliminarTemaPorId(@PathVariable int idTema){
-//        boolean temaEliminado = service.eliminarTemaPorId(idTema);
-//        return new ResponseEntity<Boolean>(temaEliminado,HttpStatus.OK);
-//    }
-//    @DeleteMapping("supertemas/{idSupertema}")
-//    public ResponseEntity eliminarSupertemaPorId(@PathVariable int idSupertema){
-//        boolean supertemaEliminado = service.eliminarSupertemaPorId(idSupertema);
-//        return new ResponseEntity<Boolean>(supertemaEliminado,HttpStatus.OK);
-//    }
+    @DeleteMapping("autores/{idAutor}")
+    public ResponseEntity eliminarAutorPorId(@PathVariable int idAutor){
+        AutorDto autorDto = service.recuperarAutorPorId(idAutor);
+        service.eliminarAutorPorId(idAutor);
+        return new ResponseEntity<AutorDto>(autorDto,HttpStatus.OK);
+    }
+    @DeleteMapping("textos/{idTexto}")
+    public ResponseEntity eliminarTextoPorId(@PathVariable int idTexo){
+        TextoDto textoDto = service.recuperarTextoPorId(idTexo);
+        service.eliminarTextoPorId(idTexo);
+        return new ResponseEntity<TextoDto>(textoDto,HttpStatus.OK);
+    }
+    @DeleteMapping("temas/{idTema}")
+    public ResponseEntity eliminarTemaPorId(@PathVariable int idTema){
+        TemaDto temaDto = service.recuperarTemaPorId(idTema);
+        service.eliminarTemaPorId(idTema);
+        return new ResponseEntity<TemaDto>(temaDto,HttpStatus.OK);
+    }
+    @DeleteMapping("supertemas/{idSupertema}")
+    public ResponseEntity eliminarSupertemaPorId(@PathVariable int idSupertema){
+        SupertemaDto supertemaDto= service.recuperarSupertemaPorId(idSupertema);
+        service.eliminarSupertemaPorId(idSupertema);
+        return new ResponseEntity<SupertemaDto>(supertemaDto,HttpStatus.OK);
+    }
 
     //DELETE resource/{id}/resource/{id} --> Eliminar vínculos entre recursos por id
 //    @DeleteMapping(value = "/temas/{idTema}/supertemas/{idSupertema}")

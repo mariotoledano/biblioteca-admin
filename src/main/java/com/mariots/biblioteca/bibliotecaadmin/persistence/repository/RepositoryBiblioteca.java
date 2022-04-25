@@ -27,4 +27,9 @@ public interface RepositoryBiblioteca {
     public Optional<AutorEntity> recuperarAutorPorNombre(String nombreAutor);
     public Optional<TemaEntity> recuperarTemaPorNombre(String nombreTema);
     public Optional<SupertemaEntity> recuperarSupertemaPorNombre(String nombreSupertema);
+
+    public void eliminarAutor(AutorEntity autor);
+    public void eliminarTexto(TextoEntity texto);
+    public void eliminarTema(TemaEntity tema);
+    public void eliminarSupertema(SupertemaEntity supertema);
 }

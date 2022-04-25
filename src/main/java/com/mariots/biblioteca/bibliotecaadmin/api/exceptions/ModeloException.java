@@ -11,6 +11,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @Builder
 public class ModeloException{
+
     private LocalDateTime fechaYHora;
     private String mensaje;
     private String detalles;

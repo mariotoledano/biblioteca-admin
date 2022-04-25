@@ -20,10 +20,7 @@ import com.mariots.biblioteca.bibliotecaadmin.persistence.repository.RepositoryB
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -33,7 +30,7 @@ public class ServiceBibliotecaImpl implements ServiceBiblioteca {
    @Autowired
     Mapper mapper;
 
-    //MÉTODOS GUARDAR
+//MÉTODOS GUARDAR
     @Override
     public AutorDto guardarAutor(AutorDto autorDto) {
         return mapper.toDto(repository.guardarAutor(mapper.toEntity(autorDto)));
@@ -54,7 +51,7 @@ public class ServiceBibliotecaImpl implements ServiceBiblioteca {
         return mapper.toDto(repository.guardarTexto(mapper.toEntity(textoDto)));
     }
 
-    //MÉTODOS RECUPERAR TODOS
+//MÉTODOS RECUPERAR TODOS
     @Override
     public List<AutorDto> recuperarAutores() {
         return repository.recuperarAutores().stream().map(mapper::toDto).collect(Collectors.toList());
@@ -75,7 +72,7 @@ public class ServiceBibliotecaImpl implements ServiceBiblioteca {
         return repository.recupearTextos().stream().map(mapper::toDto).collect(Collectors.toList());
     }
 
-    //MÉTODOS RECUPERAR POR ID
+//MÉTODOS RECUPERAR POR ID
     @Override
     public AutorDto recuperarAutorPorId(int idAutor) {
         return repository.recuperarAutorPorId(idAutor).map(mapper::toDto).orElseThrow(()->new RecursoNoEncontradoException("Id de Autor no encontrado"));
@@ -109,7 +106,7 @@ public class ServiceBibliotecaImpl implements ServiceBiblioteca {
     public SupertemaDto recuperarSupertemaPorNombre(String nombreSupertema) {
         return repository.recuperarSupertemaPorNombre(nombreSupertema).map(mapper::toDto).orElseThrow(()->new RecursoNoEncontradoException("Nombre de Supertema no encontrado"));
     }
-    //MÉTODOS AÑADIR VÍNCULOS
+//MÉTODOS AÑADIR VÍNCULOS
     @Override
     public TemaSupertema vincularTemaSupertema(int idTema, int idSupertema) {
         TemaEntity temaEntity = repository.recuperarTemaPorId(idTema)
@@ -219,6 +216,33 @@ public class ServiceBibliotecaImpl implements ServiceBiblioteca {
         TextoDto textoDespues = recuperarTextoPorId(idTexto);
         AutorDto autorDespues = recuperarAutorPorId(idAutor);
         return  new TextoAutor(textoDespues,autorDespues);
+    }
+
+//MÉTODOS ELIMINAR RECURSO
+    @Override
+    public void eliminarAutorPorId(int idAutor) {
+        AutorEntity autorEntity = repository.recuperarAutorPorId(idAutor)
+                .orElseThrow(()->new RecursoNoEncontradoException("Id de autor no encontrado"));
+        repository.eliminarAutor(autorEntity);
+    }
+    @Override
+    public void eliminarTextoPorId(int idTexo) {
+        TextoEntity textoEntity = repository.recuperarTextoPorId(idTexo)
+                .orElseThrow(()->new RecursoNoEncontradoException("Id de texto no encontrado"));
+        repository.eliminarTexto(textoEntity);
+    }
+    @Override
+    public void eliminarTemaPorId(int idTema) {
+        TemaEntity temaEntity = repository.recuperarTemaPorId(idTema)
+                .orElseThrow(()->new RecursoNoEncontradoException("Id de tema no encontrado"));
+        repository.eliminarTema(temaEntity);
+
+    }
+    @Override
+    public void eliminarSupertemaPorId(int idSupertema) {
+        SupertemaEntity supertemaEntity = repository.recuperarSupertemaPorId(idSupertema)
+                .orElseThrow(()->new RecursoNoEncontradoException("Id de supertema no encontrado"));
+        repository.eliminarSupertema(supertemaEntity);
     }
 
 

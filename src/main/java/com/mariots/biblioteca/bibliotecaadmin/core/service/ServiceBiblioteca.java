@@ -35,4 +35,9 @@ public interface ServiceBiblioteca {
     TextoTema vincularTextoTema(int idTexto, int idTema);
     TextoAutor vincularTextoAutor(int idTexto, int idAutor);
     TextoAutor sobreescribirVinculoTextoAutor(int idTexto, int idAutor);
+
+    void eliminarAutorPorId(int idAutor);
+    void eliminarTextoPorId(int idTexo);
+    void eliminarTemaPorId(int idTema);
+    void eliminarSupertemaPorId(int idSupertema);
 }
