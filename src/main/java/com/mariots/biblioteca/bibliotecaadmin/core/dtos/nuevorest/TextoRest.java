@@ -10,7 +10,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class NuevoTextoRest {
+public class TextoRest {
 
     private String textoString;
     private String longitud;

@@ -5,28 +5,34 @@ import com.mariots.biblioteca.bibliotecaadmin.core.dtos.SupertemaDto;
 import com.mariots.biblioteca.bibliotecaadmin.core.dtos.TemaDto;
 import com.mariots.biblioteca.bibliotecaadmin.core.dtos.TextoDto;
 import com.mariots.biblioteca.bibliotecaadmin.core.dtos.objetosvinculados.TemaSupertema;
+import com.mariots.biblioteca.bibliotecaadmin.core.dtos.objetosvinculados.TextoAutor;
+import com.mariots.biblioteca.bibliotecaadmin.core.dtos.objetosvinculados.TextoTema;
 
 import java.util.List;
 
 public interface ServiceBiblioteca {
-    public AutorDto guardarAutor(AutorDto autorDto);
-    public TemaDto guardarTema(TemaDto temaDto);
-    public SupertemaDto guardarSupertema(SupertemaDto supertemaDto);
-    public TextoDto guardarTexto(TextoDto textoDto);
+    AutorDto guardarAutor(AutorDto autorDto);
+    TemaDto guardarTema(TemaDto temaDto);
+    SupertemaDto guardarSupertema(SupertemaDto supertemaDto);
+    TextoDto guardarTexto(TextoDto textoDto);
 
-    public List<AutorDto> recuperarAutores();
-    public List<TemaDto> recuperarTemas();
-    public List<SupertemaDto> recuperarSupertemas();
-    public List<TextoDto> recupearTextos();
+    List<AutorDto> recuperarAutores();
+    List<TemaDto> recuperarTemas();
+    List<SupertemaDto> recuperarSupertemas();
+    List<TextoDto> recupearTextos();
 
-    public AutorDto recuperarAutorPorId(int idAutor);
-    public TemaDto recuperarTemaPorId(int idTema);
-    public SupertemaDto recuperarSupertemaPorId(int idSupertema);
-    public TextoDto recuperarTextoPorId(int idTexto);
+    AutorDto recuperarAutorPorId(int idAutor);
+    TemaDto recuperarTemaPorId(int idTema);
+    SupertemaDto recuperarSupertemaPorId(int idSupertema);
+    TextoDto recuperarTextoPorId(int idTexto);
 
-    public AutorDto recuperarAutorPorNombre(String nombreAutor);
-    public TemaDto recuperarTemaPorNombre(String nombreTema);
-    public SupertemaDto recuperarSupertemaPorNombre(String nombreSupertema);
+    AutorDto recuperarAutorPorNombre(String nombreAutor);
+    TemaDto recuperarTemaPorNombre(String nombreTema);
+    SupertemaDto recuperarSupertemaPorNombre(String nombreSupertema);
 
-    public TemaSupertema vincularTemaSupertema(int idTema, int idSupertema);
+    TemaSupertema vincularTemaSupertema(int idTema, int idSupertema);
+    TemaSupertema sobreescribirVinculoTemaSupertema(int idTema, int idSupertema);
+    TextoTema vincularTextoTema(int idTexto, int idTema);
+    TextoAutor vincularTextoAutor(int idTexto, int idAutor);
+    TextoAutor sobreescribirVinculoTextoAutor(int idTexto, int idAutor);
 }

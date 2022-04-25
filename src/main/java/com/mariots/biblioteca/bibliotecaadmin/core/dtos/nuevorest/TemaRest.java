@@ -7,8 +7,6 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class NuevoSupertemaRest {
-
-    private String nombreSupertema;
-
+public class TemaRest {
+    String nombreTema;
 }

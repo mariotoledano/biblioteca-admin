@@ -6,10 +6,10 @@ import com.mariots.biblioteca.bibliotecaadmin.core.dtos.AutorDto;
 import com.mariots.biblioteca.bibliotecaadmin.core.dtos.SupertemaDto;
 import com.mariots.biblioteca.bibliotecaadmin.core.dtos.TemaDto;
 import com.mariots.biblioteca.bibliotecaadmin.core.dtos.TextoDto;
-import com.mariots.biblioteca.bibliotecaadmin.core.dtos.nuevorest.NuevoAutorRest;
-import com.mariots.biblioteca.bibliotecaadmin.core.dtos.nuevorest.NuevoSupertemaRest;
-import com.mariots.biblioteca.bibliotecaadmin.core.dtos.nuevorest.NuevoTemaRest;
-import com.mariots.biblioteca.bibliotecaadmin.core.dtos.nuevorest.NuevoTextoRest;
+import com.mariots.biblioteca.bibliotecaadmin.core.dtos.nuevorest.AutorRest;
+import com.mariots.biblioteca.bibliotecaadmin.core.dtos.nuevorest.SupertemaRest;
+import com.mariots.biblioteca.bibliotecaadmin.core.dtos.nuevorest.TemaRest;
+import com.mariots.biblioteca.bibliotecaadmin.core.dtos.nuevorest.TextoRest;
 import com.mariots.biblioteca.bibliotecaadmin.persistence.entities.AutorEntity;
 import com.mariots.biblioteca.bibliotecaadmin.persistence.entities.SupertemaEntity;
 import com.mariots.biblioteca.bibliotecaadmin.persistence.entities.TemaEntity;
@@ -140,32 +140,32 @@ public class MapperImpl implements Mapper{
 
     //NUEVO-REST --> DTO
     @Override
-    public AutorDto toDto(NuevoAutorRest nuevoAutorRest) {
+    public AutorDto toDto(AutorRest autorRest) {
         return new AutorDto().builder()
-                .nombreAutor(nuevoAutorRest.getNombreAutor())
-                .fechaAutor(nuevoAutorRest.getFechaAutor())
-                .descripcionBreve(nuevoAutorRest.getDescripcionBreve())
-                .descripcionLarga(nuevoAutorRest.getDescripcionLarga())
+                .nombreAutor(autorRest.getNombreAutor())
+                .fechaAutor(autorRest.getFechaAutor())
+                .descripcionBreve(autorRest.getDescripcionBreve())
+                .descripcionLarga(autorRest.getDescripcionLarga())
                 .build();
     }
 
     @Override
-    public TextoDto toDto(NuevoTextoRest nuevoTextoRest) {
+    public TextoDto toDto(TextoRest textoRest) {
         TextoDto textoDto = new TextoDto().builder()
-                .textoString(nuevoTextoRest.getTextoString())
-                .longitud(nuevoTextoRest.getLongitud())
+                .textoString(textoRest.getTextoString())
+                .longitud(textoRest.getLongitud())
                 .build();
         List<Integer> idTemas = new ArrayList<>();
         //comprobamos si el nombre de autor se ha introducido
-        if(nuevoTextoRest.getNombreAutor()==null) {
+        if(textoRest.getNombreAutor()==null) {
             //no se ha introducido --> excepción
             throw new CampoEnBlancoException();
         } else {
             //se ha introducido -->
             //comprobamos si existe el nombre de autor en BD
-            if(repository.recuperarAutorPorNombre(nuevoTextoRest.getNombreAutor()).isPresent()){
+            if(repository.recuperarAutorPorNombre(textoRest.getNombreAutor()).isPresent()){
                 //existe entonces añadimos el autor al textoDto
-                int idAutor =repository.recuperarAutorPorNombre(nuevoTextoRest.getNombreAutor()).get().getIdAutor();
+                int idAutor =repository.recuperarAutorPorNombre(textoRest.getNombreAutor()).get().getIdAutor();
                 textoDto.setIdAutor(idAutor);
             } else {
                 //no existe --> excepción y pedimos otro
@@ -173,12 +173,12 @@ public class MapperImpl implements Mapper{
             }
         }
         //comprobamos si existen los temas aportados
-        if(nuevoTextoRest.getNombreTemas()==null){
+        if(textoRest.getNombreTemas()==null){
             throw new CampoEnBlancoException();
         } else {
             //comprobamos si existen en BD los temas aportados, si hay alguno que no está en BD se lanza ex
-            if(nuevoTextoRest.getNombreTemas().stream().allMatch((nombreTema)->repository.recuperarTemaPorNombre(nombreTema).isPresent())){
-                nuevoTextoRest.getNombreTemas().stream().map((nombreTema)->idTemas.add(repository.recuperarTemaPorNombre(nombreTema).get().getIdTema())).collect(Collectors.toList());
+            if(textoRest.getNombreTemas().stream().allMatch((nombreTema)->repository.recuperarTemaPorNombre(nombreTema).isPresent())){
+                textoRest.getNombreTemas().stream().map((nombreTema)->idTemas.add(repository.recuperarTemaPorNombre(nombreTema).get().getIdTema())).collect(Collectors.toList());
                 textoDto.setIdTemas(idTemas);
             } else {
                 throw new RecursoNoEncontradoException("No existe el nombre de tema aportado, ingrese un nombre de autor previamente registrado");
@@ -188,16 +188,16 @@ public class MapperImpl implements Mapper{
     }
 
     @Override
-    public TemaDto toDto(NuevoTemaRest nuevoTemaRest) {
+    public TemaDto toDto(TemaRest temaRest) {
         return new TemaDto().builder()
-                .nombreTema(nuevoTemaRest.getNombreTema())
+                .nombreTema(temaRest.getNombreTema())
                 .build();
     }
 
     @Override
-    public SupertemaDto toDto(NuevoSupertemaRest nuevoSupertemaRest) {
+    public SupertemaDto toDto(SupertemaRest supertemaRest) {
         return new SupertemaDto().builder()
-                .nombreSupertema(nuevoSupertemaRest.getNombreSupertema())
+                .nombreSupertema(supertemaRest.getNombreSupertema())
                 .build();
     }
 

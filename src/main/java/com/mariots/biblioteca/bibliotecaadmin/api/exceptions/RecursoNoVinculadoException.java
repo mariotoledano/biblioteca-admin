@@ -4,8 +4,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 @ResponseStatus(HttpStatus.BAD_REQUEST)
-public class RecursoYaVinculadoException extends RuntimeException{
-    public RecursoYaVinculadoException(){
-        super("Ya existe un vínculo. Use la opción de /sobreescribir si lo desea.");
+public class RecursoNoVinculadoException extends RuntimeException{
+    public RecursoNoVinculadoException(){
+        super("Este vínculo no existe. No utilice la opción /sobreescribir si desea crear el vínculo.");
     }
 }
