@@ -11,5 +11,7 @@ Demasiada lógica de negocio concentrada en mapper:
 Separar web de Rest, plantear la Web como un cliente del servicio Rest
 Investigar el funcionamiento Exception Handler, posible contradicción entre HttpStatus de la excepción concreta
 y el HttpStatus lanzado por ResponseEntityExceptionHandler
-
-
+No hay control para no repetición de texto
+Validar números como entrada en path para ids
+Validar longitud te textoString en función de valor de longitud
+validar longitud: solo breve o largo

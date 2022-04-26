@@ -21,7 +21,7 @@ public interface ServiceBiblioteca {
     List<AutorDto> recuperarAutores();
     List<TemaDto> recuperarTemas();
     List<SupertemaDto> recuperarSupertemas();
-    List<TextoDto> recupearTextos();
+    List<TextoDto> recuperarTextos();
 
     AutorDto recuperarAutorPorId(int idAutor);
     TemaDto recuperarTemaPorId(int idTema);
@@ -31,6 +31,11 @@ public interface ServiceBiblioteca {
     AutorDto recuperarAutorPorNombre(String nombreAutor);
     TemaDto recuperarTemaPorNombre(String nombreTema);
     SupertemaDto recuperarSupertemaPorNombre(String nombreSupertema);
+
+    List<TextoDto> recuperarTextosPorAutor(int idAutor);
+    List<TextoDto> recuperarTextosPorTema(int idTema);
+    List<TextoDto> recuperarTextosPorSupertema(int idSupertema);
+    List<TemaDto> recuperarTemasPorSupertema(int idSupertema);
 
     TemaSupertema vincularTemaSupertema(int idTema, int idSupertema);
     TemaSupertema sobreescribirVinculoTemaSupertema(int idTema, int idSupertema);
@@ -51,7 +56,5 @@ public interface ServiceBiblioteca {
     TextoDto actualizarTextoPorId(int id, TextoRest texto);
     TemaDto actualizarTemaPorId(int id, TemaRest tema);
     SupertemaDto actualizarSupertemaPorId(int id, SupertemaRest supertema);
-
-
 
 }

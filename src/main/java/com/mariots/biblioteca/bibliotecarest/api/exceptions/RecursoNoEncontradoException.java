@@ -8,8 +8,8 @@ public class RecursoNoEncontradoException extends RuntimeException {
     public RecursoNoEncontradoException(){
         super("Recurso no encontrado");
     }
-    public RecursoNoEncontradoException(String mensajeError){
-        super(mensajeError);
+    public RecursoNoEncontradoException(String mensajePersonalizado){
+        super(mensajePersonalizado);
     }
 
 }

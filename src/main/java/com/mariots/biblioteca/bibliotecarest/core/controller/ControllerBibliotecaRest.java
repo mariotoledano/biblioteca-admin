@@ -34,7 +34,7 @@ public class ControllerBibliotecaRest {
 
     @GetMapping(value = "/textos")
     public ResponseEntity recuperarTextos() {
-        List<TextoDto> textos = service.recupearTextos();
+        List<TextoDto> textos = service.recuperarTextos();
         return new ResponseEntity<List<TextoDto>>(textos, HttpStatus.FOUND);
     }
 
@@ -94,6 +94,29 @@ public class ControllerBibliotecaRest {
     public ResponseEntity recuperarSupertemaPorId(@PathVariable String nombreSupertema) {
         SupertemaDto supertema = service.recuperarSupertemaPorNombre(nombreSupertema);
         return new ResponseEntity<SupertemaDto>(supertema, HttpStatus.FOUND);
+    }
+
+//GET resource/resource/{id} --> texto por autor, texto por tema, texto por supertema, tema por supertema
+
+    @GetMapping(value="/textos/autores/{idAutor}")
+    public ResponseEntity recuperarTextosPorAutor(@PathVariable int idAutor){
+        List<TextoDto> textos = service.recuperarTextosPorAutor(idAutor);
+        return new ResponseEntity<List<TextoDto>>(textos, HttpStatus.FOUND);
+    }
+    @GetMapping(value="/textos/temas/{idTema}")
+    public ResponseEntity recuperarTextosPorTema(@PathVariable int idTema){
+        List<TextoDto> textos = service.recuperarTextosPorTema(idTema);
+        return new ResponseEntity<List<TextoDto>>(textos, HttpStatus.FOUND);
+    }
+    @GetMapping(value="/textos/supertemas/{idSupertema}")
+    public ResponseEntity recuperarTextosPorSupertema(@PathVariable int idSupertema){
+        List<TextoDto> textos = service.recuperarTextosPorSupertema(idSupertema);
+        return new ResponseEntity<List<TextoDto>>(textos, HttpStatus.FOUND);
+    }
+    @GetMapping(value="/temas/supertemas/{idSupertema}")
+    public ResponseEntity recuperarTemasPorSupertema(@PathVariable int idSupertema){
+        List<TemaDto> temas = service.recuperarTemasPorSupertema(idSupertema);
+        return new ResponseEntity<List<TemaDto>>(temas, HttpStatus.FOUND);
     }
 
 //POST resource --> Creación nuevo resource

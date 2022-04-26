@@ -60,62 +60,138 @@ public class ServiceBibliotecaImpl implements ServiceBiblioteca {
         return mapper.toDto(repository.guardarTexto(mapper.toEntity(textoDto)));
     }
 
-    //MÉTODOS RECUPERAR TODOS
+//MÉTODOS RECUPERAR TODOS
     @Override
     public List<AutorDto> recuperarAutores() {
-        return repository.recuperarAutores().stream().map(mapper::toDto).collect(Collectors.toList());
+        List<AutorEntity> todosAutores = repository.recuperarAutores();
+        if (todosAutores ==null||todosAutores.isEmpty()){
+            throw new NoHayResultadosException("No hay autores registrados en la BBDD");
+        }
+        return todosAutores.stream().map(mapper::toDto).collect(Collectors.toList());
     }
 
     @Override
     public List<TemaDto> recuperarTemas() {
-        return repository.recuperarTemas().stream().map(mapper::toDto).collect(Collectors.toList());
+        List<TemaEntity> todosTemas = repository.recuperarTemas();
+        if (todosTemas==null||todosTemas.isEmpty()){
+            throw new NoHayResultadosException("No hay temas registrados en la BBDD");
+        }
+        return todosTemas.stream().map(mapper::toDto).collect(Collectors.toList());
     }
 
     @Override
     public List<SupertemaDto> recuperarSupertemas() {
-        return repository.recuperarSupertemas().stream().map(mapper::toDto).collect(Collectors.toList());
+        List<SupertemaEntity> todosSupertemas = repository.recuperarSupertemas();
+        if (todosSupertemas==null|| todosSupertemas.isEmpty()){
+            throw new NoHayResultadosException("No hay supertemas registrados en la BBDD");
+        }
+        return todosSupertemas.stream().map(mapper::toDto).collect(Collectors.toList());
     }
 
     @Override
-    public List<TextoDto> recupearTextos() {
-        return repository.recupearTextos().stream().map(mapper::toDto).collect(Collectors.toList());
+    public List<TextoDto> recuperarTextos() {
+        List<TextoEntity> todosTextos = repository.recupearTextos();
+        if (todosTextos==null||todosTextos.isEmpty()){
+            throw new NoHayResultadosException("No hay textos registrados en la BBDD");
+        }
+        return todosTextos.stream().map(mapper::toDto).collect(Collectors.toList());
     }
 
 //RECUPERAR POR ID
     @Override
     public AutorDto recuperarAutorPorId(int idAutor) {
-        return repository.recuperarAutorPorId(idAutor).map(mapper::toDto).orElseThrow(()->new RecursoNoEncontradoException("Id de Autor no encontrado"));
+        return repository.recuperarAutorPorId(idAutor).map(mapper::toDto)
+                .orElseThrow(()->new RecursoNoEncontradoException("Id de Autor no encontrado"));
     }
 
     @Override
     public TemaDto recuperarTemaPorId(int idTema) {
-        return repository.recuperarTemaPorId(idTema).map(mapper::toDto).orElseThrow(()->new RecursoNoEncontradoException("Id de Tema no encontrado"));
+        return repository.recuperarTemaPorId(idTema).map(mapper::toDto)
+                .orElseThrow(()->new RecursoNoEncontradoException("Id de Tema no encontrado"));
     }
 
     @Override
     public SupertemaDto recuperarSupertemaPorId(int idSupertema) {
-        return repository.recuperarSupertemaPorId(idSupertema).map(mapper::toDto).orElseThrow(()->new RecursoNoEncontradoException("Id de Supertema no encontrado"));
+        return repository.recuperarSupertemaPorId(idSupertema).map(mapper::toDto)
+                .orElseThrow(()->new RecursoNoEncontradoException("Id de Supertema no encontrado"));
     }
 
     @Override
     public TextoDto recuperarTextoPorId(int idTexto) {
-        return repository.recuperarTextoPorId(idTexto).map(mapper::toDto).orElseThrow(()->new RecursoNoEncontradoException("Id de Texto no encontrado"));
+        return repository.recuperarTextoPorId(idTexto).map(mapper::toDto)
+                .orElseThrow(()->new RecursoNoEncontradoException("Id de Texto no encontrado"));
     }
 
+//RECUPERAR POR NOMBRE
     @Override
     public AutorDto recuperarAutorPorNombre(String nombreAutor) {
-        return repository.recuperarAutorPorNombre(nombreAutor).map(mapper::toDto).orElseThrow(()->new RecursoNoEncontradoException("Nombre de Autor no encontrado"));
+        return repository.recuperarAutorPorNombre(nombreAutor).map(mapper::toDto)
+                .orElseThrow(()->new RecursoNoEncontradoException("Nombre de Autor no encontrado"));
     }
 
     @Override
     public TemaDto recuperarTemaPorNombre(String nombreTema) {
-        return repository.recuperarTemaPorNombre(nombreTema).map(mapper::toDto).orElseThrow(()->new RecursoNoEncontradoException("Nombre de Tema no encontrado"));    }
+        return repository.recuperarTemaPorNombre(nombreTema).map(mapper::toDto)
+                .orElseThrow(()->new RecursoNoEncontradoException("Nombre de Tema no encontrado"));    }
 
     @Override
     public SupertemaDto recuperarSupertemaPorNombre(String nombreSupertema) {
-        return repository.recuperarSupertemaPorNombre(nombreSupertema).map(mapper::toDto).orElseThrow(()->new RecursoNoEncontradoException("Nombre de Supertema no encontrado"));
+        return repository.recuperarSupertemaPorNombre(nombreSupertema)
+                .map(mapper::toDto).orElseThrow(()->new RecursoNoEncontradoException("Nombre de Supertema no encontrado"));
     }
-//AÑADIR VÍNCULOS
+//RECUPERAR SEGÚN OTRO RESOURCE
+    @Override
+    public List<TextoDto> recuperarTextosPorAutor(int idAutor) {
+        recuperarAutorPorId(idAutor);
+        return recuperarTextos().stream().filter((texto) -> texto.getIdAutor() == idAutor).collect(Collectors.toList());
+    }
+
+    @Override
+    public List<TextoDto> recuperarTextosPorTema(int idTema) {
+        TemaDto temaDto = recuperarTemaPorId(idTema);
+        List<TextoDto> resultado = recuperarTextos()
+                .stream()
+                .filter(
+                        (texto)->texto.getIdTemas()
+                                .stream()
+                                .anyMatch((tema)->tema==idTema)==true)
+                .collect(Collectors.toList());
+        if (resultado.isEmpty()||resultado==null){
+            throw new NoHayResultadosException("No hay textos vinculados con este tema");
+        }
+        return resultado;
+    }
+
+    @Override
+    public List<TextoDto> recuperarTextosPorSupertema(int idSupertema) {
+        SupertemaDto supertemaDto = recuperarSupertemaPorId(idSupertema);
+        List<TextoDto> resultado = new ArrayList<>();
+        List<Integer> idTemasEnSupertema = supertemaDto.getIdTemas();
+        for (int idTemaEnSupertema:idTemasEnSupertema) {
+            List<TextoDto> textosDeTemaAsociado = recuperarTextosPorTema(idTemaEnSupertema);
+            for(TextoDto texto:textosDeTemaAsociado){
+                resultado.add(texto);
+            }
+        }
+        if(resultado.isEmpty()){
+            throw new NoHayResultadosException("No hay textos vinculados con este supertema");
+        }
+        return resultado;
+    }
+
+    @Override
+    public List<TemaDto> recuperarTemasPorSupertema(int idSupertema) {
+        recuperarSupertemaPorId(idSupertema);
+        List<TemaDto> resultado = recuperarTemas().stream()
+                .filter((tema) -> tema.getIdSupertema() != null && tema.getIdSupertema() == idSupertema)
+                .collect(Collectors.toList());
+        if (resultado.isEmpty()){
+            throw new NoHayResultadosException("No hay temas vinculados co este supertema");
+        }
+        return resultado;
+    }
+
+    //AÑADIR VÍNCULOS
     @Override
     public TemaSupertema vincularTemaSupertema(int idTema, int idSupertema) {
         TemaEntity temaEntity = repository.recuperarTemaPorId(idTema)

@@ -90,21 +90,10 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-actuator</artifactId>
 		</dependency>
-<!--		HAL explorer funciona porque el endpoint http://localhost:8085/ está ocupado por la web, habría que configurar los endpoints-->
-<!--		<dependency>-->
-<!--			<groupId>org.springframework.data</groupId>-->
-<!--			<artifactId>spring-data-rest-hal-explorer</artifactId>-->
-<!--			<version>3.6.4</version>-->
-<!--		</dependency>-->
-
-		<!--MVC-->
 		<dependency>
-			<groupId>org.apache.tomcat.embed</groupId>
-			<artifactId>tomcat-embed-jasper</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>javax.servlet</groupId>
-			<artifactId>jstl</artifactId>
+			<groupId>org.springframework.data</groupId>
+			<artifactId>spring-data-rest-hal-explorer</artifactId>
+			<version>3.6.4</version>
 		</dependency>
 
 		<!--OTROS-->
