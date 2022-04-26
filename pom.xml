@@ -9,10 +9,10 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.mariots.biblioteca</groupId>
-	<artifactId>biblioteca-admin</artifactId>
+	<artifactId>biblioteca-rest</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>biblioteca-admin</name>
-	<description>Web para la administracion de la bbdd de la biblioteca</description>
+	<name>biblioteca-rest</name>
+	<description>Biblioteca para proveer recursos a web u otro cliente rest</description>
 
 <!--PROPERTIES-->
 	<properties>
