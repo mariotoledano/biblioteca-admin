@@ -19,6 +19,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Component
@@ -80,6 +81,9 @@ public class MapperImpl implements Mapper{
     @Override
     public AutorEntity toEntity(AutorDto autorDto) {
         AutorEntity autorEntity = new AutorEntity();
+        if (autorDto.getNombreAutor()==null){
+            throw new CampoEnBlancoException("nombreAutor");
+        }
         //El id se define en BD
         autorEntity.setNombreAutor(autorDto.getNombreAutor());
         autorEntity.setFechaAutor(autorDto.getFechaAutor());
@@ -97,6 +101,10 @@ public class MapperImpl implements Mapper{
     @Override
     public SupertemaEntity toEntity(SupertemaDto supertemaDto) {
         SupertemaEntity supertemaEntity = new SupertemaEntity();
+        if(supertemaDto.getNombreSupertema()==null){
+            throw new CampoEnBlancoException("nombreSupertema");
+        }
+
         supertemaEntity.setNombreSupertema(supertemaDto.getNombreSupertema());
         if (supertemaDto.getIdTemas() == null) {
         } else {
@@ -110,6 +118,9 @@ public class MapperImpl implements Mapper{
     @Override
     public TemaEntity toEntity(TemaDto temaDto) {
         TemaEntity temaEntity= new TemaEntity();
+        if (temaDto.getNombreTema()==null){
+            throw new CampoEnBlancoException("nombreTema");
+        }
         temaEntity.setNombreTema(temaDto.getNombreTema());
         if (temaEntity.getTextos() == null) {
         }else{
@@ -123,6 +134,9 @@ public class MapperImpl implements Mapper{
     @Override
     public TextoEntity toEntity(TextoDto textoDto) {
         TextoEntity textoEntity = new TextoEntity();
+        if (textoDto.getTextoString()==null){
+            throw new CampoEnBlancoException("textoString");
+        }
         textoEntity.setTextoString(textoDto.getTextoString());
         textoEntity.setLongitud(textoDto.getLongitud());
         if (textoDto.getIdAutor() == null) {

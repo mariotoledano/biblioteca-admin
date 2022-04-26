@@ -9,7 +9,6 @@ import com.mariots.biblioteca.bibliotecaadmin.core.dtos.inputrest.*;
 import com.mariots.biblioteca.bibliotecaadmin.core.dtos.objetosvinculados.TemaSupertema;
 import com.mariots.biblioteca.bibliotecaadmin.core.dtos.objetosvinculados.TextoAutor;
 import com.mariots.biblioteca.bibliotecaadmin.core.dtos.objetosvinculados.TextoTema;
-import com.mariots.biblioteca.bibliotecaadmin.core.dtos.respuestaDelete.RecursoEliminado;
 import com.mariots.biblioteca.bibliotecaadmin.core.service.ServiceBiblioteca;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -120,40 +119,39 @@ public class ControllerBibliotecaRest {
         return new ResponseEntity<TextoDto>(textoGuardado, HttpStatus.CREATED);
     }
 
-//    @PostMapping(value = "/textos/autores/{idAutor}/temas/{idTema}")
-//    public ResponseEntity registrarNuevoTextoVinculadoPorPath
-//            (@RequestBody TextoRestSinAT texto, @PathVariable int idAutor, @PathVariable int idTema){
-//        TextoDto textoGuardado = service.guardarTextoDesdePath(texto, idAutor, idTema);
-//        return new ResponseEntity<TextoDto>(textoGuardado, HttpStatus.CREATED);
-//    }
+    @PostMapping(value = "/textos/autores/{idAutor}/temas/{idTema}")
+    public ResponseEntity registrarNuevoTextoVinculadoPorPath
+            (@RequestBody TextoRestSinAT texto, @PathVariable int idAutor, @PathVariable int idTema){
+        TextoDto textoGuardado = service.guardarTextoDesdePath(texto, idAutor, idTema);
+        return new ResponseEntity<TextoDto>(textoGuardado, HttpStatus.CREATED);
+    }
 
-    //PUT resource/{id} + body data -->Actualizar un recurso
-//    @GetMapping(value = "/autores/{id}")
-//    public ResponseEntity actualizarAutorPorId(@PathVariable int id, @RequestBody AutorRest autor) {
-//        AutorDto autorNuevo = service.actualizarAutorPorId(id);
-//        return new ResponseEntity<AutorDto>(autorNuevo, HttpStatus.OK);
-//    }
-//
-//    @GetMapping(value = "/textos/{id}")
-//    public ResponseEntity recuperarTextosPorId(@PathVariable int id, @RequestBody TextoRest texto) {
-//        TextoDto textoNuevo = service.actualizarTextoPorId(id);
-//        return new ResponseEntity<TextoDto>(textoNuevo, HttpStatus.OK);
-//    }
-//
-//    @GetMapping(value = "/temas/{id}")
-//    public ResponseEntity recuperarTemasPorId(@PathVariable int id, @RequestBody TemaRest tema) {
-//        TemaDto temaNuevo = service.actualizarTemaPorId(id);
-//        return new ResponseEntity<TemaDto>(temaNuevo, HttpStatus.OK);
-//    }
-//
-//    @GetMapping(value = "/supertemas/{id}")
-//    public ResponseEntity recuperarSupertemasPorId(@PathVariable int id, @RequestBody SupertemaRest supertema) {
-//        SupertemaDto supertemaNuevo = service.actualizarSupertemaPorId(id);
-//        return new ResponseEntity<SupertemaDto>(supertemaNuevo, HttpStatus.OK);
-//    }
+//PUT resource/{id} + body data -->Actualizar un recurso
+    @PutMapping(value = "/autores/{id}")
+    public ResponseEntity actualizarAutorPorId(@PathVariable int id, @RequestBody AutorRest autor) {
+        AutorDto autorNuevo = service.actualizarAutorPorId(id, autor);
+        return new ResponseEntity<AutorDto>(autorNuevo, HttpStatus.OK);
+    }
 
+    @PutMapping(value = "/textos/{id}")
+    public ResponseEntity actualizarTextosPorId(@PathVariable int id, @RequestBody TextoRest texto) {
+        TextoDto textoNuevo = service.actualizarTextoPorId(id, texto);
+        return new ResponseEntity<TextoDto>(textoNuevo, HttpStatus.OK);
+    }
 
-    //PUT resource/{id}/resource/{id}   vincular y sobreescribir vínculos existentes
+    @PutMapping(value = "/temas/{id}")
+    public ResponseEntity actualizarTemasPorId(@PathVariable int id, @RequestBody TemaRest tema) {
+        TemaDto temaNuevo = service.actualizarTemaPorId(id, tema);
+        return new ResponseEntity<TemaDto>(temaNuevo, HttpStatus.OK);
+    }
+
+    @PutMapping(value = "/supertemas/{id}")
+    public ResponseEntity actualizarSupertemasPorId(@PathVariable int id, @RequestBody SupertemaRest supertema) {
+        SupertemaDto supertemaNuevo = service.actualizarSupertemaPorId(id, supertema);
+        return new ResponseEntity<SupertemaDto>(supertemaNuevo, HttpStatus.OK);
+    }
+
+//PUT resource/{id}/resource/{id}   vincular y sobreescribir vínculos existentes
     @PutMapping(value = "/temas/{idTema}/supertemas/{idSupertema}")
     public ResponseEntity vincularTemaSupertema(@PathVariable int idTema, @PathVariable int idSupertema) {
         TemaSupertema temaSupertema = service.vincularTemaSupertema(idTema, idSupertema);
@@ -183,7 +181,7 @@ public class ControllerBibliotecaRest {
         return new ResponseEntity<TextoAutor>(textoAutor, HttpStatus.CREATED);
     }
 
-    //DELETE resource/{id} --> Eliminar recursos por id
+//DELETE resource/{id} --> Eliminar recursos por id
     @DeleteMapping("autores/{idAutor}")
     public ResponseEntity eliminarAutorPorId(@PathVariable int idAutor){
         AutorDto autorDto = service.recuperarAutorPorId(idAutor);
@@ -210,21 +208,21 @@ public class ControllerBibliotecaRest {
     }
 
     //DELETE resource/{id}/resource/{id} --> Eliminar vínculos entre recursos por id
-//    @DeleteMapping(value = "/temas/{idTema}/supertemas/{idSupertema}")
-//    public ResponseEntity desvincularTemaSupertema(@PathVariable int idTema, @PathVariable int idSupertema) {
-//        TemaSupertema temaSupertema = service.desvincularTemaSupertema(idTema, idSupertema);
-//        return new ResponseEntity<TemaSupertema>(temaSupertema, HttpStatus.OK);
-//    }
-//
-//    @DeleteMapping(value = "/textos/{idTexto}/temas/{idTema}")
-//    public ResponseEntity desvincularTextoTema(@PathVariable int idTexto, @PathVariable int idTema) {
-//        TextoTema textoTema = service.desvincularTextoTema(idTexto, idTema);
-//        return new ResponseEntity<TextoTema>(textoTema, HttpStatus.OK);
-//    }
-//    @DeleteMapping(value = "/textos/{idTexto}/autores/{idAutor}")
-//    public ResponseEntity desvincularTextoAutor(@PathVariable int idTexto, @PathVariable int idAutor) {
-//        TextoAutor textoAutor = service.desvincularTextoAutor(idTexto, idAutor);
-//        return new ResponseEntity<TextoAutor>(textoAutor, HttpStatus.OK);
-//    }
+    @DeleteMapping(value = "/temas/{idTema}/supertemas/{idSupertema}")
+    public ResponseEntity desvincularTemaSupertema(@PathVariable int idTema, @PathVariable int idSupertema) {
+        TemaSupertema temaSupertema = service.desvincularTemaSupertema(idTema, idSupertema);
+        return new ResponseEntity<TemaSupertema>(temaSupertema, HttpStatus.OK);
+    }
+
+    @DeleteMapping(value = "/textos/{idTexto}/temas/{idTema}")
+    public ResponseEntity desvincularTextoTema(@PathVariable int idTexto, @PathVariable int idTema) {
+        TextoTema textoTema = service.desvincularTextoTema(idTexto, idTema);
+        return new ResponseEntity<TextoTema>(textoTema, HttpStatus.OK);
+    }
+    @DeleteMapping(value = "/textos/{idTexto}/autores/{idAutor}")
+    public ResponseEntity desvincularTextoAutor(@PathVariable int idTexto, @PathVariable int idAutor) {
+        TextoAutor textoAutor = service.desvincularTextoAutor(idTexto, idAutor);
+        return new ResponseEntity<TextoAutor>(textoAutor, HttpStatus.OK);
+    }
 
 }

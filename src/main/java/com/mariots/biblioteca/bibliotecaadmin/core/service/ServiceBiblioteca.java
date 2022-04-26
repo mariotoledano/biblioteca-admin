@@ -4,6 +4,7 @@ import com.mariots.biblioteca.bibliotecaadmin.core.dtos.AutorDto;
 import com.mariots.biblioteca.bibliotecaadmin.core.dtos.SupertemaDto;
 import com.mariots.biblioteca.bibliotecaadmin.core.dtos.TemaDto;
 import com.mariots.biblioteca.bibliotecaadmin.core.dtos.TextoDto;
+import com.mariots.biblioteca.bibliotecaadmin.core.dtos.inputrest.*;
 import com.mariots.biblioteca.bibliotecaadmin.core.dtos.objetosvinculados.TemaSupertema;
 import com.mariots.biblioteca.bibliotecaadmin.core.dtos.objetosvinculados.TextoAutor;
 import com.mariots.biblioteca.bibliotecaadmin.core.dtos.objetosvinculados.TextoTema;
@@ -15,6 +16,7 @@ public interface ServiceBiblioteca {
     TemaDto guardarTema(TemaDto temaDto);
     SupertemaDto guardarSupertema(SupertemaDto supertemaDto);
     TextoDto guardarTexto(TextoDto textoDto);
+    TextoDto guardarTextoDesdePath(TextoRestSinAT texto, int idAutor, int idTema);
 
     List<AutorDto> recuperarAutores();
     List<TemaDto> recuperarTemas();
@@ -36,8 +38,20 @@ public interface ServiceBiblioteca {
     TextoAutor vincularTextoAutor(int idTexto, int idAutor);
     TextoAutor sobreescribirVinculoTextoAutor(int idTexto, int idAutor);
 
+    TemaSupertema desvincularTemaSupertema(int idTema, int idSupertema);
+    TextoTema desvincularTextoTema(int idTexto, int idTema);
+    TextoAutor desvincularTextoAutor(int idTexto, int idAutor);
+
     void eliminarAutorPorId(int idAutor);
     void eliminarTextoPorId(int idTexo);
     void eliminarTemaPorId(int idTema);
     void eliminarSupertemaPorId(int idSupertema);
+
+    AutorDto actualizarAutorPorId(int id, AutorRest autor);
+    TextoDto actualizarTextoPorId(int id, TextoRest texto);
+    TemaDto actualizarTemaPorId(int id, TemaRest tema);
+    SupertemaDto actualizarSupertemaPorId(int id, SupertemaRest supertema);
+
+
+
 }

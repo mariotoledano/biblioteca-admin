@@ -8,4 +8,7 @@ public class RecursoYaVinculadoException extends RuntimeException{
     public RecursoYaVinculadoException(){
         super("Ya existe un vínculo. Use la opción de /sobreescribir si lo desea.");
     }
+    public RecursoYaVinculadoException(String mensajePersonalizado){
+        super(mensajePersonalizado);
+    }
 }

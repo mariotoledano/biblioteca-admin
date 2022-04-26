@@ -1,14 +1,12 @@
 package com.mariots.biblioteca.bibliotecaadmin.core.service;
 
-import com.mariots.biblioteca.bibliotecaadmin.api.exceptions.RecursoNoEncontradoException;
-import com.mariots.biblioteca.bibliotecaadmin.api.exceptions.RecursoNoVinculadoException;
-import com.mariots.biblioteca.bibliotecaadmin.api.exceptions.RecursoYaVinculadoException;
-import com.mariots.biblioteca.bibliotecaadmin.api.exceptions.RepetirVinculoException;
+import com.mariots.biblioteca.bibliotecaadmin.api.exceptions.*;
 import com.mariots.biblioteca.bibliotecaadmin.core.dtos.AutorDto;
 import com.mariots.biblioteca.bibliotecaadmin.core.dtos.SupertemaDto;
 import com.mariots.biblioteca.bibliotecaadmin.core.dtos.TemaDto;
 import com.mariots.biblioteca.bibliotecaadmin.core.dtos.TextoDto;
 import com.mariots.biblioteca.bibliotecaadmin.api.mapper.Mapper;
+import com.mariots.biblioteca.bibliotecaadmin.core.dtos.inputrest.*;
 import com.mariots.biblioteca.bibliotecaadmin.core.dtos.objetosvinculados.TemaSupertema;
 import com.mariots.biblioteca.bibliotecaadmin.core.dtos.objetosvinculados.TextoAutor;
 import com.mariots.biblioteca.bibliotecaadmin.core.dtos.objetosvinculados.TextoTema;
@@ -20,6 +18,7 @@ import com.mariots.biblioteca.bibliotecaadmin.persistence.repository.RepositoryB
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.lang.reflect.Array;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -30,7 +29,7 @@ public class ServiceBibliotecaImpl implements ServiceBiblioteca {
    @Autowired
     Mapper mapper;
 
-//MÉTODOS GUARDAR
+//GUARDAR
     @Override
     public AutorDto guardarAutor(AutorDto autorDto) {
         return mapper.toDto(repository.guardarAutor(mapper.toEntity(autorDto)));
@@ -51,7 +50,18 @@ public class ServiceBibliotecaImpl implements ServiceBiblioteca {
         return mapper.toDto(repository.guardarTexto(mapper.toEntity(textoDto)));
     }
 
-//MÉTODOS RECUPERAR TODOS
+    @Override
+    public TextoDto guardarTextoDesdePath(TextoRestSinAT textoRestSinAT, int idAutor, int idTema) {
+        TextoDto textoDto = TextoDto.builder()
+                .textoString(textoRestSinAT.getTextoString())
+                .longitud(textoRestSinAT.getLongitud())
+                .idAutor(idAutor)
+                .idTemas(Arrays.asList(idTema))
+                .build();
+        return mapper.toDto(repository.guardarTexto(mapper.toEntity(textoDto)));
+    }
+
+    //MÉTODOS RECUPERAR TODOS
     @Override
     public List<AutorDto> recuperarAutores() {
         return repository.recuperarAutores().stream().map(mapper::toDto).collect(Collectors.toList());
@@ -72,7 +82,7 @@ public class ServiceBibliotecaImpl implements ServiceBiblioteca {
         return repository.recupearTextos().stream().map(mapper::toDto).collect(Collectors.toList());
     }
 
-//MÉTODOS RECUPERAR POR ID
+//RECUPERAR POR ID
     @Override
     public AutorDto recuperarAutorPorId(int idAutor) {
         return repository.recuperarAutorPorId(idAutor).map(mapper::toDto).orElseThrow(()->new RecursoNoEncontradoException("Id de Autor no encontrado"));
@@ -106,7 +116,7 @@ public class ServiceBibliotecaImpl implements ServiceBiblioteca {
     public SupertemaDto recuperarSupertemaPorNombre(String nombreSupertema) {
         return repository.recuperarSupertemaPorNombre(nombreSupertema).map(mapper::toDto).orElseThrow(()->new RecursoNoEncontradoException("Nombre de Supertema no encontrado"));
     }
-//MÉTODOS AÑADIR VÍNCULOS
+//AÑADIR VÍNCULOS
     @Override
     public TemaSupertema vincularTemaSupertema(int idTema, int idSupertema) {
         TemaEntity temaEntity = repository.recuperarTemaPorId(idTema)
@@ -218,7 +228,66 @@ public class ServiceBibliotecaImpl implements ServiceBiblioteca {
         return  new TextoAutor(textoDespues,autorDespues);
     }
 
-//MÉTODOS ELIMINAR RECURSO
+//ELIMINAR VÍNCULOS
+    @Override
+    public TemaSupertema desvincularTemaSupertema(int idTema, int idSupertema) {
+        TemaEntity temaEntity = repository.recuperarTemaPorId(idTema)
+                .orElseThrow(() -> new RecursoNoEncontradoException("Id de tema no encontrado"));
+        SupertemaEntity supertemaEntity = repository.recuperarSupertemaPorId(idSupertema)
+                .orElseThrow(() -> new RecursoNoEncontradoException("Id de supertema no encontrado"));
+
+        if(temaEntity.getSupertema()==null ||
+                temaEntity.getSupertema()!=supertemaEntity){
+            throw new RecursoNoVinculadoException();
+        } else{
+            temaEntity.setSupertema(null);
+            repository.guardarTema(temaEntity);
+        }
+        TemaDto temaDespues = recuperarTemaPorId(idTema);
+        SupertemaDto supertemaDespues = recuperarSupertemaPorId(idSupertema);
+        return new TemaSupertema(temaDespues, supertemaDespues);
+    }
+
+    @Override
+    public TextoTema desvincularTextoTema(int idTexto, int idTema) {
+        TextoEntity textoEntity = repository.recuperarTextoPorId(idTexto)
+                .orElseThrow(() -> new RecursoNoEncontradoException("Id de texto no encontrado"));
+        TemaEntity temaEntity = repository.recuperarTemaPorId(idTema)
+                .orElseThrow(() -> new RecursoNoEncontradoException("Id de tema no encontrado"));
+        if (textoEntity.getTemas()==null
+                || textoEntity.getTemas().stream().noneMatch((tema)->tema==temaEntity)){
+            throw new RecursoNoVinculadoException();
+        } else{
+            List<TemaEntity> temasEnTexto = textoEntity.getTemas();
+            int indexTemaEntity = temasEnTexto.indexOf(temaEntity);
+            temasEnTexto.remove(indexTemaEntity);
+            textoEntity.setTemas(temasEnTexto);
+            repository.guardarTexto(textoEntity);
+        }
+        TextoDto textoDespues = recuperarTextoPorId(idTexto);
+        TemaDto temaDespues = recuperarTemaPorId(idTema);
+        return new TextoTema(textoDespues, temaDespues);
+    }
+
+    @Override
+    public TextoAutor desvincularTextoAutor(int idTexto, int idAutor) {
+        TextoEntity textoEntity = repository.recuperarTextoPorId(idTexto)
+                .orElseThrow(() -> new RecursoNoEncontradoException("Id de texto no encontrado"));
+        AutorEntity autorEntity = repository.recuperarAutorPorId(idAutor)
+                .orElseThrow(() -> new RecursoNoEncontradoException("Id de autor no encontrado"));
+        if(textoEntity.getAutor()==null ||
+                textoEntity.getAutor()!=autorEntity){
+            throw  new RecursoNoVinculadoException();
+        } else{
+            textoEntity.setAutor(null);
+            repository.guardarTexto(textoEntity);
+        }
+        TextoDto textoDespues = recuperarTextoPorId(idTexto);
+        AutorDto autorDespues = recuperarAutorPorId(idAutor);
+        return new TextoAutor(textoDespues, autorDespues);
+    }
+
+//ELIMINAR RECURSO
     @Override
     public void eliminarAutorPorId(int idAutor) {
         AutorEntity autorEntity = repository.recuperarAutorPorId(idAutor)
@@ -236,13 +305,69 @@ public class ServiceBibliotecaImpl implements ServiceBiblioteca {
         TemaEntity temaEntity = repository.recuperarTemaPorId(idTema)
                 .orElseThrow(()->new RecursoNoEncontradoException("Id de tema no encontrado"));
         repository.eliminarTema(temaEntity);
-
     }
     @Override
     public void eliminarSupertemaPorId(int idSupertema) {
         SupertemaEntity supertemaEntity = repository.recuperarSupertemaPorId(idSupertema)
                 .orElseThrow(()->new RecursoNoEncontradoException("Id de supertema no encontrado"));
         repository.eliminarSupertema(supertemaEntity);
+    }
+//ACTUALIZAR RECURSO POR ID
+    @Override
+    public AutorDto actualizarAutorPorId(int idAutor, AutorRest autorRest) {
+        AutorEntity autorEntity = repository.recuperarAutorPorId(idAutor)
+                .orElseThrow(()->new RecursoNoEncontradoException("Id de autor no encontrado"));
+        //control de null en campos notNull
+        if (Objects.isNull(autorRest.getNombreAutor())){
+            throw new CampoEnBlancoException("nombreAutor");
+        }
+        autorEntity.setNombreAutor(autorRest.getNombreAutor());
+        autorEntity.setFechaAutor(autorRest.getFechaAutor());
+        autorEntity.setDescripcionBreve(autorRest.getDescripcionBreve());
+        autorEntity.setDescripcionLarga(autorRest.getDescripcionLarga());
+        repository.guardarAutor(autorEntity);
+        AutorDto autorActualizado = recuperarAutorPorId(idAutor);
+        return autorActualizado;
+    }
+
+    @Override
+    public TextoDto actualizarTextoPorId(int idTexto, TextoRest textoRest) {
+        TextoEntity textoEntity = repository.recuperarTextoPorId(idTexto)
+                .orElseThrow(()->new RecursoNoEncontradoException("Id de texto no encontrado"));
+        if (textoEntity.getTextoString()==null){
+            throw new CampoEnBlancoException("textoString");
+        }
+        textoEntity.setTextoString(textoRest.getTextoString());
+        textoEntity.setLongitud(textoRest.getLongitud());
+        repository.guardarTexto(textoEntity);
+        TextoDto textoActualizado = recuperarTextoPorId(idTexto);
+        return textoActualizado;
+    }
+
+    @Override
+    public TemaDto actualizarTemaPorId(int idTema, TemaRest temaRest) {
+        TemaEntity temaEntity = repository.recuperarTemaPorId(idTema)
+                .orElseThrow(()->new RecursoNoEncontradoException("Id de texto no encontrado"));
+        if (temaEntity.getNombreTema()==null){
+            throw new CampoEnBlancoException("nombreTema");
+        }
+        temaEntity.setNombreTema(temaRest.getNombreTema());
+        repository.guardarTema(temaEntity);
+        TemaDto temaActualizado = recuperarTemaPorId(idTema);
+        return temaActualizado;
+    }
+
+    @Override
+    public SupertemaDto actualizarSupertemaPorId(int idSupertema, SupertemaRest supertemaRest) {
+        SupertemaEntity supertemaEntity = repository.recuperarSupertemaPorId(idSupertema)
+                .orElseThrow(()->new RecursoNoEncontradoException("Id de supertema no encontrado"));
+        if(supertemaEntity.getNombreSupertema()==null){
+            throw new CampoEnBlancoException("nombreSupertema");
+        }
+        supertemaEntity.setNombreSupertema(supertemaRest.getNombreSupertema());
+        repository.guardarSupertema(supertemaEntity);
+        SupertemaDto supertemaActualizado = recuperarSupertemaPorId(idSupertema);
+        return supertemaActualizado;
     }
 
 
