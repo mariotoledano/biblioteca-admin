@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 @ResponseStatus(HttpStatus.BAD_REQUEST)
 public class RecursoNoVinculadoException extends RuntimeException{
     public RecursoNoVinculadoException(){
-       super("No existe ningún vínculo previo. No utilice la opción /sobreescribir si desea crear un vínculo nuevo.");
+       super("No existe ningún vínculo previo");
     }
     public RecursoNoVinculadoException(String mensajePersonalizado){
         super(mensajePersonalizado);

@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 @ResponseStatus(HttpStatus.BAD_REQUEST)
 public class RecursoYaVinculadoException extends RuntimeException{
     public RecursoYaVinculadoException(){
-        super("Ya existe un vínculo. Use la opción de /sobreescribir si lo desea.");
+        super("Ya existe un vínculo. Utilice PUT para sobreescribir");
     }
     public RecursoYaVinculadoException(String mensajePersonalizado){
         super(mensajePersonalizado);
