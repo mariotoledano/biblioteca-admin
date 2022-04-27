@@ -80,9 +80,6 @@ public class MapperImpl implements Mapper{
     @Override
     public AutorEntity toEntity(AutorDto autorDto) {
         AutorEntity autorEntity = new AutorEntity();
-        if (autorDto.getNombreAutor()==null){
-            throw new CampoEnBlancoException("nombreAutor");
-        }
         autorEntity.setNombreAutor(autorDto.getNombreAutor());
         autorEntity.setFechaAutor(autorDto.getFechaAutor());
         autorEntity.setDescripcionBreve(autorDto.getDescripcionBreve());
@@ -99,10 +96,6 @@ public class MapperImpl implements Mapper{
     @Override
     public SupertemaEntity toEntity(SupertemaDto supertemaDto) {
         SupertemaEntity supertemaEntity = new SupertemaEntity();
-        if(supertemaDto.getNombreSupertema()==null){
-            throw new CampoEnBlancoException("nombreSupertema");
-        }
-
         supertemaEntity.setNombreSupertema(supertemaDto.getNombreSupertema());
         if (supertemaDto.getIdTemas() == null) {
         } else {
@@ -116,9 +109,6 @@ public class MapperImpl implements Mapper{
     @Override
     public TemaEntity toEntity(TemaDto temaDto) {
         TemaEntity temaEntity= new TemaEntity();
-        if (temaDto.getNombreTema()==null){
-            throw new CampoEnBlancoException("nombreTema");
-        }
         temaEntity.setNombreTema(temaDto.getNombreTema());
         if (temaEntity.getTextos() == null) {
         }else{
@@ -132,9 +122,6 @@ public class MapperImpl implements Mapper{
     @Override
     public TextoEntity toEntity(TextoDto textoDto) {
         TextoEntity textoEntity = new TextoEntity();
-        if (textoDto.getTextoString()==null){
-            throw new CampoEnBlancoException("textoString");
-        }
         textoEntity.setTextoString(textoDto.getTextoString());
         textoEntity.setLongitud(textoDto.getLongitud());
         if (textoDto.getIdAutor() == null) {
@@ -151,6 +138,7 @@ public class MapperImpl implements Mapper{
     }
 
     //NUEVO-REST --> DTO
+    //VALIDACIONES EN SERVICE
     @Override
     public AutorDto toDto(AutorRest autorRest) {
         return new AutorDto().builder()
@@ -163,40 +151,25 @@ public class MapperImpl implements Mapper{
 
     @Override
     public TextoDto toDto(TextoRest textoRest) {
+        List<Integer> idTemas = new ArrayList<>();
+        textoRest.getNombreTemas()
+                .stream()
+                .map((nombreTema)->idTemas.add(
+                        repository
+                        .recuperarTemaPorNombre(nombreTema)
+                        .orElseThrow(()->new RecursoNoEncontradoException("No existe el nombre de tema aportado, ingrese un nombre de tema previamente registrado"))
+                        .getIdTema()))
+                .collect(Collectors.toList());
+
         TextoDto textoDto = new TextoDto().builder()
                 .textoString(textoRest.getTextoString())
                 .longitud(textoRest.getLongitud())
+                .idAutor(repository.recuperarAutorPorNombre(textoRest.getNombreAutor())
+                        .orElseThrow(()->new RecursoNoEncontradoException("No existe el nombre de autor aportado, ingrese un nombre de autor previamente registrado"))
+                        .getIdAutor())
+                .idTemas(idTemas)
                 .build();
-        List<Integer> idTemas = new ArrayList<>();
-        //comprobamos si el nombre de autor se ha introducido
-        if(textoRest.getNombreAutor()==null) {
-            //no se ha introducido --> excepción
-            throw new CampoEnBlancoException();
-        } else {
-            //se ha introducido -->
-            //comprobamos si existe el nombre de autor en BD
-            if(repository.recuperarAutorPorNombre(textoRest.getNombreAutor()).isPresent()){
-                //existe entonces añadimos el autor al textoDto
-                int idAutor =repository.recuperarAutorPorNombre(textoRest.getNombreAutor()).get().getIdAutor();
-                textoDto.setIdAutor(idAutor);
-            } else {
-                //no existe --> excepción y pedimos otro
-                throw new RecursoNoEncontradoException("No existe el nombre de autor aportado, ingrese un nombre de autor previamente registrado");
-            }
-        }
-        //comprobamos si existen los temas aportados
-        if(textoRest.getNombreTemas()==null){
-            throw new CampoEnBlancoException();
-        } else {
-            //comprobamos si existen en BD los temas aportados, si hay alguno que no está en BD se lanza ex
-            if(textoRest.getNombreTemas().stream().allMatch((nombreTema)->repository.recuperarTemaPorNombre(nombreTema).isPresent())){
-                textoRest.getNombreTemas().stream().map((nombreTema)->idTemas.add(repository.recuperarTemaPorNombre(nombreTema).get().getIdTema())).collect(Collectors.toList());
-                textoDto.setIdTemas(idTemas);
-            } else {
-                throw new RecursoNoEncontradoException("No existe el nombre de tema aportado, ingrese un nombre de autor previamente registrado");
-            }
-        }
-    return textoDto;
+        return textoDto;
     }
 
     @Override

@@ -79,4 +79,13 @@ public class ResponseEntityExceptionHandlerPersonalizado extends ResponseEntityE
                 .build();
         return new ResponseEntity(modeloException, HttpStatus.OK);
     }
+    @ExceptionHandler(DuplicarRecursoException.class)
+    public final ResponseEntity<ModeloException> respuestaDuplicarRecursoException(DuplicarRecursoException ex, WebRequest request){
+        ModeloException modeloException = ModeloException.builder()
+                .fechaYHora(LocalDateTime.now())
+                .mensaje(ex.getMessage())
+                .detalles(request.getDescription(true))
+                .build();
+        return new ResponseEntity(modeloException, HttpStatus.CONFLICT);
+    }
 }

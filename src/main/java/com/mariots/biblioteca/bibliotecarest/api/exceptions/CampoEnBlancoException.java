@@ -9,6 +9,6 @@ public class CampoEnBlancoException extends RuntimeException{
         super("Campo en blanco no valido, introduzca un valor");
     }
     public CampoEnBlancoException(String mensajePersonalizado){
-        super("El campo " + mensajePersonalizado + "no puede estar en blanco");
+        super("El campo " + mensajePersonalizado + " no puede estar en blanco");
     }
 }

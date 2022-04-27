@@ -10,25 +10,17 @@ ENDPOINTS:
         http://localhost:8085/actuator
 
 GESTIÓN RECURSOS
-    #Creación
-        Texto se crea vinculado a un Autor y a un Tema previamente generados (se crea con body aportando nombre de autor y tema
-        , estudiar posiblidad de crear en path con ids)
-        POST textos body-->> AutorNombre y TemaNombre ya registrados
-        POST textos/autores/{id}/temas/{id}
-        Autor, Tema y Supertema se crea sin víncular, ni posibilidad de hacerlo en el momento de creación
-        POST recurso(temas, supertemas o autores)
-    #Añadir Vínculo
-        Texto vinculado a Autor y Tema en creación
-        Tema y Supertema con Put en path tema-->> supertema (añade el vínculo, no lo sustituye)
-    #Eliminar Vínculo
-        DELETE recurso/{id}/unlink/recurso/{id}
-        tema -->> supertema
-        texto -->> autor
-        texto -->> tema
 
-    #Eliminar recurso
-        DELETE resource/{id}
+//GET resource --> Recuperar todos los resources de un tipo
+//GET resource/{id} --> Recuperar recurso por id
+//GET resource/nombre/{nombre} --> Recuperar recurso por nombre
+//GET resource/resource/{id} --> texto por autor, texto por tema, texto por supertema, tema por supertema
 
+//POST resource --> Creación nuevo resource
+//POST resource/{id}/resource/{id} -->vincular recursos (actualizar vinculos existentes con PUT)
 
+//PUT resource/{id}/resource/{id} --> sobreescribir vínculos existentes
+//PUT resource/{id} + body data -->Actualizar un recurso
 
-
+//DELETE resource/{id} --> Eliminar recursos por id
+//DELETE resource/{id}/resource/{id} --> Eliminar vínculos entre recursos por id

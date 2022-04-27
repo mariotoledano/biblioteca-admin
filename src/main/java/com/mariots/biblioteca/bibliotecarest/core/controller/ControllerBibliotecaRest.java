@@ -123,25 +123,25 @@ public class ControllerBibliotecaRest {
 
     @PostMapping(value = "/autores")
     public ResponseEntity registrarNuevoAutor(@RequestBody AutorRest autor) {
-        AutorDto autorGuardado = service.guardarAutor(mapper.toDto(autor));
+        AutorDto autorGuardado = service.guardarAutor(autor);
         return new ResponseEntity<AutorDto>(autorGuardado, HttpStatus.CREATED);
     }
 
     @PostMapping(value = "/temas")
     public ResponseEntity registrarNuevoTema(@RequestBody TemaRest tema) {
-        TemaDto temaGuardado = service.guardarTema(mapper.toDto(tema));
+        TemaDto temaGuardado = service.guardarTema(tema);
         return new ResponseEntity<TemaDto>(temaGuardado, HttpStatus.CREATED);
     }
 
     @PostMapping(value = "/supertemas")
     public ResponseEntity registrarNuevoSupertema(@RequestBody SupertemaRest supertema) {
-        SupertemaDto supertemaGuardado = service.guardarSupertema(mapper.toDto(supertema));
+        SupertemaDto supertemaGuardado = service.guardarSupertema(supertema);
         return new ResponseEntity<SupertemaDto>(supertemaGuardado, HttpStatus.CREATED);
     }
 
     @PostMapping(value = "/textos")
     public ResponseEntity registrarNuevoTexto(@RequestBody TextoRest texto) {
-        TextoDto textoGuardado = service.guardarTexto(mapper.toDto(texto));
+        TextoDto textoGuardado = service.guardarTexto(texto);
         return new ResponseEntity<TextoDto>(textoGuardado, HttpStatus.CREATED);
     }
 
