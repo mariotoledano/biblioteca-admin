@@ -13,8 +13,10 @@ import com.mariots.biblioteca.bibliotecarest.core.service.ServiceBiblioteca;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -140,7 +142,7 @@ public class ControllerBibliotecaRest {
     }
 
     @PostMapping(value = "/textos")
-    public ResponseEntity registrarNuevoTexto(@RequestBody TextoRest texto) {
+    public ResponseEntity registrarNuevoTexto(@RequestBody @Validated TextoRest texto) {
         TextoDto textoGuardado = service.guardarTexto(texto);
         return new ResponseEntity<TextoDto>(textoGuardado, HttpStatus.CREATED);
     }

@@ -1,10 +1,12 @@
 package com.mariots.biblioteca.bibliotecarest.persistence.entities;
 
+import com.mariots.biblioteca.bibliotecarest.api.validation.LongitudTextoConstraint;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import javax.validation.constraints.Size;
 import java.util.List;
 
 @Data
@@ -12,6 +14,7 @@ import java.util.List;
 @AllArgsConstructor
 @Entity
 @Table(name = "textos")
+@LongitudTextoConstraint(nombreCampoLongitud = "longitud", nombreCampoTextoString = "textoString")
 public class TextoEntity {
 
     @Id

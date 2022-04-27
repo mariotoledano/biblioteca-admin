@@ -11,16 +11,16 @@ ENDPOINTS:
 
 GESTIÓN RECURSOS
 
-//GET resource --> Recuperar todos los resources de un tipo
-//GET resource/{id} --> Recuperar recurso por id
-//GET resource/nombre/{nombre} --> Recuperar recurso por nombre
-//GET resource/resource/{id} --> texto por autor, texto por tema, texto por supertema, tema por supertema
+    //GET resource --> Recuperar todos los resources de un tipo
+    //GET resource/{id} --> Recuperar recurso por id
+    //GET resource/nombre/{nombre} --> Recuperar recurso por nombre
+    //GET resource/resource/{id} --> texto por autor, texto por tema, texto por supertema, tema por supertema
 
-//POST resource --> Creación nuevo resource
-//POST resource/{id}/resource/{id} -->vincular recursos (actualizar vinculos existentes con PUT)
+    //POST resource --> Creación nuevo resource
+    //POST resource/{id}/resource/{id} -->vincular recursos (actualizar vinculos existentes con PUT)
 
-//PUT resource/{id}/resource/{id} --> sobreescribir vínculos existentes
-//PUT resource/{id} + body data -->Actualizar un recurso
+    //PUT resource/{id}/resource/{id} --> sobreescribir vínculos existentes
+    //PUT resource/{id} + body data -->Actualizar un recurso
 
-//DELETE resource/{id} --> Eliminar recursos por id
-//DELETE resource/{id}/resource/{id} --> Eliminar vínculos entre recursos por id
+    //DELETE resource/{id} --> Eliminar recursos por id
+    //DELETE resource/{id}/resource/{id} --> Eliminar vínculos entre recursos por id

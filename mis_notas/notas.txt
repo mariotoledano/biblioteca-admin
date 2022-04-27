@@ -2,9 +2,16 @@
 
 
 MEJORAS
-Implementar HTOAS
-Demasiada lógica de negocio concentrada en mapper
+
 
 Validar números como entrada en path para ids, reconducir excepción a una personalizada
 Validar longitud te textoString en función de valor de longitud
 validar longitud: solo breve o largo
+
+Implementar HTOAS
+
+Conectar repository de web a biblioteca-rest
+
+Autenticación y autorización
+
+Demasiada lógica de negocio concentrada en mapper
