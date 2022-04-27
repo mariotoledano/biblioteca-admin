@@ -4,7 +4,7 @@ ENDPOINTS:
         http://localhost:8085/swagger-ui/index.html
     #H2 Base de Datos
         http://localhost:8085/h2
-    #Web
+    #HAL Explorer
         http://localhost:8085/
     #Actuator
         http://localhost:8085/actuator

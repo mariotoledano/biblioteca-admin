@@ -96,6 +96,12 @@
 			<version>3.6.4</version>
 		</dependency>
 
+		<!--SEGURIDAD-->
+<!--		<dependency>-->
+<!--			<groupId>org.springframework.boot</groupId>-->
+<!--			<artifactId>spring-boot-starter-security</artifactId>-->
+<!--		</dependency>-->
+
 		<!--OTROS-->
 		<dependency>
 			<groupId>org.projectlombok</groupId>

@@ -16,7 +16,7 @@ public interface ServiceBiblioteca {
     TemaDto guardarTema(TemaDto temaDto);
     SupertemaDto guardarSupertema(SupertemaDto supertemaDto);
     TextoDto guardarTexto(TextoDto textoDto);
-    TextoDto guardarTextoDesdePath(TextoRestSinAT texto, int idAutor, int idTema);
+    TextoDto guardarTextoDesdePath(TextoRest texto, int idAutor, int idTema);
 
     List<AutorDto> recuperarAutores();
     List<TemaDto> recuperarTemas();

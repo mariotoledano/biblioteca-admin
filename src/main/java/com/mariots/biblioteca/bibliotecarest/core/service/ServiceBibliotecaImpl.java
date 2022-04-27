@@ -50,14 +50,14 @@ public class ServiceBibliotecaImpl implements ServiceBiblioteca {
     }
 
     @Override
-    public TextoDto guardarTextoDesdePath(TextoRestSinAT textoRestSinAT, int idAutor, int idTema) {
+    public TextoDto guardarTextoDesdePath(TextoRest textoRest, int idAutor, int idTema) {
         TextoDto textoDto = TextoDto.builder()
-                .textoString(textoRestSinAT.getTextoString())
-                .longitud(textoRestSinAT.getLongitud())
+                .textoString(textoRest.getTextoString())
+                .longitud(textoRest.getLongitud())
                 .idAutor(idAutor)
                 .idTemas(Arrays.asList(idTema))
                 .build();
-        return mapper.toDto(repository.guardarTexto(mapper.toEntity(textoDto)));
+        return guardarTexto(textoDto);
     }
 
 //MÉTODOS RECUPERAR TODOS

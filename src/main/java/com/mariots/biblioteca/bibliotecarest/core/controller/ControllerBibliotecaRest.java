@@ -147,7 +147,7 @@ public class ControllerBibliotecaRest {
 
     @PostMapping(value = "/textos/autores/{idAutor}/temas/{idTema}")
     public ResponseEntity registrarNuevoTextoVinculadoPorPath
-            (@RequestBody TextoRestSinAT texto, @PathVariable int idAutor, @PathVariable int idTema){
+            (@RequestBody TextoRest texto, @PathVariable int idAutor, @PathVariable int idTema){
         TextoDto textoGuardado = service.guardarTextoDesdePath(texto, idAutor, idTema);
         return new ResponseEntity<TextoDto>(textoGuardado, HttpStatus.CREATED);
     }

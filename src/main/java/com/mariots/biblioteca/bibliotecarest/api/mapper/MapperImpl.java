@@ -83,7 +83,6 @@ public class MapperImpl implements Mapper{
         if (autorDto.getNombreAutor()==null){
             throw new CampoEnBlancoException("nombreAutor");
         }
-        //El id se define en BD
         autorEntity.setNombreAutor(autorDto.getNombreAutor());
         autorEntity.setFechaAutor(autorDto.getFechaAutor());
         autorEntity.setDescripcionBreve(autorDto.getDescripcionBreve());
