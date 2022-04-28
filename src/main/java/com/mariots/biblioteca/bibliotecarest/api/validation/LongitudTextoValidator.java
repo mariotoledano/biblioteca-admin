@@ -16,10 +16,9 @@ public class LongitudTextoValidator
         this.longitud = constraintAnnotation.nombreCampoLongitud();
         this.textoString = constraintAnnotation.nombreCampoTextoString();
     }
-    @Override
+
     public boolean isValid(Object textoModel,
                            ConstraintValidatorContext context) {
-        context.disableDefaultConstraintViolation();
         String valorLongitud = (String) new BeanWrapperImpl(textoModel)
                 .getPropertyValue(longitud);
         String valorTextoString = (String) new BeanWrapperImpl(textoModel)
