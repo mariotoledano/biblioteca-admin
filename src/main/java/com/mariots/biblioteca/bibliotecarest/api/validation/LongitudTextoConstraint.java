@@ -13,11 +13,8 @@ import java.lang.annotation.Target;
 public @interface LongitudTextoConstraint {
     Class<?>[] groups() default {};
     Class<? extends Payload>[] payload() default {};
-
-    String message() default "La longitud del texto no se ajusta a los siguientes estándares: \n" +
-            "Texto breve --> Menos de 120 caracteres\n" +
-            "Texto largo --> Más de 90 caracteres\n" +
-            "O bien no se aportó breve o largo como longitud\n";
+    String message() default "{org.hibernate.validator.referenceguide.chapter06.CheckCase." +
+            "message}";
 
     String nombreCampoLongitud();
 

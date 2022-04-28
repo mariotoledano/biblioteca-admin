@@ -1,22 +1,32 @@
 package com.mariots.biblioteca.bibliotecarest.core.controller;
 
+import com.mariots.biblioteca.bibliotecarest.api.exceptions.ModeloException;
 import com.mariots.biblioteca.bibliotecarest.api.mapper.Mapper;
 import com.mariots.biblioteca.bibliotecarest.core.dtos.AutorDto;
 import com.mariots.biblioteca.bibliotecarest.core.dtos.SupertemaDto;
 import com.mariots.biblioteca.bibliotecarest.core.dtos.TemaDto;
 import com.mariots.biblioteca.bibliotecarest.core.dtos.TextoDto;
-import com.mariots.biblioteca.bibliotecarest.core.dtos.inputrest.*;
+import com.mariots.biblioteca.bibliotecarest.core.dtos.inputrest.AutorRest;
+import com.mariots.biblioteca.bibliotecarest.core.dtos.inputrest.SupertemaRest;
+import com.mariots.biblioteca.bibliotecarest.core.dtos.inputrest.TemaRest;
+import com.mariots.biblioteca.bibliotecarest.core.dtos.inputrest.TextoRest;
 import com.mariots.biblioteca.bibliotecarest.core.dtos.objetosvinculados.TemaSupertema;
 import com.mariots.biblioteca.bibliotecarest.core.dtos.objetosvinculados.TextoAutor;
 import com.mariots.biblioteca.bibliotecarest.core.dtos.objetosvinculados.TextoTema;
 import com.mariots.biblioteca.bibliotecarest.core.service.ServiceBiblioteca;
+import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.FieldError;
+import org.springframework.validation.ObjectError;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.context.request.WebRequest;
 
-import javax.validation.Valid;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -257,6 +267,23 @@ public class ControllerBibliotecaRest {
         SupertemaDto supertemaDto= service.recuperarSupertemaPorId(idSupertema);
         service.eliminarSupertemaPorId(idSupertema);
         return new ResponseEntity<SupertemaDto>(supertemaDto,HttpStatus.OK);
+    }
+
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public final ResponseEntity<ModeloException> respuestaMethodArgumentNotValidException(MethodArgumentNotValidException ex, WebRequest request){
+
+        List<ObjectError> fieldErrors = ex.getBindingResult().getAllErrors();
+        List<String> listaMensajesError = new ArrayList<>();
+        for (ObjectError error : fieldErrors) {
+           String mensajeError = error.getDefaultMessage();
+            listaMensajesError.add(mensajeError);
+        }
+            ModeloException modeloException = ModeloException.builder()
+                .fechaYHora(LocalDateTime.now())
+                .mensaje(listaMensajesError.toString())
+                .detalles(request.getDescription(true))
+                .build();
+        return new ResponseEntity(modeloException, HttpStatus.BAD_REQUEST);
     }
 
 }
