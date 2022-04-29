@@ -11,5 +11,8 @@ public class RecursoNoEncontradoException extends RuntimeException {
     public RecursoNoEncontradoException(String mensajePersonalizado){
         super(mensajePersonalizado);
     }
-
+    private final String accionRecomendada = "Intoducir un identificador que coincida con uno existente";
+    public String getAccionRecomendada(){
+        return this.accionRecomendada;
+    }
 }

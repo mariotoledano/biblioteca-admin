@@ -11,4 +11,9 @@ public class RepetirVinculoException extends RuntimeException{
     public RepetirVinculoException(){
         super("Este mismo vínculo ya existía previamente");
     }
+    private final String accionRecomendada =
+            "";
+    public String getAccionRecomendada(){
+        return this.accionRecomendada;
+    }
 }

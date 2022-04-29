@@ -1,13 +1,9 @@
 package com.mariots.biblioteca.bibliotecarest.api.exceptions;
 
 import org.springframework.beans.TypeMismatchException;
-import org.springframework.core.MethodParameter;
-import org.springframework.core.Ordered;
-import org.springframework.core.annotation.Order;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.lang.Nullable;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -25,7 +21,8 @@ public class ExceptionHandlerPersonalizado extends ResponseEntityExceptionHandle
     public final ResponseEntity<Object> respuestaGenericaExcepcion(Exception ex, WebRequest request) {
                  ModeloException modeloException = ModeloException.builder()
                 .fechaYHora(LocalDateTime.now())
-                .mensaje(ex.getMessage())
+                .informacion(ex.getMessage())
+                .accionRecomendada("Se ha producido un error no contemplado")
                 .detalles(request.getDescription(true))
                 .build();
         return new ResponseEntity(modeloException, HttpStatus.INTERNAL_SERVER_ERROR);
@@ -39,9 +36,10 @@ public class ExceptionHandlerPersonalizado extends ResponseEntityExceptionHandle
 
         ModeloException modeloException = ModeloException.builder()
                 .fechaYHora(LocalDateTime.now())
-                .mensaje("El valor introducido debe ser del tipo: " + tipoRequerido +
+                .informacion("El valor introducido debe ser del tipo " + tipoRequerido +
                         ". Usted ha introducido " + valorIntoducidoErroneo +
-                        ", un "+ tipoValorIntoducido + ".")
+                        ", un valor de tipo "+ tipoValorIntoducido + ".")
+                .accionRecomendada("Intoducir un valor del tipo requerido")
                 .detalles(request.getDescription(true))
                 .build();
         return new ResponseEntity(modeloException, HttpStatus.INTERNAL_SERVER_ERROR);
@@ -57,7 +55,8 @@ public class ExceptionHandlerPersonalizado extends ResponseEntityExceptionHandle
         }
         ModeloException modeloException = ModeloException.builder()
                 .fechaYHora(LocalDateTime.now())
-                .mensaje(mensajesError.toString())
+                .informacion(mensajesError.toString())
+                .accionRecomendada("Intoducir valores que cumplan con los requisitos")
                 .detalles(request.getDescription(true))
                 .build();
         return new ResponseEntity(modeloException, HttpStatus.BAD_REQUEST);
@@ -67,7 +66,8 @@ public class ExceptionHandlerPersonalizado extends ResponseEntityExceptionHandle
     public final ResponseEntity<ModeloException> respuestaRecursoNoEncontrado(RecursoNoEncontradoException ex, WebRequest request){
         ModeloException modeloException = ModeloException.builder()
                 .fechaYHora(LocalDateTime.now())
-                .mensaje(ex.getMessage())
+                .informacion(ex.getMessage())
+                .accionRecomendada(ex.getAccionRecomendada())
                 .detalles(request.getDescription(true))
                 .build();
         return new ResponseEntity(modeloException, HttpStatus.NOT_FOUND);
@@ -77,7 +77,8 @@ public class ExceptionHandlerPersonalizado extends ResponseEntityExceptionHandle
     public final ResponseEntity<ModeloException> respuestaCampoEnBlancoException(CampoEnBlancoException ex, WebRequest request){
         ModeloException modeloException = ModeloException.builder()
                 .fechaYHora(LocalDateTime.now())
-                .mensaje(ex.getMessage())
+                .informacion(ex.getMessage())
+                .accionRecomendada(ex.getAccionRecomendada())
                 .detalles(request.getDescription(true))
                 .build();
         return new ResponseEntity(modeloException, HttpStatus.BAD_REQUEST);
@@ -87,7 +88,8 @@ public class ExceptionHandlerPersonalizado extends ResponseEntityExceptionHandle
     public final ResponseEntity<ModeloException> respuestaRecursoYaVinculadoException(RecursoYaVinculadoException ex, WebRequest request){
         ModeloException modeloException = ModeloException.builder()
                 .fechaYHora(LocalDateTime.now())
-                .mensaje(ex.getMessage())
+                .informacion(ex.getMessage())
+                .accionRecomendada(ex.getAccionRecomendada())
                 .detalles(request.getDescription(true))
                 .build();
         return new ResponseEntity(modeloException, HttpStatus.BAD_REQUEST);
@@ -97,7 +99,8 @@ public class ExceptionHandlerPersonalizado extends ResponseEntityExceptionHandle
     public final ResponseEntity<ModeloException> respuestaRecursoNoVinculadoException(RecursoNoVinculadoException ex, WebRequest request){
         ModeloException modeloException = ModeloException.builder()
                 .fechaYHora(LocalDateTime.now())
-                .mensaje(ex.getMessage())
+                .informacion(ex.getMessage())
+                .accionRecomendada(ex.getAccionRecomendada())
                 .detalles(request.getDescription(true))
                 .build();
         return new ResponseEntity(modeloException, HttpStatus.BAD_REQUEST);
@@ -107,7 +110,8 @@ public class ExceptionHandlerPersonalizado extends ResponseEntityExceptionHandle
     public final ResponseEntity<ModeloException> respuestaRepetirVinculoException(RepetirVinculoException ex, WebRequest request){
         ModeloException modeloException = ModeloException.builder()
                 .fechaYHora(LocalDateTime.now())
-                .mensaje(ex.getMessage())
+                .informacion(ex.getMessage())
+                .accionRecomendada(ex.getAccionRecomendada())
                 .detalles(request.getDescription(true))
                 .build();
         return new ResponseEntity(modeloException, HttpStatus.BAD_REQUEST);
@@ -117,7 +121,8 @@ public class ExceptionHandlerPersonalizado extends ResponseEntityExceptionHandle
     public final ResponseEntity<ModeloException> respuestaNoHayResultadosException(NoHayResultadosException ex, WebRequest request){
         ModeloException modeloException = ModeloException.builder()
                 .fechaYHora(LocalDateTime.now())
-                .mensaje(ex.getMessage())
+                .informacion(ex.getMessage())
+                .accionRecomendada(ex.getAccionRecomendada())
                 .detalles(request.getDescription(true))
                 .build();
         return new ResponseEntity(modeloException, HttpStatus.OK);
@@ -127,7 +132,8 @@ public class ExceptionHandlerPersonalizado extends ResponseEntityExceptionHandle
     public final ResponseEntity<ModeloException> respuestaDuplicarRecursoException(DuplicarRecursoException ex, WebRequest request){
         ModeloException modeloException = ModeloException.builder()
                 .fechaYHora(LocalDateTime.now())
-                .mensaje(ex.getMessage())
+                .informacion(ex.getMessage())
+                .accionRecomendada(ex.getAccionRecomendada())
                 .detalles(request.getDescription(true))
                 .build();
         return new ResponseEntity(modeloException, HttpStatus.CONFLICT);

@@ -11,4 +11,9 @@ public class DuplicarRecursoException extends RuntimeException{
     public DuplicarRecursoException(String mensajePersonalizado){
         super(mensajePersonalizado);
     }
+
+    private final String accionRecomendada = "Introducir datos nuevos";
+    public String getAccionRecomendada(){
+        return this.accionRecomendada;
+    }
 }

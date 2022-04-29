@@ -13,6 +13,7 @@ import java.time.LocalDateTime;
 public class ModeloException{
 
     private LocalDateTime fechaYHora;
-    private String mensaje;
+    private String informacion;
+    private String accionRecomendada;
     private String detalles;
 }

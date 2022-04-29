@@ -11,4 +11,9 @@ public class RecursoNoVinculadoException extends RuntimeException{
     public RecursoNoVinculadoException(String mensajePersonalizado){
         super(mensajePersonalizado);
     }
+    private final String accionRecomendada =
+            "Utilice el método POST si desea crearlo. Si desea eliminarlo no es necesario tomar acción.";
+    public String getAccionRecomendada(){
+        return this.accionRecomendada;
+    }
 }
