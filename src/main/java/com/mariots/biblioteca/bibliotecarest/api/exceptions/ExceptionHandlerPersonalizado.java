@@ -1,10 +1,13 @@
 package com.mariots.biblioteca.bibliotecarest.api.exceptions;
 
+import org.springframework.beans.TypeMismatchException;
+import org.springframework.core.MethodParameter;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.lang.Nullable;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -23,6 +26,22 @@ public class ExceptionHandlerPersonalizado extends ResponseEntityExceptionHandle
                  ModeloException modeloException = ModeloException.builder()
                 .fechaYHora(LocalDateTime.now())
                 .mensaje(ex.getMessage())
+                .detalles(request.getDescription(true))
+                .build();
+        return new ResponseEntity(modeloException, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+    @Override
+    protected ResponseEntity<Object> handleTypeMismatch(TypeMismatchException ex, HttpHeaders headers, HttpStatus status, WebRequest request) {
+
+        String tipoRequerido = ex.getRequiredType().toString();
+        String valorIntoducidoErroneo = ex.getValue().toString();
+        String tipoValorIntoducido = ex.getValue().getClass().toString();
+
+        ModeloException modeloException = ModeloException.builder()
+                .fechaYHora(LocalDateTime.now())
+                .mensaje("El valor introducido debe ser del tipo: " + tipoRequerido +
+                        ". Usted ha introducido " + valorIntoducidoErroneo +
+                        ", un "+ tipoValorIntoducido + ".")
                 .detalles(request.getDescription(true))
                 .build();
         return new ResponseEntity(modeloException, HttpStatus.INTERNAL_SERVER_ERROR);

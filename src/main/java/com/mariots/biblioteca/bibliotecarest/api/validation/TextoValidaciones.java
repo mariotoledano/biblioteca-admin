@@ -6,14 +6,14 @@ import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 import java.util.Objects;
 
-public class LongitudTextoValidator
-        implements ConstraintValidator<RestriccionesTexto, Object>{
+public class TextoValidaciones
+        implements ConstraintValidator<TextoRestricciones, Object>{
 
     private String longitud;
     private String textoString;
 
     @Override
-    public void initialize(RestriccionesTexto constraintAnnotation) {
+    public void initialize(TextoRestricciones constraintAnnotation) {
         this.longitud = constraintAnnotation.nombreCampoLongitud();
         this.textoString = constraintAnnotation.nombreCampoTextoString();
     }

@@ -1,6 +1,5 @@
 package com.mariots.biblioteca.bibliotecarest.core.controller;
 
-import com.mariots.biblioteca.bibliotecarest.api.exceptions.ModeloException;
 import com.mariots.biblioteca.bibliotecarest.api.mapper.Mapper;
 import com.mariots.biblioteca.bibliotecarest.core.dtos.AutorDto;
 import com.mariots.biblioteca.bibliotecarest.core.dtos.SupertemaDto;
@@ -14,19 +13,13 @@ import com.mariots.biblioteca.bibliotecarest.core.dtos.objetosvinculados.TemaSup
 import com.mariots.biblioteca.bibliotecarest.core.dtos.objetosvinculados.TextoAutor;
 import com.mariots.biblioteca.bibliotecarest.core.dtos.objetosvinculados.TextoTema;
 import com.mariots.biblioteca.bibliotecarest.core.service.ServiceBiblioteca;
-import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.FieldError;
-import org.springframework.validation.ObjectError;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.context.request.WebRequest;
 
-import java.time.LocalDateTime;
-import java.util.ArrayList;
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -65,7 +58,7 @@ public class ControllerBibliotecaRest {
 //GET resource/{id} --> Recuperar recurso por id
 
     @GetMapping(value = "/autores/{id}")
-    public ResponseEntity recuperarAutorPorId(@PathVariable int id) {
+    public ResponseEntity recuperarAutorPorId(@PathVariable @Valid int id) {
         AutorDto autor = service.recuperarAutorPorId(id);
         return new ResponseEntity<AutorDto>(autor, HttpStatus.FOUND);
     }
