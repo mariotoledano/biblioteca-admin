@@ -1,6 +1,6 @@
 package com.mariots.biblioteca.bibliotecarest.core.dtos;
 
-import com.mariots.biblioteca.bibliotecarest.api.validation.LongitudTextoConstraint;
+import com.mariots.biblioteca.bibliotecarest.api.validation.RestriccionesTexto;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -12,7 +12,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@LongitudTextoConstraint(nombreCampoLongitud = "longitud", nombreCampoTextoString = "textoString")
+@RestriccionesTexto(nombreCampoLongitud = "longitud", nombreCampoTextoString = "textoString")
 public class TextoDto {
     private int idTexto;
     private String textoString;
@@ -20,10 +20,4 @@ public class TextoDto {
     private Integer idAutor;
     private List<Integer> idTemas;
 
-    public TextoDto(String textoString, String longitud, Integer idAutor, List<Integer> idTemas) {
-        this.textoString = textoString;
-        this.longitud = longitud;
-        this.idAutor = idAutor;
-        this.idTemas = idTemas;
-    }
 }

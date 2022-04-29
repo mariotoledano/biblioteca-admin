@@ -10,11 +10,10 @@ import java.lang.annotation.Target;
 @Constraint(validatedBy = LongitudTextoValidator.class)
 @Target({ ElementType.TYPE })
 @Retention(RetentionPolicy.RUNTIME)
-public @interface LongitudTextoConstraint {
+public @interface RestriccionesTexto {
     Class<?>[] groups() default {};
     Class<? extends Payload>[] payload() default {};
-    String message() default "{org.hibernate.validator.referenceguide.chapter06.CheckCase." +
-            "message}";
+    String message() default "Error de validación de Texto";
 
     String nombreCampoLongitud();
 

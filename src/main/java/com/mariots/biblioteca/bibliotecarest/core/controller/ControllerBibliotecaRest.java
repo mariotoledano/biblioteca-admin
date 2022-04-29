@@ -269,21 +269,4 @@ public class ControllerBibliotecaRest {
         return new ResponseEntity<SupertemaDto>(supertemaDto,HttpStatus.OK);
     }
 
-    @ExceptionHandler(MethodArgumentNotValidException.class)
-    public final ResponseEntity<ModeloException> respuestaMethodArgumentNotValidException(MethodArgumentNotValidException ex, WebRequest request){
-
-        List<ObjectError> fieldErrors = ex.getBindingResult().getAllErrors();
-        List<String> listaMensajesError = new ArrayList<>();
-        for (ObjectError error : fieldErrors) {
-           String mensajeError = error.getDefaultMessage();
-            listaMensajesError.add(mensajeError);
-        }
-            ModeloException modeloException = ModeloException.builder()
-                .fechaYHora(LocalDateTime.now())
-                .mensaje(listaMensajesError.toString())
-                .detalles(request.getDescription(true))
-                .build();
-        return new ResponseEntity(modeloException, HttpStatus.BAD_REQUEST);
-    }
-
 }

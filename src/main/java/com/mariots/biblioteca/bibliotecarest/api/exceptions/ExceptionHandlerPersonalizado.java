@@ -1,54 +1,48 @@
 package com.mariots.biblioteca.bibliotecarest.api.exceptions;
 
-import lombok.extern.slf4j.Slf4j;
-import org.hibernate.exception.ConstraintViolationException;
-import org.springframework.context.annotation.Bean;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
-import javax.xml.bind.annotation.XmlElementDecl;
-import java.net.BindException;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @RestControllerAdvice
-public class ResponseEntityExceptionHandlerPersonalizado extends ResponseEntityExceptionHandler {
+public class ExceptionHandlerPersonalizado extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler(value = Exception.class)
     public final ResponseEntity<Object> respuestaGenericaExcepcion(Exception ex, WebRequest request) {
                  ModeloException modeloException = ModeloException.builder()
                 .fechaYHora(LocalDateTime.now())
-                .mensaje("respuesta genérica exception")
+                .mensaje(ex.getMessage())
                 .detalles(request.getDescription(true))
                 .build();
         return new ResponseEntity(modeloException, HttpStatus.INTERNAL_SERVER_ERROR);
     }
-    //    @ExceptionHandler(MethodArgumentNotValidException.class)
-//    public final ResponseEntity<ModeloException> respuestaMethodArgumentNotValidException(MethodArgumentNotValidException ex, WebRequest request){
-//        ModeloException modeloException = ModeloException.builder()
-//                .fechaYHora(LocalDateTime.now())
-//                .mensaje(ex.getMessage())
-//                .detalles(request.getDescription(true))
-//                .build();
-//        return new ResponseEntity(modeloException, HttpStatus.BAD_REQUEST);
-//    }
-//    @ResponseStatus(HttpStatus.UNPROCESSABLE_ENTITY)
-//    @Override
-//    protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex, HttpHeaders headers, HttpStatus status, WebRequest request) {
-//        ModeloException modeloException = ModeloException.builder()
-//                .fechaYHora(LocalDateTime.now())
-//                .mensaje(ex.getMessage())
-//                .detalles(request.getDescription(true))
-//                .build();
-//        return new ResponseEntity(modeloException, HttpStatus.BAD_REQUEST);
-//    }
+
+    @Override
+    protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex, HttpHeaders headers, HttpStatus status, WebRequest request) {
+        List<ObjectError> errores = ex.getBindingResult().getAllErrors();
+        List<String> mensajesError = new ArrayList<>();
+        for (ObjectError error : errores) {
+            String mensajeError = error.getDefaultMessage();
+            mensajesError.add(mensajeError);
+        }
+        ModeloException modeloException = ModeloException.builder()
+                .fechaYHora(LocalDateTime.now())
+                .mensaje(mensajesError.toString())
+                .detalles(request.getDescription(true))
+                .build();
+        return new ResponseEntity(modeloException, HttpStatus.BAD_REQUEST);
+    }
 
     @ExceptionHandler(RecursoNoEncontradoException.class)
     public final ResponseEntity<ModeloException> respuestaRecursoNoEncontrado(RecursoNoEncontradoException ex, WebRequest request){
@@ -119,28 +113,5 @@ public class ResponseEntityExceptionHandlerPersonalizado extends ResponseEntityE
                 .build();
         return new ResponseEntity(modeloException, HttpStatus.CONFLICT);
     }
-
-    @ExceptionHandler(LongitudYTextoNoConcuerdanException.class)
-    public final ResponseEntity<ModeloException> respuestaLongitudYTextoNoConcuerdanException(LongitudYTextoNoConcuerdanException ex, WebRequest request){
-        ModeloException modeloException = ModeloException.builder()
-                .fechaYHora(LocalDateTime.now())
-                .mensaje(ex.getMessage())
-                .detalles(request.getDescription(true))
-                .build();
-        return new ResponseEntity(modeloException, HttpStatus.BAD_REQUEST);
-    }
-
-    @ExceptionHandler(ConstraintViolationException.class)
-    public final ResponseEntity<ModeloException> respuestaConstraintViolationException(ConstraintViolationException ex, WebRequest request){
-        ModeloException modeloException = ModeloException.builder()
-                .fechaYHora(LocalDateTime.now())
-                .mensaje(ex.getMessage())
-                .detalles(request.getDescription(true))
-                .build();
-        return new ResponseEntity(modeloException, HttpStatus.BAD_REQUEST);
-    }
-
-
-
 
 }
