@@ -1,13 +1,13 @@
 package com.mariots.biblioteca.bibliotecarest.api.mapper;
 
-import com.mariots.biblioteca.bibliotecarest.core.dtos.AutorDto;
-import com.mariots.biblioteca.bibliotecarest.core.dtos.SupertemaDto;
-import com.mariots.biblioteca.bibliotecarest.core.dtos.TemaDto;
-import com.mariots.biblioteca.bibliotecarest.core.dtos.TextoDto;
-import com.mariots.biblioteca.bibliotecarest.core.dtos.inputrest.AutorRest;
-import com.mariots.biblioteca.bibliotecarest.core.dtos.inputrest.SupertemaRest;
-import com.mariots.biblioteca.bibliotecarest.core.dtos.inputrest.TemaRest;
-import com.mariots.biblioteca.bibliotecarest.core.dtos.inputrest.TextoRest;
+import com.mariots.biblioteca.bibliotecarest.core.model.dto.AutorDto;
+import com.mariots.biblioteca.bibliotecarest.core.model.dto.SupertemaDto;
+import com.mariots.biblioteca.bibliotecarest.core.model.dto.TemaDto;
+import com.mariots.biblioteca.bibliotecarest.core.model.dto.TextoDto;
+import com.mariots.biblioteca.bibliotecarest.core.model.nuevosrecurso.AutorNuevo;
+import com.mariots.biblioteca.bibliotecarest.core.model.nuevosrecurso.SupertemaNuevo;
+import com.mariots.biblioteca.bibliotecarest.core.model.nuevosrecurso.TemaNuevo;
+import com.mariots.biblioteca.bibliotecarest.core.model.nuevosrecurso.TextoNuevo;
 import com.mariots.biblioteca.bibliotecarest.persistence.entities.AutorEntity;
 import com.mariots.biblioteca.bibliotecarest.persistence.entities.SupertemaEntity;
 import com.mariots.biblioteca.bibliotecarest.persistence.entities.TemaEntity;
@@ -31,9 +31,9 @@ public interface Mapper {
 
     //Rest --> Dto
 
-    AutorDto toDto(AutorRest autorRest);
-    TextoDto toDto(TextoRest textoRest);
-    TemaDto toDto(TemaRest temaRest);
-    SupertemaDto toDto(SupertemaRest supertemaRest);
+    AutorDto toDto(AutorNuevo autorNuevo);
+    TextoDto toDto(TextoNuevo textoNuevo);
+    TemaDto toDto(TemaNuevo temaNuevo);
+    SupertemaDto toDto(SupertemaNuevo supertemaNuevo);
 
 }

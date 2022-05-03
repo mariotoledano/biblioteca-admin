@@ -1,4 +1,4 @@
-package com.mariots.biblioteca.bibliotecarest.core.dtos.inputrest;
+package com.mariots.biblioteca.bibliotecarest.core.model.dto;
 
 import com.mariots.biblioteca.bibliotecarest.api.validation.TextoRestricciones;
 import lombok.AllArgsConstructor;
@@ -13,10 +13,11 @@ import java.util.List;
 @AllArgsConstructor
 @Builder
 @TextoRestricciones(nombreCampoLongitud = "longitud", nombreCampoTextoString = "textoString")
-public class TextoRest {
-
+public class TextoDto {
+    private int idTexto;
     private String textoString;
     private String longitud;
-    private String nombreAutor;
-    private List<String> nombreTemas;
+    private Integer idAutor;
+    private List<Integer> idTemas;
+
 }

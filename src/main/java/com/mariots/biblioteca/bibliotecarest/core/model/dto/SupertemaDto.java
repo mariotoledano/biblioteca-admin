@@ -1,4 +1,4 @@
-package com.mariots.biblioteca.bibliotecarest.core.dtos;
+package com.mariots.biblioteca.bibliotecarest.core.model.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

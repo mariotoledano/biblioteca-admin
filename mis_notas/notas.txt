@@ -3,9 +3,6 @@
 
 MEJORAS
 
-
-Validar números como entrada en path para ids, reconducir excepción a una personalizada
-
 Implementar HTOAS
 
 Conectar repository de web a biblioteca-rest

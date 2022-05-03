@@ -1,26 +1,33 @@
 package com.mariots.biblioteca.bibliotecarest.core.controller;
 
+import com.mariots.biblioteca.bibliotecarest.api.hateoas.Hateoas;
+import com.mariots.biblioteca.bibliotecarest.api.hateoas.indice.Indice;
 import com.mariots.biblioteca.bibliotecarest.api.mapper.Mapper;
-import com.mariots.biblioteca.bibliotecarest.core.dtos.AutorDto;
-import com.mariots.biblioteca.bibliotecarest.core.dtos.SupertemaDto;
-import com.mariots.biblioteca.bibliotecarest.core.dtos.TemaDto;
-import com.mariots.biblioteca.bibliotecarest.core.dtos.TextoDto;
-import com.mariots.biblioteca.bibliotecarest.core.dtos.inputrest.AutorRest;
-import com.mariots.biblioteca.bibliotecarest.core.dtos.inputrest.SupertemaRest;
-import com.mariots.biblioteca.bibliotecarest.core.dtos.inputrest.TemaRest;
-import com.mariots.biblioteca.bibliotecarest.core.dtos.inputrest.TextoRest;
-import com.mariots.biblioteca.bibliotecarest.core.dtos.objetosvinculados.TemaSupertema;
-import com.mariots.biblioteca.bibliotecarest.core.dtos.objetosvinculados.TextoAutor;
-import com.mariots.biblioteca.bibliotecarest.core.dtos.objetosvinculados.TextoTema;
+import com.mariots.biblioteca.bibliotecarest.core.model.dto.AutorDto;
+import com.mariots.biblioteca.bibliotecarest.core.model.dto.SupertemaDto;
+import com.mariots.biblioteca.bibliotecarest.core.model.dto.TemaDto;
+import com.mariots.biblioteca.bibliotecarest.core.model.dto.TextoDto;
+import com.mariots.biblioteca.bibliotecarest.core.model.nuevosrecurso.AutorNuevo;
+import com.mariots.biblioteca.bibliotecarest.core.model.nuevosrecurso.SupertemaNuevo;
+import com.mariots.biblioteca.bibliotecarest.core.model.nuevosrecurso.TemaNuevo;
+import com.mariots.biblioteca.bibliotecarest.core.model.nuevosrecurso.TextoNuevo;
+import com.mariots.biblioteca.bibliotecarest.core.model.clasesempaquetado.TemaSupertema;
+import com.mariots.biblioteca.bibliotecarest.core.model.clasesempaquetado.TextoAutor;
+import com.mariots.biblioteca.bibliotecarest.core.model.clasesempaquetado.TextoTema;
 import com.mariots.biblioteca.bibliotecarest.core.service.ServiceBiblioteca;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.hateoas.Link;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.Arrays;
 import java.util.List;
+
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 @RestController
 public class ControllerBibliotecaRest {
@@ -29,6 +36,29 @@ public class ControllerBibliotecaRest {
     ServiceBiblioteca service;
     @Autowired
     Mapper mapper;
+    @Autowired
+    Hateoas hateoas;
+
+
+    @GetMapping(value = "/prueba")
+    public List<Link> prueba(){
+        Link linkTodosAutores = linkTo(methodOn(ControllerBibliotecaRest.class)
+                .recuperarAutores()).withRel("Recuperar todos los Autores");
+        Link linkTodosTextos = linkTo(methodOn(ControllerBibliotecaRest.class)
+                .recuperarTextos()).withRel("Recuperar todos los Textos");
+        Link linkTodosTemas = linkTo(methodOn(ControllerBibliotecaRest.class)
+                .recuperarTemas()).withRel("Recuperar todos los Temas");
+        Link linkTodosSupertemas = linkTo(methodOn(ControllerBibliotecaRest.class)
+                .recuperarSupertemas()).withRel("Recuperar todos los Supertemas");
+        List<Link> linksTodosRecursos = Arrays.asList(linkTodosAutores,linkTodosTextos, linkTodosTemas, linkTodosSupertemas);
+        return linksTodosRecursos;
+    }
+//GET indice
+    @GetMapping(value = "/indice")
+    public ResponseEntity irAlIndice(){
+        Indice indice = Hateoas.recuperarIndice();
+        return new ResponseEntity<Indice>(indice,HttpStatus.OK);
+    }
 
 //GET resource -- Recuperar todos los resources de un tipo
     @GetMapping(value = "/autores")
@@ -63,6 +93,18 @@ public class ControllerBibliotecaRest {
         return new ResponseEntity<AutorDto>(autor, HttpStatus.FOUND);
     }
 
+//MODIFICADO REFACTORIZAR!!!/////////////////////////////
+//    @GetMapping(value = "/autores/{id}")
+//    @ResponseStatus(HttpStatus.FOUND)
+//    public EntityModel<ResponseEntity> recuperarAutorPorId(@PathVariable @Valid int id) {
+//        AutorDto autor = service.recuperarAutorPorId(id);
+//        ResponseEntity<AutorDto> responseEntity = new ResponseEntity<>(autor, HttpStatus.FOUND);
+//        EntityModel<ResponseEntity> entityModel=EntityModel.of(responseEntity);
+//        WebMvcLinkBuilder linkRecuperarAutores = linkTo(methodOn(this.getClass()).recuperarTemaPorId(1));
+//        entityModel.add(linkRecuperarAutores.withRel("Recuperar todos los autores"));
+//        return entityModel;
+//    }
+/////////////////////////////////////////////////
     @GetMapping(value = "/textos/{id}")
     public ResponseEntity recuperarTextoPorId(@PathVariable int id) {
         TextoDto texto = service.recuperarTextoPorId(id);
@@ -96,7 +138,7 @@ public class ControllerBibliotecaRest {
     }
 
     @GetMapping(value = "/supertemas/nombre/{nombreSupertema}")
-    public ResponseEntity recuperarSupertemaPorId(@PathVariable String nombreSupertema) {
+    public ResponseEntity recuperarSupertemaPorNombre(@PathVariable String nombreSupertema) {
         SupertemaDto supertema = service.recuperarSupertemaPorNombre(nombreSupertema);
         return new ResponseEntity<SupertemaDto>(supertema, HttpStatus.FOUND);
     }
@@ -127,32 +169,32 @@ public class ControllerBibliotecaRest {
 //POST resource --> Creación nuevo resource
 
     @PostMapping(value = "/autores")
-    public ResponseEntity registrarNuevoAutor(@RequestBody AutorRest autor) {
+    public ResponseEntity registrarNuevoAutor(@RequestBody AutorNuevo autor) {
         AutorDto autorGuardado = service.guardarAutor(autor);
         return new ResponseEntity<AutorDto>(autorGuardado, HttpStatus.CREATED);
     }
 
     @PostMapping(value = "/temas")
-    public ResponseEntity registrarNuevoTema(@RequestBody TemaRest tema) {
+    public ResponseEntity registrarNuevoTema(@RequestBody TemaNuevo tema) {
         TemaDto temaGuardado = service.guardarTema(tema);
         return new ResponseEntity<TemaDto>(temaGuardado, HttpStatus.CREATED);
     }
 
     @PostMapping(value = "/supertemas")
-    public ResponseEntity registrarNuevoSupertema(@RequestBody SupertemaRest supertema) {
+    public ResponseEntity registrarNuevoSupertema(@RequestBody SupertemaNuevo supertema) {
         SupertemaDto supertemaGuardado = service.guardarSupertema(supertema);
         return new ResponseEntity<SupertemaDto>(supertemaGuardado, HttpStatus.CREATED);
     }
 
     @PostMapping(value = "/textos")
-    public ResponseEntity registrarNuevoTexto(@RequestBody @Validated TextoRest texto) {
+    public ResponseEntity registrarNuevoTexto(@RequestBody @Validated TextoNuevo texto) {
         TextoDto textoGuardado = service.guardarTexto(texto);
         return new ResponseEntity<TextoDto>(textoGuardado, HttpStatus.CREATED);
     }
 
     @PostMapping(value = "/textos/autores/{idAutor}/temas/{idTema}")
     public ResponseEntity registrarNuevoTextoVinculadoPorPath
-            (@RequestBody TextoRest texto, @PathVariable int idAutor, @PathVariable int idTema){
+            (@RequestBody TextoNuevo texto, @PathVariable int idAutor, @PathVariable int idTema){
         TextoDto textoGuardado = service.guardarTextoDesdePath(texto, idAutor, idTema);
         return new ResponseEntity<TextoDto>(textoGuardado, HttpStatus.CREATED);
     }
@@ -177,7 +219,7 @@ public class ControllerBibliotecaRest {
         return new ResponseEntity<TextoAutor>(textoAutor, HttpStatus.CREATED);
     }
 
-//PUT resource/{id}/resource/{id} --> sobreescribir vínculos esistentes
+//PUT resource/{id}/resource/{id} --> sobreescribir vínculos existentes
 
     @PutMapping(value = "/temas/{idTema}/supertemas/{idSupertema}")
     public ResponseEntity sobreescribirVinculoTemaSupertema(@PathVariable int idTema, @PathVariable int idSupertema) {
@@ -212,25 +254,25 @@ public class ControllerBibliotecaRest {
 
 //PUT resource/{id} + body data -->Actualizar un recurso
     @PutMapping(value = "/autores/{id}")
-    public ResponseEntity actualizarAutorPorId(@PathVariable int id, @RequestBody AutorRest autor) {
+    public ResponseEntity actualizarAutorPorId(@PathVariable int id, @RequestBody AutorNuevo autor) {
         AutorDto autorNuevo = service.actualizarAutorPorId(id, autor);
         return new ResponseEntity<AutorDto>(autorNuevo, HttpStatus.OK);
     }
 
     @PutMapping(value = "/textos/{id}")
-    public ResponseEntity actualizarTextosPorId(@PathVariable int id, @RequestBody TextoRest texto) {
+    public ResponseEntity actualizarTextosPorId(@PathVariable int id, @RequestBody TextoNuevo texto) {
         TextoDto textoNuevo = service.actualizarTextoPorId(id, texto);
         return new ResponseEntity<TextoDto>(textoNuevo, HttpStatus.OK);
     }
 
     @PutMapping(value = "/temas/{id}")
-    public ResponseEntity actualizarTemasPorId(@PathVariable int id, @RequestBody TemaRest tema) {
+    public ResponseEntity actualizarTemasPorId(@PathVariable int id, @RequestBody TemaNuevo tema) {
         TemaDto temaNuevo = service.actualizarTemaPorId(id, tema);
         return new ResponseEntity<TemaDto>(temaNuevo, HttpStatus.OK);
     }
 
     @PutMapping(value = "/supertemas/{id}")
-    public ResponseEntity actualizarSupertemasPorId(@PathVariable int id, @RequestBody SupertemaRest supertema) {
+    public ResponseEntity actualizarSupertemasPorId(@PathVariable int id, @RequestBody SupertemaNuevo supertema) {
         SupertemaDto supertemaNuevo = service.actualizarSupertemaPorId(id, supertema);
         return new ResponseEntity<SupertemaDto>(supertemaNuevo, HttpStatus.OK);
     }

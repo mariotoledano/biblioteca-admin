@@ -1,15 +1,15 @@
 package com.mariots.biblioteca.bibliotecarest.core.service;
 
 import com.mariots.biblioteca.bibliotecarest.api.exceptions.*;
-import com.mariots.biblioteca.bibliotecarest.core.dtos.AutorDto;
-import com.mariots.biblioteca.bibliotecarest.core.dtos.SupertemaDto;
-import com.mariots.biblioteca.bibliotecarest.core.dtos.TemaDto;
-import com.mariots.biblioteca.bibliotecarest.core.dtos.TextoDto;
+import com.mariots.biblioteca.bibliotecarest.core.model.dto.AutorDto;
+import com.mariots.biblioteca.bibliotecarest.core.model.dto.SupertemaDto;
+import com.mariots.biblioteca.bibliotecarest.core.model.dto.TemaDto;
+import com.mariots.biblioteca.bibliotecarest.core.model.dto.TextoDto;
 import com.mariots.biblioteca.bibliotecarest.api.mapper.Mapper;
-import com.mariots.biblioteca.bibliotecarest.core.dtos.inputrest.*;
-import com.mariots.biblioteca.bibliotecarest.core.dtos.objetosvinculados.TemaSupertema;
-import com.mariots.biblioteca.bibliotecarest.core.dtos.objetosvinculados.TextoAutor;
-import com.mariots.biblioteca.bibliotecarest.core.dtos.objetosvinculados.TextoTema;
+import com.mariots.biblioteca.bibliotecarest.core.model.nuevosrecurso.*;
+import com.mariots.biblioteca.bibliotecarest.core.model.clasesempaquetado.TemaSupertema;
+import com.mariots.biblioteca.bibliotecarest.core.model.clasesempaquetado.TextoAutor;
+import com.mariots.biblioteca.bibliotecarest.core.model.clasesempaquetado.TextoTema;
 import com.mariots.biblioteca.bibliotecarest.persistence.entities.AutorEntity;
 import com.mariots.biblioteca.bibliotecarest.persistence.entities.SupertemaEntity;
 import com.mariots.biblioteca.bibliotecarest.persistence.entities.TemaEntity;
@@ -27,143 +27,93 @@ public class ServiceBibliotecaImpl implements ServiceBiblioteca {
     RepositoryBiblioteca repository;
    @Autowired
     Mapper mapper;
-
-//GUARDAR DTO
+   
+//GUARDAR NUEVO
     @Override
-    public AutorDto guardarAutor(AutorDto autorDto) {
-        if (autorDto.getNombreAutor()==null||autorDto.getNombreAutor().isEmpty()){
-            throw new CampoEnBlancoException("nombreAutor");
-        }
-        if(repository.recuperarAutores().stream()
-                .anyMatch((autor)->Objects.equals(autor.getNombreAutor(),autorDto.getNombreAutor()))){
-            throw new DuplicarRecursoException("Ya existe un autor con ese nombre de autor");
-        }
-        return mapper.toDto(repository.guardarAutor(mapper.toEntity(autorDto)));
-    }
-
-    @Override
-    public TemaDto guardarTema(TemaDto temaDto) {
-        if (temaDto.getNombreTema()==null){
-            throw new CampoEnBlancoException("nombreTema");
-        }
-        if (repository.recuperarTemas().stream()
-                .anyMatch((tema)->Objects.equals(tema.getNombreTema(),temaDto.getNombreTema()))){
-            throw new DuplicarRecursoException("Ya existe un tema con ese nombre de tema");
-        }
-        return mapper.toDto(repository.guardarTema(mapper.toEntity(temaDto)));
-    }
-
-    @Override
-    public SupertemaDto guardarSupertema(SupertemaDto supertemaDto) {
-        if(supertemaDto.getNombreSupertema()==null){
-            throw new CampoEnBlancoException("nombreSupertema");
-        }
-        if (repository.recuperarSupertemas().stream()
-                .anyMatch((supertema) ->Objects.equals(supertema.getNombreSupertema() , supertemaDto.getNombreSupertema()))) {
-            throw new DuplicarRecursoException("Ya existe un supertema con ese nombre de supertema");
-        }
-        return mapper.toDto(repository.guardarSupertema(mapper.toEntity(supertemaDto)));
-    }
-
-    @Override
-    public TextoDto guardarTexto(TextoDto textoDto) {
-        if (textoDto.getTextoString()==null){
-            throw new CampoEnBlancoException("textoString");
-        }
-        if (repository.recupearTextos().stream()
-                .anyMatch((texto)->Objects.equals(texto.getTextoString(),textoDto.getTextoString()))){
-            throw new DuplicarRecursoException("Ya existe un texto igual");
-        }
-        return mapper.toDto(repository.guardarTexto(mapper.toEntity(textoDto)));
-    }
-//GUARDAR REST
-    @Override
-    public AutorDto guardarAutor(AutorRest autorRest) {
-        if (autorRest.getNombreAutor()==null||autorRest.getNombreAutor().isEmpty()){
+    public AutorDto guardarAutor(AutorNuevo autorNuevo) {
+        if (autorNuevo.getNombreAutor()==null|| autorNuevo.getNombreAutor().isEmpty()){
             throw new CampoEnBlancoException("nombreAutor");
         }
         if (repository.recuperarAutores().stream()
-                .anyMatch((autor)->Objects.equals(autor.getNombreAutor(),(autorRest.getNombreAutor())))){
+                .anyMatch((autor)->Objects.equals(autor.getNombreAutor(),(autorNuevo.getNombreAutor())))){
             throw new DuplicarRecursoException("Ya existe un autor con ese nombre de autor");
         }
-        AutorEntity autorEntity = mapper.toEntity(mapper.toDto(autorRest));
+        AutorEntity autorEntity = mapper.toEntity(mapper.toDto(autorNuevo));
         return mapper.toDto(repository.guardarAutor(autorEntity));
     }
 
     @Override
-    public TemaDto guardarTema(TemaRest temaRest) {
-        if(temaRest.getNombreTema()==null||temaRest.getNombreTema().isEmpty()){
+    public TemaDto guardarTema(TemaNuevo temaNuevo) {
+        if(temaNuevo.getNombreTema()==null|| temaNuevo.getNombreTema().isEmpty()){
             throw new CampoEnBlancoException("nombreTema");
         }
         if (repository.recuperarTemas().stream()
-                .anyMatch((tema)->Objects.equals(tema.getNombreTema(),temaRest.getNombreTema()))){
+                .anyMatch((tema)->Objects.equals(tema.getNombreTema(), temaNuevo.getNombreTema()))){
             throw new DuplicarRecursoException("Ya existe un tema con ese nombre de tema");
         }
-        TemaEntity temaEntity = mapper.toEntity(mapper.toDto(temaRest));
+        TemaEntity temaEntity = mapper.toEntity(mapper.toDto(temaNuevo));
         return mapper.toDto(repository.guardarTema(temaEntity));
     }
 
     @Override
-    public SupertemaDto guardarSupertema(SupertemaRest supertemaRest) {
-        if (supertemaRest.getNombreSupertema()==null||supertemaRest.getNombreSupertema().isEmpty()){
+    public SupertemaDto guardarSupertema(SupertemaNuevo supertemaNuevo) {
+        if (supertemaNuevo.getNombreSupertema()==null|| supertemaNuevo.getNombreSupertema().isEmpty()){
             throw new CampoEnBlancoException("nombreSupertema");
         }
         if (repository.recuperarSupertemas().stream()
-                .anyMatch((supertema)->Objects.equals(supertema.getNombreSupertema(),supertemaRest.getNombreSupertema()))){
+                .anyMatch((supertema)->Objects.equals(supertema.getNombreSupertema(), supertemaNuevo.getNombreSupertema()))){
             throw new DuplicarRecursoException("Ya existe un supertema con ese nombre de supertema");
         }
-        SupertemaEntity supertemaEntity = mapper.toEntity(mapper.toDto(supertemaRest));
+        SupertemaEntity supertemaEntity = mapper.toEntity(mapper.toDto(supertemaNuevo));
         return mapper.toDto(repository.guardarSupertema(supertemaEntity));
     }
 
     @Override
-    public TextoDto guardarTexto(TextoRest textoRest) {
-        if(textoRest.getTextoString()==null||textoRest.getTextoString().isEmpty()){
+    public TextoDto guardarTexto(TextoNuevo textoNuevo) {
+        if(textoNuevo.getTextoString()==null|| textoNuevo.getTextoString().isEmpty()){
             throw new CampoEnBlancoException("textoString");
         }
         if (repository.recupearTextos().stream()
-                .anyMatch((texto)->Objects.equals(texto.getTextoString(),textoRest.getTextoString()))){
+                .anyMatch((texto)->Objects.equals(texto.getTextoString(), textoNuevo.getTextoString()))){
             throw new DuplicarRecursoException("Ya existe un texto igual");
         }
         //comprobamos el autor aportado
-        if(textoRest.getNombreAutor()==null||textoRest.getNombreAutor().isEmpty()){
+        if(textoNuevo.getNombreAutor()==null|| textoNuevo.getNombreAutor().isEmpty()){
             throw new CampoEnBlancoException("nombreAutor");
-        } else if (repository.recuperarAutorPorNombre(textoRest.getNombreAutor()) == null) {
+        } else if (repository.recuperarAutorPorNombre(textoNuevo.getNombreAutor()) == null) {
             throw new RecursoNoEncontradoException("No existe el nombre de autor aportado, ingrese un nombre de autor previamente registrado");
         }
         //comprobamos el tema aportado
-        if(textoRest.getNombreTemas()==null||textoRest.getNombreTemas().isEmpty()){
+        if(textoNuevo.getNombreTemas()==null|| textoNuevo.getNombreTemas().isEmpty()){
             throw new CampoEnBlancoException("nombreTemas");
-        } else if (textoRest.getNombreTemas().stream()
+        } else if (textoNuevo.getNombreTemas().stream()
                 .anyMatch((nombreTema)->repository.recuperarTemaPorNombre(nombreTema)==null)){
             throw new RecursoNoEncontradoException("No existe el nombre de tema aportado, ingrese un nombre previamente registrado");
         }
-        TextoEntity textoEntity = mapper.toEntity(mapper.toDto(textoRest));
+        TextoEntity textoEntity = mapper.toEntity(mapper.toDto(textoNuevo));
         return mapper.toDto(repository.guardarTexto(textoEntity));
     }
 
     @Override
-    public TextoDto guardarTextoDesdePath(TextoRest textoRest, int idAutor, int idTema) {
-        if(textoRest.getTextoString()==null||textoRest.getTextoString().isEmpty()){
+    public TextoDto guardarTextoDesdePath(TextoNuevo textoNuevo, int idAutor, int idTema) {
+        if(textoNuevo.getTextoString()==null|| textoNuevo.getTextoString().isEmpty()){
             throw new CampoEnBlancoException("textoString");
         }
         if (repository.recupearTextos().stream()
-                .anyMatch((texto)->Objects.equals(texto.getTextoString(),textoRest.getTextoString()))){
+                .anyMatch((texto)->Objects.equals(texto.getTextoString(), textoNuevo.getTextoString()))){
             throw new DuplicarRecursoException("Ya existe un texto igual");
         }
         //idAutor e idTema no pueden ser nulos al venir de path
-        repository.recuperarAutorPorId(idAutor)
-                .orElseThrow(()->new RecursoNoEncontradoException("Id de Autor no encontrado"));
-        repository.recuperarTextoPorId(idTema)
-                .orElseThrow(()->new RecursoNoEncontradoException("Id de Tema no encontrado"));
-
-        TextoDto textoDto = TextoDto.builder()
-                .textoString(textoRest.getTextoString())
-                .longitud(textoRest.getLongitud())
-                .idAutor(idAutor)
-                .idTemas(Arrays.asList(idTema))
+        TextoNuevo textoAGuardar = textoNuevo.builder()
+                .textoString(textoNuevo.getTextoString())
+                .longitud(textoNuevo.getLongitud())
+                .nombreAutor(repository.recuperarAutorPorId(idAutor)
+                        .orElseThrow(()->new RecursoNoEncontradoException("Id de Autor no encontrado")).getNombreAutor())
+                .nombreTemas(Arrays.asList(
+                        repository.recuperarTemaPorId(idTema)
+                                .orElseThrow(()->new RecursoNoEncontradoException("Id de Tema no encontrado")).getNombreTema())                )
                 .build();
-        return guardarTexto(textoDto);
+        return guardarTexto(textoAGuardar);
     }
 
 //MÉTODOS RECUPERAR TODOS
@@ -495,57 +445,57 @@ public class ServiceBibliotecaImpl implements ServiceBiblioteca {
     }
 //ACTUALIZAR RECURSO POR ID
     @Override
-    public AutorDto actualizarAutorPorId(int idAutor, AutorRest autorRest) {
+    public AutorDto actualizarAutorPorId(int idAutor, AutorNuevo autorNuevo) {
         AutorEntity autorEntity = repository.recuperarAutorPorId(idAutor)
                 .orElseThrow(()->new RecursoNoEncontradoException("Id de autor no encontrado"));
         //control de null en campos notNull
-        if (Objects.isNull(autorRest.getNombreAutor())){
+        if (Objects.isNull(autorNuevo.getNombreAutor())){
             throw new CampoEnBlancoException("nombreAutor");
         }
-        autorEntity.setNombreAutor(autorRest.getNombreAutor());
-        autorEntity.setFechaAutor(autorRest.getFechaAutor());
-        autorEntity.setDescripcionBreve(autorRest.getDescripcionBreve());
-        autorEntity.setDescripcionLarga(autorRest.getDescripcionLarga());
+        autorEntity.setNombreAutor(autorNuevo.getNombreAutor());
+        autorEntity.setFechaAutor(autorNuevo.getFechaAutor());
+        autorEntity.setDescripcionBreve(autorNuevo.getDescripcionBreve());
+        autorEntity.setDescripcionLarga(autorNuevo.getDescripcionLarga());
         repository.guardarAutor(autorEntity);
         AutorDto autorActualizado = recuperarAutorPorId(idAutor);
         return autorActualizado;
     }
 
     @Override
-    public TextoDto actualizarTextoPorId(int idTexto, TextoRest textoRest) {
+    public TextoDto actualizarTextoPorId(int idTexto, TextoNuevo textoNuevo) {
         TextoEntity textoEntity = repository.recuperarTextoPorId(idTexto)
                 .orElseThrow(()->new RecursoNoEncontradoException("Id de texto no encontrado"));
         if (textoEntity.getTextoString()==null){
             throw new CampoEnBlancoException("textoString");
         }
-        textoEntity.setTextoString(textoRest.getTextoString());
-        textoEntity.setLongitud(textoRest.getLongitud());
+        textoEntity.setTextoString(textoNuevo.getTextoString());
+        textoEntity.setLongitud(textoNuevo.getLongitud());
         repository.guardarTexto(textoEntity);
         TextoDto textoActualizado = recuperarTextoPorId(idTexto);
         return textoActualizado;
     }
 
     @Override
-    public TemaDto actualizarTemaPorId(int idTema, TemaRest temaRest) {
+    public TemaDto actualizarTemaPorId(int idTema, TemaNuevo temaNuevo) {
         TemaEntity temaEntity = repository.recuperarTemaPorId(idTema)
                 .orElseThrow(()->new RecursoNoEncontradoException("Id de texto no encontrado"));
         if (temaEntity.getNombreTema()==null){
             throw new CampoEnBlancoException("nombreTema");
         }
-        temaEntity.setNombreTema(temaRest.getNombreTema());
+        temaEntity.setNombreTema(temaNuevo.getNombreTema());
         repository.guardarTema(temaEntity);
         TemaDto temaActualizado = recuperarTemaPorId(idTema);
         return temaActualizado;
     }
 
     @Override
-    public SupertemaDto actualizarSupertemaPorId(int idSupertema, SupertemaRest supertemaRest) {
+    public SupertemaDto actualizarSupertemaPorId(int idSupertema, SupertemaNuevo supertemaNuevo) {
         SupertemaEntity supertemaEntity = repository.recuperarSupertemaPorId(idSupertema)
                 .orElseThrow(()->new RecursoNoEncontradoException("Id de supertema no encontrado"));
         if(supertemaEntity.getNombreSupertema()==null){
             throw new CampoEnBlancoException("nombreSupertema");
         }
-        supertemaEntity.setNombreSupertema(supertemaRest.getNombreSupertema());
+        supertemaEntity.setNombreSupertema(supertemaNuevo.getNombreSupertema());
         repository.guardarSupertema(supertemaEntity);
         SupertemaDto supertemaActualizado = recuperarSupertemaPorId(idSupertema);
         return supertemaActualizado;

@@ -1,26 +1,23 @@
 package com.mariots.biblioteca.bibliotecarest.core.service;
 
-import com.mariots.biblioteca.bibliotecarest.core.dtos.AutorDto;
-import com.mariots.biblioteca.bibliotecarest.core.dtos.SupertemaDto;
-import com.mariots.biblioteca.bibliotecarest.core.dtos.TemaDto;
-import com.mariots.biblioteca.bibliotecarest.core.dtos.TextoDto;
-import com.mariots.biblioteca.bibliotecarest.core.dtos.inputrest.*;
-import com.mariots.biblioteca.bibliotecarest.core.dtos.objetosvinculados.TemaSupertema;
-import com.mariots.biblioteca.bibliotecarest.core.dtos.objetosvinculados.TextoAutor;
-import com.mariots.biblioteca.bibliotecarest.core.dtos.objetosvinculados.TextoTema;
+import com.mariots.biblioteca.bibliotecarest.core.model.dto.AutorDto;
+import com.mariots.biblioteca.bibliotecarest.core.model.dto.SupertemaDto;
+import com.mariots.biblioteca.bibliotecarest.core.model.dto.TemaDto;
+import com.mariots.biblioteca.bibliotecarest.core.model.dto.TextoDto;
+import com.mariots.biblioteca.bibliotecarest.core.model.nuevosrecurso.*;
+import com.mariots.biblioteca.bibliotecarest.core.model.clasesempaquetado.TemaSupertema;
+import com.mariots.biblioteca.bibliotecarest.core.model.clasesempaquetado.TextoAutor;
+import com.mariots.biblioteca.bibliotecarest.core.model.clasesempaquetado.TextoTema;
 
 import java.util.List;
 
 public interface ServiceBiblioteca {
-    AutorDto guardarAutor(AutorDto autorDto);
-    TemaDto guardarTema(TemaDto temaDto);
-    SupertemaDto guardarSupertema(SupertemaDto supertemaDto);
-    TextoDto guardarTexto(TextoDto textoDto);
-    AutorDto guardarAutor(AutorRest autorRest);
-    TemaDto guardarTema(TemaRest temaRest);
-    SupertemaDto guardarSupertema(SupertemaRest supertemaRest);
-    TextoDto guardarTexto(TextoRest textoRest);
-    TextoDto guardarTextoDesdePath(TextoRest texto, int idAutor, int idTema);
+
+    AutorDto guardarAutor(AutorNuevo autorNuevo);
+    TemaDto guardarTema(TemaNuevo temaNuevo);
+    SupertemaDto guardarSupertema(SupertemaNuevo supertemaNuevo);
+    TextoDto guardarTexto(TextoNuevo textoNuevo);
+    TextoDto guardarTextoDesdePath(TextoNuevo texto, int idAutor, int idTema);
 
     List<AutorDto> recuperarAutores();
     List<TemaDto> recuperarTemas();
@@ -56,9 +53,9 @@ public interface ServiceBiblioteca {
     void eliminarTemaPorId(int idTema);
     void eliminarSupertemaPorId(int idSupertema);
 
-    AutorDto actualizarAutorPorId(int id, AutorRest autor);
-    TextoDto actualizarTextoPorId(int id, TextoRest texto);
-    TemaDto actualizarTemaPorId(int id, TemaRest tema);
-    SupertemaDto actualizarSupertemaPorId(int id, SupertemaRest supertema);
+    AutorDto actualizarAutorPorId(int id, AutorNuevo autor);
+    TextoDto actualizarTextoPorId(int id, TextoNuevo texto);
+    TemaDto actualizarTemaPorId(int id, TemaNuevo tema);
+    SupertemaDto actualizarSupertemaPorId(int id, SupertemaNuevo supertema);
 
 }

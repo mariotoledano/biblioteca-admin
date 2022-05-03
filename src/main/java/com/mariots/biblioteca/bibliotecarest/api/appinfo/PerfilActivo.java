@@ -12,10 +12,10 @@ public class PerfilActivo {
     private Environment environment;
     public void imprimirPerfilActivo(){
         for(String perfil:environment.getActiveProfiles()){
-            String textoAImp = Objects.isNull(perfil)?
-                    "No existe un perfil activo definido":
-                    "Perfil activo: " + perfil;
-            System.out.println(textoAImp);
+            String infoPerfil = Objects.isNull(perfil)?
+                    "No existe un perfil activo definido para el inicio de la aplicación":
+                    "La aplicación ha iniciado con el perfil: " + perfil;
+            System.out.println(infoPerfil);
         }
 
     }

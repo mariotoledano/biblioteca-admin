@@ -1,12 +1,14 @@
-package com.mariots.biblioteca.bibliotecarest.core.dtos.inputrest;
+package com.mariots.biblioteca.bibliotecarest.core.model.nuevosrecurso;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class TemaRest {
+@Builder
+public class TemaNuevo {
     String nombreTema;
 }

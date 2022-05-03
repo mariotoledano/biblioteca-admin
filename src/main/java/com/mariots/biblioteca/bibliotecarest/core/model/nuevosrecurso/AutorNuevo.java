@@ -1,4 +1,4 @@
-package com.mariots.biblioteca.bibliotecarest.core.dtos.inputrest;
+package com.mariots.biblioteca.bibliotecarest.core.model.nuevosrecurso;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class AutorRest {
+public class AutorNuevo {
     private String nombreAutor;
     private String fechaAutor;
     private String descripcionBreve;

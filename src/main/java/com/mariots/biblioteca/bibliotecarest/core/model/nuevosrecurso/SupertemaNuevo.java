@@ -1,13 +1,15 @@
-package com.mariots.biblioteca.bibliotecarest.core.dtos.inputrest;
+package com.mariots.biblioteca.bibliotecarest.core.model.nuevosrecurso;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class SupertemaRest {
+@Builder
+public class SupertemaNuevo {
 
     private String nombreSupertema;
 

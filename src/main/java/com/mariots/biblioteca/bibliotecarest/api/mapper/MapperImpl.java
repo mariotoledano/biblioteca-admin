@@ -1,15 +1,14 @@
 package com.mariots.biblioteca.bibliotecarest.api.mapper;
 
-import com.mariots.biblioteca.bibliotecarest.api.exceptions.CampoEnBlancoException;
 import com.mariots.biblioteca.bibliotecarest.api.exceptions.RecursoNoEncontradoException;
-import com.mariots.biblioteca.bibliotecarest.core.dtos.AutorDto;
-import com.mariots.biblioteca.bibliotecarest.core.dtos.SupertemaDto;
-import com.mariots.biblioteca.bibliotecarest.core.dtos.TemaDto;
-import com.mariots.biblioteca.bibliotecarest.core.dtos.TextoDto;
-import com.mariots.biblioteca.bibliotecarest.core.dtos.inputrest.AutorRest;
-import com.mariots.biblioteca.bibliotecarest.core.dtos.inputrest.SupertemaRest;
-import com.mariots.biblioteca.bibliotecarest.core.dtos.inputrest.TemaRest;
-import com.mariots.biblioteca.bibliotecarest.core.dtos.inputrest.TextoRest;
+import com.mariots.biblioteca.bibliotecarest.core.model.dto.AutorDto;
+import com.mariots.biblioteca.bibliotecarest.core.model.dto.SupertemaDto;
+import com.mariots.biblioteca.bibliotecarest.core.model.dto.TemaDto;
+import com.mariots.biblioteca.bibliotecarest.core.model.dto.TextoDto;
+import com.mariots.biblioteca.bibliotecarest.core.model.nuevosrecurso.AutorNuevo;
+import com.mariots.biblioteca.bibliotecarest.core.model.nuevosrecurso.SupertemaNuevo;
+import com.mariots.biblioteca.bibliotecarest.core.model.nuevosrecurso.TemaNuevo;
+import com.mariots.biblioteca.bibliotecarest.core.model.nuevosrecurso.TextoNuevo;
 import com.mariots.biblioteca.bibliotecarest.persistence.entities.AutorEntity;
 import com.mariots.biblioteca.bibliotecarest.persistence.entities.SupertemaEntity;
 import com.mariots.biblioteca.bibliotecarest.persistence.entities.TemaEntity;
@@ -140,19 +139,19 @@ public class MapperImpl implements Mapper{
     //NUEVO-REST --> DTO
     //VALIDACIONES EN SERVICE
     @Override
-    public AutorDto toDto(AutorRest autorRest) {
+    public AutorDto toDto(AutorNuevo autorNuevo) {
         return new AutorDto().builder()
-                .nombreAutor(autorRest.getNombreAutor())
-                .fechaAutor(autorRest.getFechaAutor())
-                .descripcionBreve(autorRest.getDescripcionBreve())
-                .descripcionLarga(autorRest.getDescripcionLarga())
+                .nombreAutor(autorNuevo.getNombreAutor())
+                .fechaAutor(autorNuevo.getFechaAutor())
+                .descripcionBreve(autorNuevo.getDescripcionBreve())
+                .descripcionLarga(autorNuevo.getDescripcionLarga())
                 .build();
     }
 
     @Override
-    public TextoDto toDto(TextoRest textoRest) {
+    public TextoDto toDto(TextoNuevo textoNuevo) {
         List<Integer> idTemas = new ArrayList<>();
-        textoRest.getNombreTemas()
+        textoNuevo.getNombreTemas()
                 .stream()
                 .map((nombreTema)->idTemas.add(
                         repository
@@ -162,9 +161,9 @@ public class MapperImpl implements Mapper{
                 .collect(Collectors.toList());
 
         TextoDto textoDto = new TextoDto().builder()
-                .textoString(textoRest.getTextoString())
-                .longitud(textoRest.getLongitud())
-                .idAutor(repository.recuperarAutorPorNombre(textoRest.getNombreAutor())
+                .textoString(textoNuevo.getTextoString())
+                .longitud(textoNuevo.getLongitud())
+                .idAutor(repository.recuperarAutorPorNombre(textoNuevo.getNombreAutor())
                         .orElseThrow(()->new RecursoNoEncontradoException("No existe el nombre de autor aportado, ingrese un nombre de autor previamente registrado"))
                         .getIdAutor())
                 .idTemas(idTemas)
@@ -173,16 +172,16 @@ public class MapperImpl implements Mapper{
     }
 
     @Override
-    public TemaDto toDto(TemaRest temaRest) {
+    public TemaDto toDto(TemaNuevo temaNuevo) {
         return new TemaDto().builder()
-                .nombreTema(temaRest.getNombreTema())
+                .nombreTema(temaNuevo.getNombreTema())
                 .build();
     }
 
     @Override
-    public SupertemaDto toDto(SupertemaRest supertemaRest) {
+    public SupertemaDto toDto(SupertemaNuevo supertemaNuevo) {
         return new SupertemaDto().builder()
-                .nombreSupertema(supertemaRest.getNombreSupertema())
+                .nombreSupertema(supertemaNuevo.getNombreSupertema())
                 .build();
     }
 
