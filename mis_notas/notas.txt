@@ -3,10 +3,8 @@
 
 MEJORAS
 
-Implementar HTOAS
+HTOAS dinmámicos
 
 Conectar repository de web a biblioteca-rest
 
 Autenticación y autorización
-
-Demasiada lógica de negocio concentrada en mapper

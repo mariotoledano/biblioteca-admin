@@ -10,7 +10,7 @@ ENDPOINTS:
         http://localhost:8085/actuator
 
 GESTIÓN RECURSOS
-
+    //GET indice -->Indice de todas las acciones posibles
     //GET resource --> Recuperar todos los resources de un tipo
     //GET resource/{id} --> Recuperar recurso por id
     //GET resource/nombre/{nombre} --> Recuperar recurso por nombre

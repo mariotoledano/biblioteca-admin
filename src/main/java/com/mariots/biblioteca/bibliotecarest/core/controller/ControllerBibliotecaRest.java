@@ -93,18 +93,6 @@ public class ControllerBibliotecaRest {
         return new ResponseEntity<AutorDto>(autor, HttpStatus.FOUND);
     }
 
-//MODIFICADO REFACTORIZAR!!!/////////////////////////////
-//    @GetMapping(value = "/autores/{id}")
-//    @ResponseStatus(HttpStatus.FOUND)
-//    public EntityModel<ResponseEntity> recuperarAutorPorId(@PathVariable @Valid int id) {
-//        AutorDto autor = service.recuperarAutorPorId(id);
-//        ResponseEntity<AutorDto> responseEntity = new ResponseEntity<>(autor, HttpStatus.FOUND);
-//        EntityModel<ResponseEntity> entityModel=EntityModel.of(responseEntity);
-//        WebMvcLinkBuilder linkRecuperarAutores = linkTo(methodOn(this.getClass()).recuperarTemaPorId(1));
-//        entityModel.add(linkRecuperarAutores.withRel("Recuperar todos los autores"));
-//        return entityModel;
-//    }
-/////////////////////////////////////////////////
     @GetMapping(value = "/textos/{id}")
     public ResponseEntity recuperarTextoPorId(@PathVariable int id) {
         TextoDto texto = service.recuperarTextoPorId(id);
